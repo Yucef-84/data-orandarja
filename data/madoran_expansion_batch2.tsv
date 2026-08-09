@@ -1,0 +1,65 @@
+id	cefr	topic	arabic	source_form	latin	ko	en	kind	marker_type	oran_marker	evidence	status	source_id	source_locator	note
+OD-0193	A1	family	مرا	مرا	mra	여자; 아내	woman; wife	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 245; sentence 16	문맥에 따라 여자 또는 아내
+OD-0194	A1	people	صاحب	صاحب	sa7eb	친구	friend	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 29688; sentence 1312	
+OD-0195	A1	family	ولاد	ولاد	wlad	아이들; 자녀	children	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5039; sentence 264	복수형
+OD-0196	A1	family	فاميليا	فاميليا	familia	가족	family	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 294; sentence 19	차용어
+OD-0197	A1	clothing	قش	قش	qech	옷	clothes	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13295; sentence 642	
+OD-0198	A1	clothing	قمجة	قمجة	qamja	셔츠	shirt	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14593; sentence 685	
+OD-0199	A1	clothing	صباطي	صباطي	sbati	신발	shoes	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 20173; sentence 918	코퍼스 gloss는 복수 Shoes
+OD-0200	A1	colors	بيض	بيض	byed	흰색의	white	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 22983; sentence 1064	
+OD-0201	A1	colors	كحلة	كحلة	k7la	검은색의(여성형)	black (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8403; sentence 401	MADOran feminine singular suffix
+OD-0202	A1	colors	خضرة	خضرة	khdra	초록색의(여성형)	green (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7501; sentence 368	MADOran feminine singular suffix
+OD-0203	A1	colors	زرقة	زرقة	zerqa	파란색의(여성형)	blue (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9124; sentence 424	MADOran feminine singular suffix
+OD-0204	A1	colors	صفرا	صفرا	safra	노란색의(여성형)	yellow (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11843; sentence 589	여성 단수형
+OD-0205	A1	food	ماء	ماء	ma	물	water	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7953; sentence 384	
+OD-0206	A1	food	حليب	حليب	7lib	우유	milk	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 64; sentence 5	
+OD-0207	A1	food	لحم	لحم	l7em	고기	meat	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7372; sentence 364	
+OD-0208	A1	food	ماكلة	ماكلة	makla	음식	food	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7410; sentence 365	
+OD-0209	A1	food	لاتاي	لاتاي	latay	차	tea	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8638; sentence 409	정관사가 어휘화된 차용형
+OD-0210	A1	food	سكر	سكر	sokkar	설탕	sugar	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8853; sentence 416	모음은 학습용 정규화
+OD-0211	A1	food	ملح	ملح	mel7	소금	salt	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7543; sentence 369	모음은 학습용 정규화
+OD-0212	A1	food	مطلوع	مطلوع	matlu3	마틀루 빵; 구운 빵	matlou bread; baked bread	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3612; sentence 205	알제리식 둥근 빵
+OD-0213	A1	food	تفاح	تفاح	tfa7	사과	apples	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9653; sentence 442	집합·복수 의미
+OD-0214	A1	food	بطاطا	بطاطا	batata	감자	potato	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4298; sentence 234	
+OD-0215	A1	food	طماطيس	طماطيس	tmatis	토마토	tomatoes	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7470; sentence 367	복수·집합형
+OD-0216	A2	food	فطور	فطور	ftur	점심	lunch	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3159; sentence 184	코퍼스 gloss 기준
+OD-0217	A1	food	عشا	عشا	3cha	저녁 식사	dinner	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11538; sentence 578	
+OD-0218	A1	transport	لوطو	لوطو	loto	자동차	car; automobile	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 25; sentence 2	프랑스어 auto 계열 차용형
+OD-0219	A1	transport	بيس	بيس	bis	버스	bus	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10239; sentence 521	
+OD-0220	A1	places	مدينة	مدينة	mdina	도시	city	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2657; sentence 145	
+OD-0221	A1	home	شومبرا	شومبرا	chombra	방	room	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 19805; sentence 904	스페인어 계열 차용형
+OD-0222	A1	home	طابلة	طابلة	tabla	탁자	table	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2117; sentence 97	
+OD-0223	A1	places	سوق	سوق	suq	시장	market	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1043; sentence 55	
+OD-0224	A1	places	شارع	فشارع	chare3	거리; 길	street	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5405; sentence 278	source_form의 f/PREP를 제거해 표제화
+OD-0225	A2	transport	ستاسيون	ستاسيون	stasyon	역; 정류장	station	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 26066; sentence 1179	
+OD-0226	A1	transport	تاكسي	تاكسي	taksi	택시	taxi	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4233; sentence 231	
+OD-0227	A1	places	مطعم	مطعم	mat3am	식당	restaurant	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13095; sentence 635	
+OD-0228	A1	health	سبيطار	لسبيطار	sbitar	병원	hospital	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6207; sentence 325	source_form의 l/PREP를 제거해 표제화
+OD-0229	A1	health	طبيب	طبيب	tbib	의사	doctor	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 23284; sentence 1073	
+OD-0230	A1	school	تلميد	تلميد	telmid	학생; 생도	student; pupil	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 17748; sentence 819	
+OD-0231	A1	home	فراش	فراش	frach	침대	bed	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9547; sentence 439	
+OD-0232	A1	home	كوزينة	كوزينة	kuzina	부엌	kitchen	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13210; sentence 639	
+OD-0233	A1	home	تاقة	التاقة	taqa	창문	window	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 30078; sentence 1324	source_form의 정관사를 제거해 표제화
+OD-0234	A2	weather	ريح	الريح	ri7	바람	wind	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2525; sentence 126	source_form의 정관사를 제거해 표제화
+OD-0235	A1	seasons	صيف	الصيف	sif	여름	summer	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9026; sentence 421	source_form의 정관사를 제거해 표제화
+OD-0236	A1	seasons	مشتة	فالمشتة	mechta	겨울	winter	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16491; sentence 768	source_form의 f/PREP+정관사를 제거해 표제화
+OD-0237	A2	seasons	خريف	فخريف	khrif	가을	autumn	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3200; sentence 188	source_form의 f/PREP를 제거해 표제화
+OD-0238	A1	time	بارح	بارح	bare7	어제	yesterday	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13225; sentence 640	
+OD-0239	A1	time	سيمانة	سيمانة	simana	주; 일주일	week	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10538; sentence 534	
+OD-0240	A1	time	شهر	شهر	chhar	달; 개월	month	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3022; sentence 168	
+OD-0241	A1	time	ساعة	ساعة	sa3a	시간; 한 시간	hour; time	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 808; sentence 44	
+OD-0242	A1	weather	حامي	حامي	7ami	뜨거운; 더운	hot	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7740; sentence 376	
+OD-0243	A1	adjectives	جديد	جديد	jdid	새로운; 현대적인	new; modern	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2295; sentence 107	
+OD-0244	A1	position	بعيد	بعيد	b3id	먼	far	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1123; sentence 58	
+OD-0245	A1	position	تحت	تحت	te7t	아래에	under	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3308; sentence 193	
+OD-0246	A1	position	داخل	داخل	dakhel	안; 내부	inside; interior	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4358; sentence 237	
+OD-0247	A1	position	برا	برا	berra	밖에	outside	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1142; sentence 59	코퍼스의 elsewhere 의미는 제외
+OD-0248	A1	health	جيعان	جيعان	ji3an	배고픈	hungry	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6545; sentence 338	남성 단수
+OD-0249	A1	health	عطشانة	عطشانة	3atchana	목마른(여성형)	thirsty (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11597; sentence 580	MADOran feminine singular suffix
+OD-0250	A1	health	عيان	عيان	3yan	피곤한	tired	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15230; sentence 710	
+OD-0251	A1	adjectives	ساهل	ساهل	sahel	쉬운; 간단한	easy; simple	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9035; sentence 421	
+OD-0252	A2	adjectives	صعيب	صعيب	s3ib	어려운	difficult	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15995; sentence 743	
+OD-0253	A2	shopping	غالي	غالي	ghali	비싼	expensive	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13373; sentence 644	
+OD-0254	A1	daily	اسم	اسم	esm	이름	name	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6754; sentence 344	
+OD-0255	A2	daily	لغة	لغة	lugha	언어	language	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11021; sentence 553	
+OD-0256	A1	shopping	مال	مال	mal	돈	money	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9887; sentence 480	

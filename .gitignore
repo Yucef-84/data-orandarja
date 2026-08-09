@@ -1,0 +1,12 @@
+# Local editor, OS, and agent state
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.codex/
+.agents/
+
+# Temporary and generated scratch files
+*.tmp
+*.bak
+~$*

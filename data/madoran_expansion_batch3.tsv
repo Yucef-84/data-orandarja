@@ -1,0 +1,49 @@
+id	cefr	topic	arabic	source_form	latin	ko	en	kind	marker_type	oran_marker	evidence	status	source_id	source_locator	note
+OD-0257	A1	number	زيروا	زيروا	ziru	영	zero	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6602; sentence 339	프랑스어 zéro 계열 차용형
+OD-0258	A1	number	زوج	زوج	zuj	둘	two	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 656; sentence 37	
+OD-0259	A1	number	ربع	ربع	rba3	넷(수사)	four (cardinal)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12542; sentence 617	MADOran Stem=ربع/NOUN_NUM; 다른 문맥에서는 4분의 1
+OD-0260	A1	number	ست	ست	setta	여섯	six	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6704; sentence 343	
+OD-0261	A1	number	سبعة	سبعة	seb3a	일곱	seven	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11470; sentence 575	
+OD-0262	A1	number	تسعة	تسعة	tes3a	아홉	nine	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10126; sentence 510	
+OD-0263	A2	number	لولا	لولا	lula	첫 번째(여성형)	first (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3987; sentence 220	MADOran MSA=أولى
+OD-0264	A2	number	زاوج	زاوج	zawj	두 번째	second	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11192; sentence 563	
+OD-0265	A1	body	شعر	شعر	ch3ar	머리카락	hair	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10754; sentence 544	
+OD-0266	A1	body	نيف	النيف	nif	코	nose	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15624; sentence 726	source_form의 정관사를 제거해 표제화
+OD-0267	A1	body	رقبة	رقبة	reqba	목	neck	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3660; sentence 206	
+OD-0268	A1	body	ذراع	ذراعها	dra3	팔	arm	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12431; sentence 612	source_form의 3인칭 여성 소유 접미사를 제거해 표제화
+OD-0269	A1	body	صبع	صبع	sba3	손가락	finger	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3602; sentence 204	
+OD-0270	A2	body	ليستوما	ليستوما	listoma	위; 배	stomach	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14718; sentence 689	프랑스어 estomac 계열 차용형
+OD-0271	A1	body	قلب	قلبي	qelb	심장; 마음	heart	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10258; sentence 522	source_form의 1인칭 소유 접미사를 제거해 표제화
+OD-0272	A2	body	دم	دم	demm	피	blood	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4192; sentence 229	Latin은 학습용 정규화
+OD-0273	A1	home	حيط	حيط	7it	벽	wall	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14510; sentence 683	
+OD-0274	A1	home	تواليت	تواليت	twalet	화장실	toilet	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13055; sentence 634	
+OD-0275	A1	home	مفتاح	مفتاح	mefta7	열쇠	key	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7170; sentence 358	
+OD-0276	A1	home	ضو	ضو	daw	빛; 전등	light	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14051; sentence 667	
+OD-0277	A1	food	فنجان	فنجان	fenjan	잔; 컵	cup	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7829; sentence 380	
+OD-0278	A1	food	كيسان	كيسان	kisan	컵들; 유리잔들	glasses	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7952; sentence 384	복수형
+OD-0279	A1	food	طبسي	طبسي	tbsi	접시	plate	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8866; sentence 416	
+OD-0280	A2	food	خدمي	خدمي	khodmi	칼	knife	word	lexicon	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 27706; sentence 1228	CORVAM Oran lexicon에도 xudmi로 제시
+OD-0281	A1	food	مغرف	مغرف	mghref	숟가락	spoon	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7547; sentence 369	
+OD-0282	A1	school	سؤال	سؤال	sual	질문	question	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11143; sentence 561	
+OD-0283	A1	work	خدام	خدام	khaddam	노동자; 일하는 사람	worker	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6059; sentence 319	능동분사
+OD-0284	A2	work	بوليسيا	البوليسيا	bolisya	경찰	police	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12320; sentence 608	source_form의 정관사를 제거해 표제화
+OD-0285	A1	work	شوفور	شوفور	chofor	운전사	driver	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10241; sentence 521	프랑스어 chauffeur 계열
+OD-0286	A1	verbs	نشرو	نشرو	nechru	우리는 구매한다	we buy	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12107; sentence 600	MADOran n/IV1P + plural subject suffix
+OD-0287	A1	verbs	يخلص	يخلص	ykhalles	그는 지불한다	he pays	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13695; sentence 655	MADOran y/IV3MS
+OD-0288	A1	verbs	كتب	كتب	kteb	그는 썼다	he wrote	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5167; sentence 269	MADOran PV subject 3MS
+OD-0289	A1	verbs	تقرى	تقرى	teqra	그녀는 공부한다	she studies	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4409; sentence 238	MADOran t/IV3FS
+OD-0290	A2	verbs	تعلمتي	تعلمتي	t3ellemti	너는 배웠다(여성)	you learned (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14924; sentence 697	MADOran t/IV2FS + subject suffix 2FS
+OD-0291	A1	verbs	ترقد	ترقد	terqod	너는 잔다(남성)	you sleep (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 19809; sentence 904	MADOran t/IV2MS
+OD-0292	A1	verbs	تنوض	تنوض	tnud	그녀는 일어난다	she wakes up	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1105; sentence 57	MADOran t/IV3FS
+OD-0293	A1	verbs	يتمشى	يتمشى	yetmecha	그는 걷는다	he walks	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1143; sentence 59	MADOran y/IV3MS
+OD-0294	A1	verbs	وقف	وقف	wqef	그는 섰다	he stood	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4502; sentence 242	MADOran PV subject 3MS
+OD-0295	A1	verbs	تضحك	تضحك	ted7ek	너는 웃는다(남성)	you laugh (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3396; sentence 196	MADOran t/IV2MS
+OD-0296	A1	verbs	تبكي	تبكي	tebki	그녀는 운다	she cries	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9112; sentence 424	MADOran t/IV3FS
+OD-0297	A1	verbs	نعاونك	نعاونك	n3awnek	나는 너를 돕는다	I help you	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 20187; sentence 919	MADOran n/IV1S + object 2MS
+OD-0298	A1	verbs	بدا	بدا	bda	그는 시작했다	he started	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7319; sentence 362	MADOran PV subject 3MS
+OD-0299	A2	verbs	خيرت	خيرت	khayyert	나는 골랐다	I chose	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7417; sentence 365	MADOran PV subject 1S
+OD-0300	A1	verbs	نحس	نحس	n7ess	나는 느낀다	I feel	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15949; sentence 742	MADOran n/IV1S
+OD-0301	A1	verbs	نبغي	نبغي	nebghi	나는 사랑한다	I love	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11437; sentence 574	MADOran n/IV1S
+OD-0302	A2	verbs	نكره	نكره	nekrah	나는 싫어한다	I hate	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15917; sentence 741	MADOran n/IV1S
+OD-0303	A2	adjectives	فورت	فورت	fort	강한(여성형)	strong (feminine)	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 25680; sentence 1166	프랑스어 forte 차용형
+OD-0304	A1	adjectives	طويل	الطويل	twil	키가 큰	tall	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9719; sentence 453	source_form의 정관사를 제거해 표제화

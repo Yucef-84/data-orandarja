@@ -1,0 +1,350 @@
+1999	.	.	.	./PUNC			.	ID=9	S=1
+277	لا	لا	لا	لا/NEG_PART		not,_neither-nor	non,_ni_l'un_ni_l'autre	ID=293	S=19
+274	?	?	?	?/PUNC			?	ID=103	S=8
+225	تع	تع	لِ	تع/PREP			of	ID=522	S=31
+218	,	,	فاصلة	,/PUNC			,	ID=83	S=7
+202	الله	الله	اللَّه	الله/NOUN_PROP			Allah;God	ID=141	S=10
+192	لي	لي	الّذيالتِّي	لي/REL_PRON		the_one,that	celui,_ce	ID=6	S=1
+170	يا	يا	يَا	يا/VOC_PART		oh	hé	ID=181	S=13
+149	شا	شا	مَاذا	شا/INTERROG_PART		what	quoi	ID=276	S=18
+119	أنا	أنا	أَنَا	أنا/PRON_1S			I	ID=139	S=10
+108	راني	راني	إِنّني	ران/PRESENT_PART	ي/POSS_PRON		that	ID=552	S=32
+92	باغي	باغي	رَاغِب	باغي/NOUN_ACTIVE_PART			want,desire	ID=320	S=20
+91	راه	راه	إِنّه	راه/PRESENT_PART		is	est	ID=926	S=48
+86	هنا	هنا	هُنا	هنا/ADV			here	ID=174	S=12
+80	أيا	أيا	ثُمَّ	أيا/CONJ			then,so	ID=17	S=2
+75	راك	راك	إِنَّك	راك/SUBJUNC_PART			you	ID=888	S=46
+75	كيما	كيما	مِثْل	كيما/NOUN			as	ID=282	S=19
+71	علاه	علاه	لِماذا	علاه/REL_ADV			why	ID=250	S=16
+70	كاين	كاين	هُناكَ	كاين/NOUN_ACTIVE_PART		there_is	il_y_a	ID=708	S=39
+68	اه	اه	يَا	اه/VOC_PART		oh	Ah	ID=452	S=28
+68	فيها	فيها	فِي	في/PREP	ها/PRON_3FS	in	dans	ID=410	S=25
+64	راكي	راكي	إِنّكَي	راك/PRESENT_PART	ي/POSS_PRON	you_are	tu_es	ID=2208	S=101
+61	خير	خير	خَيْر	خير/ADJ_COMP	(null)/CASE_DEF_NOM		good,best	ID=228	S=14
+59	ايا	ايا	ثُمَّ	ايا/CONJ			then,afterwards,next,moreover	ID=54	S=4
+58	صحا	صحا	حَسَنًا	صحا/GERUND		ok	d'accord	ID=453	S=28
+54	عليا	عليا	عليَ	علي/PREP	ا/POSS_PRON	on	sur	ID=2130	S=98
+53	ها	ها	هَيَا	ها/VOC_PART			come_on	ID=862	S=46
+52	ربي	ربي	رَبّ	رب/NOUN_ABSTRACT	ي/POSS_PRON	God,_lord	Dieu	ID=571	S=33
+52	كنت	كنت	كَان	كن/PV	ت/SUFF_FEM_TA	was,were	étais_,étaient	ID=2093	S=96
+51	هادا	هادا	هَذا	هاد/DEM_PRON	ا/PRON_3MS		this	ID=972	S=50
+50	مشي	مشي	لَيْسَ	مشي/NEG_PART		not	ne_pas	ID=1386	S=70
+48	عندك	عندك	عَنْد	عند/NOUN	ك/POSS_PRON_2MS	with,_at_you	avec,_à_toi	ID=403	S=24
+47	نقولك	نقولك	قالَ	قول/IV	(null)/IVSUFF_MOOD:S+ك/IVSUFF_DO:2MS	say,tell	dire	ID=159	S=11
+47	عندي	عندي	عِنْد	عند/NOUN	ي/POSS_PRON_1S	with,_to_me	avec,_chez_moi	ID=280	S=18
+46	سي	سي	السَيَّد	سي/ABBREV		sir	monsieur	ID=3247	S=191
+46	باسكو	باسكو	لأَن	باسكو/FOREIGN		because	parce_que	ID=1714	S=82
+45	كون	كون	لو	كون/SUB_CONJ		if	si	ID=278	S=18
+44	ادا	ادا	إ`ذا	ادا/CONDITION_PART			if,_whether	ID=2461	S=121
+44	قالي	قالي	قَالَ	قال/PV	(null)/PV SUFF_SUBJ :3MS+ي/POSS_PRON	said	dis	ID=38	S=3
+42	مين	مين	لَمّا	مين/SUBJUNC_PART		as,_when	quand	ID=995	S=51
+41	عليها	عليها	عَلَى	علي/PREP	ها/POSS_PRON	on	sur	ID=918	S=48
+41	هدا	هدا	هَذا	هدا/DEM_PRON		this	ce	ID=763	S=42
+40	فيه	فيه	فِيه	في/PREP	ه/POSS_PRON	in	dans	ID=1161	S=59
+39	شوية	شوية	قليل	شوي/NOUN_QUANT	ة/NSUFF_FEM_SG	little,some	peu,_certains	ID=7490	S=368
+39	صايي	صايي	كَفَى	صايي/ADV		that's_enough	Ça_suffit!	ID=733	S=40
+39	قاله	قاله	قالَ	قال/PV	(null)/PVSUFF_SUBJ:3MS+ه/PVSUFF_DO:3MS	said	dis	ID=74	S=6
+38	بويا	بويا	أب	بو/NOUN	يا/POSS_PRON_1S		father	ID=330	S=21
+38	مكانش	مكانش	لايُوجَد	كان/PV	(null)/PVSUFF_SUBJ:3MS+ش/NEG_PART	There_is_no	il_n'y_a_pas	ID=2824	S=152
+38	حاجا	حاجة	شَيّء	حاج/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	thing	chose	ID=2860	S=154
+38	عليك	عليك	عليك	علي/PREP	ك/POSS_PRON	to_you	à_vous	ID=872	S=46
+37	راهي	راهي	اِنَّها	را/PRESENT_PART	هي/POSS_PRON	it_is	elle_est	ID=514	S=31
+37	عليه	عليه	عَلى	علي/PREP	ه/PRON_3FS	on	sur	ID=1149	S=59
+36	اني	اني	إِنّني	ان/PRESENT_PART	ي/POSS_PRON	i_am	je_suis	ID=2475	S=122
+36	الي	الي	الَذي	الي/REL_PRON		which,_who,_whom	qui	ID=2426	S=117
+34	روحي	روحي	رُوح	روح/NOUN_ABSTRACT	ي/POSS_PRON	spirit,_soul	esprit	ID=1907	S=90
+33	كانوا	كانوا	كانو	كان/PV	وا/PVSUFF_SUBJ:3MP	was,were	était.étaient	ID=25197	S=1143
+33	روحك	روحك	رُوح	روح/NOUN_ABSTRACT	ك/POSS_PRON	spirit,soul	esprit	ID=1913	S=90
+33	وحد	وحد	واحِد	وحد/NOUN			one	ID=170	S=12
+32	معاه	معاه	معَ	مع/PREP	اه/POSS_PRON	with	avec	ID=940	S=49
+31	نتيا	نتيا	أَنْتِ	نتيا/PRON			you_[fem.sg.]	ID=2862	S=154
+31	ندير	ندير	فَعَل	دير/IV	(null)/IVSUFF_SUBJ:1S	do,conduct	faire,_conduire	ID=3902	S=216
+31	الا	الا	إِذا	الا/CONDITION_PART		if	si	ID=393	S=24
+31	!	!	!	!/PUNC			!	ID=3353	S=195
+31	راهم	راهم	إنَّهم	را/PRESENT_PART	هم/POSS_PRON	they_are	il_sont	ID=591	S=34
+30	انشاء	انشاء	إنشَاءَ	شاء/PV	(null)/PVSUFF_SUBJ:3MS	want	vouloir	ID=3161	S=185
+29	معاك	معاك	مَعَكَ	معا/PREP	ك/POSS_PRON_2MS	with	avec	ID=41	S=3
+28	تاعي	تاع	لِي	تاع/PREP		my	mon	ID=3880	S=215
+27	فيك	فيك	فِي	في/PREP	ك/PRON_2MS	in_you	en_toi	ID=222	S=14
+27	تاعك	تاعك	لَكَ	تاع/PREP	ك/POSS_PRON	yours	ton	ID=2681	S=146
+27	كبيرة	كبيرة	كَبِيرة	كبير/ADJ_QUALIT	ة/NSUFF_FEM_SG		large,_big	ID=1594	S=77
+26	راها	راها	إِنّها	راه/PRESENT_PART	ا/POSS_PRON	is	est	ID=938	S=49
+26	ه	ه	ه	ه/TYPO		h	h	ID=1110	S=57
+26	عليكم	عليكم	عَلَيكم	علي/PREP	كم/POSS_PRON	on	au	ID=1481	S=73
+26	ديري	ديري	اِعْمَل	دير/CV	ي/CVSUFF_SUBJ : 2FS	do	faire	ID=4335	S=236
+25	بنتي	بنتي	بَنتي	بنت/NOUN_ABSTRACT	ي/POSS_PRON	daughter	fille	ID=4394	S=238
+25	معايا	معايا	مَع	مع/PREP	ايا/POSS_PRON	with	avec	ID=946	S=49
+25	دوك	دوك	الان	دوك/NOUN_TIME_PLACE			now	ID=1002	S=51
+25	كاش	كاش	أَيّ	كاش/PART			any	ID=606	S=35
+24	كيفاش	كيفاش	كَيْفَ	كيفاش/REL_ADV		how	comment	ID=1672	S=81
+24	سكنة	سكنة	المَنزِل	سكن/NOUN_CONCRETE	ة/NSUFF_FEM_SG		house,home	ID=523	S=31
+24	كانت	كانت	كَاَنت	كان/PV	ت/PV SUFF_SUBJ :3FS	was,were	était,_étaient	ID=1019	S=53
+24	حمد	حمد	حَمْد	حمد/NOUN		praise	merci	ID=437	S=26
+24	منبعد	منبعد	بَعْد	بعد/ADV		after	après	ID=5316	S=274
+24	مانيش	مانيش	إِنّني	ني/PRESENT_PART	ي/POSS_PRON+ش/NEG_PART	not_want	ne_veux_pas	ID=3633	S=206
+23	هاكا	هاكا	هَكَذَا	هاكا/NOUN		like_this	comme_sa	ID=197	S=13
+23	شوالا	شاوالا	مَاذأ	شاوالا/INTERROG_PART		what	quoi	ID=6039	S=318
+23	عنده	عنده	عِنْد	عند/NOUN	ه/POSS_PRON	at,to	à,_à	ID=1164	S=59
+23	نروح	نروح	راحَ	روح/IV	(null)/IVSUFF_MOOD:S	go	partir	ID=40	S=3
+23	بيه	بيه	بِهِ	بي/PREP	ه/PRON_3MS	with;by_it;him	avec;par_elle;lui	ID=1434	S=71
+22	تجي	تجي	جَاء	ج/IV	ي/IVSUFF_SUBJ:2FS		come;_fit	ID=279	S=18
+22	عمري	عمري	نَفْسِي	عمر/ADJ_QUALIT	ي/POSS_PRON	myself	moi_même	ID=4696	S=250
+22	قلت	قلت	قالَ	قل/PV	ت/PVSUFF_SUBJ:1S	said	dis	ID=33	S=3
+21	حريرة	حريرة	حرِيرَة(حَسَاءجَزائِري)	حرير/NOUN_PROP	ة/NSUFF_FEM_SG	Harira_(algerian_soup)	Harira_(soupe_algerienne)	ID=7368	S=364
+21	شابة	شابة	جَميلة	شاب/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	beautiful	belle	ID=1151	S=59
+21	عندها	عندها	عِنْدَ	عند/NOUN	ها/POSS_PRON	have,_own	avoir,_posséder	ID=200	S=13
+21	هكا	هكا	هَكَذَا	هكا/NOUN_ABSTRACT		like_this	comme_ça	ID=2823	S=152
+21	أرواح	أرواح	تَعَال	أرواح/CV	(null)/CVSUFF_SUBJ :2MS		come	ID=5564	S=284
+21	يكون	يكون	كَان	كون/IV	(null)/IVSUFF_SUBJ: 3MS	is,_are	sera	ID=1784	S=85
+20	مرحبا	مرحبا	مَرْحَبَا	مرحبا/INTERJ		welcome	bienvenue	ID=5667	S=288
+20	قاتلي	قاتلي	قالَ	قات/PV	ت/PVSUFF_SUBJ:3FS+ل/PREP+ي/POSS_PRON_1S	said	dire	ID=219	S=14
+20	صاحبي	صاحبي	صَاحِب	صاحب/NOUN_ACTIVE_PART	ي/POSS_PRON	friend	ami	ID=1971	S=92
+20	شوفي	شوفي	شَاف	شوف/CV	ي/CVSUFF_SUBJ : 2FS	look,_listen	ecoute_,_regarde	ID=588	S=34
+20	3	3		3/NUMBER			3	ID=1339	S=68
+19	جات	جات	جَاءت	جا/PV	ت/SUFF_FEM_TA	come	venir	ID=1163	S=59
+19	قالك	قالك	قالَ	قال/PV	(null)/PV SUFF_SUBJ :3MS+ك/PVSUFF_DO:2MS	said,tell	dis	ID=1132	S=59
+19	لله	الله	اللَّه	الله/NOUN_PROP		allah,god	dieu	ID=934	S=48
+19	ديجا	ديجا	قد	ديجا/FOREIGN		already	déjà	ID=2766	S=150
+19	تروح	تروح	رَاحَ	روح/IV	(null)/IVSUFF_SUBJ : 2MS	go	partir	ID=35	S=3
+19	فيا	فيا	فِي	في/PREP	ا/POSS_PRON		in_me	ID=2406	S=116
+19	لك	لك	لِ	ل/PREP	ك/PRON_2MS	to_you,_for_you	à_toi,_pour_toi	ID=217	S=14
+18	قاتله	قاتله	قالت	قا/PV	ت/PVSUFF_SUBJ:3FS+ل/PREP+ه/POSS_PRON_3MS		said	ID=155	S=11
+18	ني	ني	لاهذاولاذاك	ني/FOREIGN		neither_nor	ni	ID=2674	S=146
+18	قالها	قالها	قالَ	قال/PV	(null)/PVSUFF_SUBJ:3MS+ها/PVSUFF_DO:3FS	said	dire	ID=152	S=11
+18	مسكينة	مسكينة	مِسْكِين	مسكين/NOUN	ة/NSUFF_FEM_SG		poor;humble	ID=145	S=10
+18	يوم	يوم	يَوْم	يوم/NOUN_ABSTRACT		day	jour	ID=490	S=30
+17	2	2		2/NUMBER			2	ID=1328	S=67
+17	بيها	بيها	بِها	بي/PREP	ها/POSS_PRON	with_it	avec_ça	ID=6914	S=349
+17	تاعه	تاعه	لِ	تاع/PREP	ه/POSS_PRON	its	son	ID=5483	S=282
+17	ليق	ليق	لازِم	ليق/NOUN		required	obliger	ID=176	S=12
+17	فيلا	فيلا	فِيلّا	فيلا/FOREIGN		villa	villa	ID=16636	S=775
+17	نص	نص	نِصْف	نص/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)	middle,semi	demi_,_semi	ID=1081	S=57
+17	غايا	غايا	جَيِّد	غايا/ADJ_QUALIT	(null)/CASE_INDEF_(ACC_GEN)		good,_well	ID=819	S=44
+17	مسكين	مسكين	مِسْكِين	مسكين/NOUN	(null)/CASE_INDEF_(ACC_GEN)	poor,_humble	pauvre,_modeste	ID=130	S=9
+17	هواري	هواري	هواري	هواري/NOUN_PROP		Houari	Houari	ID=1365	S=69
+17	ابري	ابري	بعد,بعدما	ابري/FOREIGN			after	ID=1187	S=61
+17	نجي	نجي	أتَى	ج/IV	ي/IVSUFF_SUBJ:1S	come	viens	ID=3024	S=168
+16	حيا	حيا	الشَيّء	حيا/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)	thing	l'_affaire,_chose	ID=1464	S=72
+16	دو	دو	مِن	دو/FOREIGN			of	ID=4778	S=253
+16	مهم	مهم	مُهِمّ	مهم/NOUN_ACTIVE_PART		most_important	le_plus_important	ID=4318	S=236
+16	حزيم	حزيم	حَزِيم	حزيم/NOUN_PROP		hazim	hazim	ID=3238	S=189
+16	جاي	جاي	قَادِم	جاي/NOUN_ACTIVE_PART		come	venir	ID=2925	S=157
+16	ملايين	ملايين	مَلَايِين	ملايين/NOUN_NUM		millions	millions	ID=6373	S=331
+16	نديرو	نديرو	فَعَل	دير/IV	و/IVSUFF_SUBJ:MP_MOOD:SJ	do	faire	ID=7540	S=369
+16	:	:	:	:/PUNC			:	ID=25359	S=1149
+15	جاية	جاية	أتٍ	جاي/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	come	venir	ID=4174	S=228
+15	معاهم	معاهم	مَعهم	معا/PREP	هم/POSS_PRON	with	avec	ID=3824	S=212
+15	كانو	كانو	كانو	كان/PV	و/PVSUFF_SUBJ:3MP	was,were	était.étaient	ID=901	S=47
+15	الخير	الخير	خَيْر	خير/NOUN_ABSTRACT	(null)/CASE_DEF_GEN		good	ID=2701	S=147
+15	فمك	فمك	فَمُك	فم/NOUN_CONCRETE	ك/POSS_PRON	mouth	bouche	ID=12994	S=633
+15	عندنا	عند	عِنْد	عند/ADV		with_us,_at	chez_nous	ID=4056	S=222
+15	تاعنا	تاعنا	لِ	تاع/PREP	نا/POSS_PRON	our	notre	ID=5501	S=282
+15	راسك	راسك	رَأْس	راس/NOUN_CONCRETE	(null)/CASE_DEF_GEN+ك/POSS_PRON	head	tête	ID=2543	S=129
+15	تهدر	تهدر	تَتَكَلَم	هدر/IV	(null)/IVSUFF_SUBJ : 2MS	speak,talk	parler	ID=2867	S=155
+15	4	4		4/NUMBER			4	ID=1280	S=64
+15	ديك	ديك	ذلك	ديك/DEM_PRON_MS		that	ce	ID=421	S=26
+15	حبة	حبة	حَبَّة	حب/NOUN_CONCRETE	ة/NSUFF_FEM_SG		grain;seed	ID=1052	S=55
+15	تقول	تقول	تَقُول	قول/IV	(null)/IVSUFF_SUBJ : 2MS		say	ID=2592	S=137
+15	لوكان	لوكان	لوكَان	كان/PV	(null)/PV SUFF_SUBJ :3MS	only_if	seulment_si	ID=2645	S=144
+15	هاديك	هديك	تِلكَ	هديك/DEM_PRON		that	celui	ID=4289	S=233
+15	وي	وي	نَعَم	وي/FOREIGN		yes	oui	ID=2704	S=148
+15	رايحة	رايحة	ذَاهِب	رايح/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	going	Aller	ID=3004	S=167
+14	شاف	شاف	رئيس	شاف/FOREIGN		chief	chef	ID=629	S=36
+14	خليني	خليني	خَلَّى	خلي/CV	(null)/CVSUFF_SUBJ :2MS +ني/CVSUFF_DO :1S	let	laisser	ID=11857	S=589
+14	قعدت	قعدت	قَعَدَ	قعد/PV	ت/PV SUFF_SUBJ :3FS	sit_down,remain	s'asseoir,rester	ID=224	S=14
+14	علينا	علينا	عَلَى	علي/PREP	نا/POSS_PRON	of	à	ID=2898	S=156
+14	راكم	راكم	إِنَّكم	را/SUBJUNC_PART	كم/POSS_PRON	you_in_plural	vous	ID=5128	S=268
+14	أونقلي	أونقلي	إنْجْليزي	أونقلي/FOREIGN			english	ID=25792	S=1169
+14	قتلك	قتلك	قالَ	قت/PV	ت/PV SUFF_SUBJ :1S+ل/PREP+ك/POSS_PRON	said	dire	ID=3283	S=192
+14	مليحة	مليحة	جَيِدَة	مليح/ADJ_QUALIT	(null)/CASE_INDEF_(ACC_GEN)+ة/NSUFF_FEM_SG	well	bien	ID=7018	S=352
+14	مدام	مدام	مدام	مدام/FOREIGN		madam	madame	ID=17890	S=826
+14	نشوف	نشوف	شَافَ	شوف/IV	(null)/IVSUFF_SUBJ:1S	see	voir	ID=1736	S=83
+14	شويا	شويا	قَلِيل	شويا/NOUN_QUANT			some,_a_little_bit	ID=1405	S=70
+14	مالك	مالك	مابك?,مامشكلتك?	ل/PREP	ك/POSS_PRON	what's_wrong_with_you_?	Qu'est-ce_qui_ne_va_pas?	ID=12973	S=632
+14	يدي	يدي	يَد	يد/NOUN_CONCRETE	ي/POSS_PRON	hand	main	ID=4717	S=251
+14	ياه	ياه	مَعَه	يا/PREP	ه/PRON_3MS		with_him	ID=49	S=4
+13	منا	منا	مِنَا	من/PREP	نا/PRON_1P	from	à_partir_de	ID=1391	S=70
+13	فيهم	فيهم	فِيهُم	في/PREP	هم/POSS_PRON	among	parmi	ID=1283	S=64
+13	دايرة	دايرة	هَكَذا	داير/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	how_is_it	comment__elle_est	ID=1072	S=56
+13	سلعة	سلعة	سِلْعَة	سلع/NOUN_CONCRETE	ة/NSUFF_FEM_SG+(null)/CASE_INDEF_GEN	commodity	marchandise	ID=18322	S=848
+13	دي	دي	آداةالجَمْع	دي/FOREIGN			des_;x;-s	ID=5140	S=268
+13	اون	اون	فِي	اون/FOREIGN		in	en	ID=3484	S=199
+13	نورمال	نورمال	عادي	نورمال/FOREIGN		normal	normale	ID=6264	S=328
+13	داير	داير	هَكَذا	داير/NOUN_ACTIVE_PART		look_like	ressembler	ID=6418	S=333
+13	مام	مام	لَمَا	مام/FOREIGN		even	même	ID=881	S=46
+13	شي	شي	شَيْء	شي/NOUN	(null)/CASE_INDEF_NOM	something,_thing	quelque_chose,_chose	ID=249	S=16
+13	دارنا	دارنا	دَارنا	دار/NOUN_CONCRETE	نا/POSS_PRON	our_family	notre_famille	ID=10707	S=542
+13	@@Lاط@@ذ	@@Lاط@@ذ	نَ	@@Lاط@@ذ/TYPO			na	ID=1604	S=78
+13	اي	ايا	ثُمَّ	ايا/CONJ		then,afterwards,next,moreover	puis,_après,_ensuite	ID=9637	S=442
+13	قالو	قالو	قَالَ	قال/PV	و/PV SUFF_SUBJ :3MS	said	dis	ID=1238	S=62
+13	بلا	بلا	بِدون	لا/NEG_PART		no;not	non;_non	ID=6366	S=331
+13	جماعة	جماعة	جَمَاعَة	جماع/NOUN_CONCRETE	ة/NSUFF_FEM_SG+(null)/CASE_INDEF_GEN	group	groupe	ID=2148	S=99
+13	كيفاه	كيفاه	كَيف	كيفاه/INTERROG_PRON		how	comment	ID=1240	S=62
+13	قالهم	قالهم	قالَ	قال/PV	(null)/PVSUFF_SUBJ:3MS+هم/PVSUFF_DO:3MP	said,_told	dire	ID=314	S=20
+13	ب	ب	بِ	ب/PREP		with	avec	ID=3386	S=196
+13	خوك	خوك	أَخ	خو/NOUN_ABSTRACT	ك/POSS_PRON		frère;x;_brother	ID=1176	S=60
+13	لدار	لدار	دَار	دار/NOUN_CONCRETE	(null)/CASE_INDEF_(ACC_GEN)		house;home	ID=157	S=11
+13	دايمن	دايمن	دائما	دايمن/ADJ_QUALIT		always	toujours	ID=1177	S=60
+12	له	له	لِ	ل/PREP	ه/POSS_PRON	to,for_+_it,him	à;pour_cela;lui	ID=4429	S=239
+12	مليون	مليون	مِلْيُون	مليون/NOUN_NUM	(null)/CASE_DEF_GEN	million	million	ID=6046	S=319
+12	زين	زين	الجَمال	زين/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)	beauty	beauté	ID=2488	S=122
+12	روحه	روحه	نَفْسَه	روح/NOUN_ABSTRACT	ه/POSS_PRON	soul,_self	âme,_soi	ID=1475	S=72
+12	رجال	رجال	رَجُل	رجال/NOUN_CONCRETE		men	hommes	ID=8940	S=418
+12	شيرة	شيرة	البِنت	شير/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	girl	fille	ID=2305	S=107
+12	زواج	زواج	زَواج	زواج/NOUN_ABSTRACT		wedding	marriage	ID=1190	S=61
+12	يقولو	يقولو	قَالَ	قول/IV	و/IVSUFF_SUBJ:MP_MOOD:SJ	say	dire	ID=1707	S=82
+12	نروحو	نروحو	راحَ	روح/IV	و/IVSUFF_SUBJ:MP_MOOD:SJ		go	ID=1734	S=83
+12	تاعهم	تاعهم	هُم	تاع/PREP	هم/POSS_PRON	their	leur	ID=630	S=36
+12	معاكم	معاكم	مَعكم	معا/PREP	كم/POSS_PRON	with	avec	ID=1859	S=88
+12	مالكي	مالكي	مابِك	ما/INTERROG_PART	ل/PREP+كي/POSS_PRON	What's_your_problem	qu'est_ce_que_ta	ID=9083	S=422
+12	بوك	بوك	فَايْسبوك	بوك/NOUN_PROP_FOREIGN		facebook	facebook	ID=3915	S=217
+12	دعوة	دعوة	دَعْوَة	دعو/NOUN	ة/NSUFF_FEM_SG		(Islamic)_missionary_work;Da'wah;propaganda	ID=227	S=14
+12	زيد	زيد	زاد	زيد/CV	(null)/CVSUFF_SUBJ :2MS	more,_add	plus_,_ajouter	ID=6061	S=319
+12	علابالي	علابالي	أَعْرِف	بال/NOUN_ABSTRACT	ي/POSS_PRON	know	connaître	ID=16130	S=754
+12	معاها	معاها	مَعَها	معا/PREP	ها/POSS_PRON	with	avec	ID=6721	S=343
+12	تخدم	تخدم	تَعْمَل	خدم/IV	(null)/IVSUFF_SUBJ : 2MS	work	travailler	ID=1457	S=72
+12	10	10		10/DATE			10	ID=7064	S=354
+12	يقولها	يقولها	يَقُول	قول/IV	(null)/IVSUFF_SUBJ: 3MS +ها/IVSUFF_DO:3FS		said	ID=1198	S=61
+12	سيدي	سيدي	سَيِّد	سيد/ADJ_QUALIT	ي/POSS_PRON		Sir;Mr.;Mister	ID=2633	S=144
+11	داك	داك	ذ`لِكَ	داك/DEM_PRON		that	ce	ID=1764	S=85
+11	تعرف	تعرف	عَرَف	عرف/IV	(null)/IVSUFF_SUBJ: 3FS	know	connaître	ID=15680	S=730
+11	(	-		-/PUNC			-	ID=1624	S=78
+11	جاو	جاو	جاء	جا/PV	و/PVSUFF_SUBJ:3MP	came	venir	ID=97	S=8
+11	تعرفي	تعرفي	عَرَف	عرف/IV	ي/IVSUFF_SUBJ:2FS	know	connaître	ID=1120	S=58
+11	معانا	معانا	مَعَ	معا/PREP	نا/POSS_PRON_1P	with	avec	ID=324	S=20
+11	قبيلة	قبيلة	قَبِيلَة	قبيل/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	tribe	tribu	ID=17822	S=822
+11	اف	اف	اف	اف/ABBREV			f;x;_f	ID=13609	S=652
+11	يبغي	يبغي	أرَاد	بغي/IV	(null)/IVSUFF_SUBJ: 3MS	want,love	vouloir,_aimer	ID=1980	S=93
+11	مي	مي	لَكِن	مي/FOREIGN		but	mais	ID=4866	S=257
+11	حلال	حلال	حَلَال	حلال/NOUN_PROP		legitimate,_halal	légitime,_halal	ID=2986	S=164
+11	معنديش	معنديش	عِنْد	عند/NOUN	ي/POSS_PRON_1S+ش/NEG_PART	have	ont	ID=1948	S=91
+11	رحت	رحت	راحَ	رح/PV	ت/PVSUFF_SUBJ:1S	went	allé	ID=368	S=23
+11	شيخ	شيخ	شَيْخ	شيخ/NOUN_CONCRETE		sheikh;chieftain	sheikh,_chef_de_clan	ID=2528	S=127
+11	دوصيي	دوصيي	مِلَف	دوصيي/FOREIGN		file	dossier	ID=4018	S=221
+11	با	با	لَيْسَ	با/FOREIGN		not	pas	ID=5368	S=276
+11	تاكل	تأكل	أَكَلُ	أكل/IV	(null)/IVSUFF_MOOD:S	eat,consume	manger,consommer	ID=429	S=26
+11	ورقة	ورقة	وَرَقة	ورق/NOUN	ة/NSUFF_FEM_SG		paper;sheet	ID=390	S=24
+11	نشوفو	نشوفو	نَرَى	شوف/IV	و/IVSUFF_SUBJ:MP_MOOD:SJ		see,watch	ID=1078	S=57
+11	ريحة	ريحة	رائحة	ريح/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	smell	odeur	ID=1127	S=58
+10	الليل	الليل	لَيْل	ليل/NOUN_ABSTRACT		night	la_nuit	ID=1082	S=57
+10	نقول	نقول	قَال	قول/IV	(null)/IVSUFF_SUBJ:1S	say	dire	ID=11278	S=566
+10	هادوا	هادو	أولئك	هاد/DEM_PRON	و/POSS_PRON	those	ceux	ID=21448	S=983
+10	صغار	صغار	صِغَار	صغار/ADJ_QUALIT	(null)/CASE_DEF_GEN	children	enfants	ID=1076	S=57
+10	راسي	راسي	رَأْس	راس/NOUN_CONCRETE	ي/POSS_PRON	head	tête	ID=3138	S=181
+10	يدير	يدير	فَعَل	دير/IV	(null)/IVSUFF_SUBJ: 3MS		do,conduct	ID=1689	S=82
+10	نتزوج	نتزوج	تَزَوَّج	تزوج/IV	(null)/IVSUFF_SUBJ:1S		get_married	ID=533	S=31
+10	عايش	عايش	عائِش	عايش/NOUN_ACTIVE_PART		living	vivant	ID=1387	S=70
+10	صغيرة	صغيرة	صَغِيرة	صغير/ADJ_QUALIT	ة/NSUFF_FEM_SG	small_young	petit__jeune	ID=3304	S=193
+10	قناة	قناة	قَناة	قنا/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	channel	canal	ID=5075	S=266
+10	تلقاهم	تلقاهم	تَجِد	لقا/IV	(null)/IVSUFF_SUBJ : 2MS+هم/PVSUFF_DO:3MP	find	trouver	ID=6566	S=339
+10	تاعها	تاعها	لِ	تاع/PREP	ها/POSS_PRON		of	ID=4482	S=241
+10	بيكم	بيكم	بِكم	بي/PREP	كم/POSS_PRON	with_you	avec_vous	ID=7344	S=363
+10	نسقسيك	نسقسيك	سَأَلَ	سقسي/IV	(null)/IVSUFF_SUBJ:1S+ك/IVSUFF_DO:2MS		se_renseigner;x;_ask,inquire	ID=2798	S=151
+10	كرية	كرية	الكِرَاء	كري/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	rent	location	ID=13456	S=646
+10	جمال	جمال	جَمَال	جمال/NOUN_PROP		Jamal	Djamel	ID=13108	S=635
+10	فات	فات	فاتَ	فات/PV	(null)/PVSUFF_SUBJ:3MS		expire;go_by;pass_by	ID=2144	S=99
+10	فاتك	فاتك	فاتَ	فات/PV	(null)/PVSUFF_SUBJ:3MS+ك/PVSUFF_DO:2MS	surpass	dépasser	ID=9584	S=440
+10	نعطيك	نعطيك	أَعْطَى	عطي/IV	(null)/IVSUFF_SUBJ:1S+ك/IVSUFF_DO:2MS	give,provide	donner,fournir	ID=3437	S=198
+10	لقيت	لقيت	لَقِيَ	لقي/PV	ت/SUFF_FEM_TA	find	trouver	ID=3938	S=218
+10	نعم	نعم	نَعَم	نعم/YES_NO_RESP_PART		yes	oui	ID=15253	S=711
+10	ياك	ياك	حَقَّا	ياك/YES_NO_RESP_PART			right_?	ID=11	S=1
+10	قتلها	قتلها	قالَ	قت/PV	ت/PV SUFF_SUBJ :1S+ل/PREP+ها/POSS_PRON		said	ID=2085	S=96
+10	قتله	قتله	قال	قت/PV	(null)/PVSUFF_SUBJ:1S+ل/PREP+ه/POSS_PRON_3MS		said	ID=339	S=22
+10	قليل	قَليل	فَقِير	قَليل/ADJ_QUALIT	(null)/CASE_INDEF_(ACC_GEN)	poor,destitute	pauvre	ID=2043	S=95
+10	نموت	نموت	أموت	موت/IV	(null)/IVSUFF_SUBJ:1S		die	ID=883	S=46
+10	وحدها	وحدها	وَحْد	وحد/NOUN	(null)/CASE_DEF_NOM+ها/POSS_PRON_3FS	alone,only	seul,seulement	ID=207	S=13
+10	وهرانية	وهرانية	وَهرَانِيّة	وهران/NOUN_RELATIVE	ي/RELATIVE_YA+ة/NSUFF_FEM_SG	Oranian	oranaise	ID=2299	S=107
+10	لاباس	لاباس	لابَأْس	لاباس/NOUN_ABSTRACT		I'm_okay	Je_vais_bien	ID=820	S=44
+10	براس	براس	رَأْس	راس/NOUN_CONCRETE			tête;x;_head	ID=3072	S=175
+9	كيف	كيف	كِيف(اسمالعَائِلَةلِممثلة)	كيف/NOUN_PROP_FOREIGN		kaif_(_family_name_of_actress)	kaif_(_nom_de_famille_de_l'actrice)	ID=10752	S=544
+9	كيراك	كيراك	كِيفحَالَك	را/PRESENT_PART	ك/POSS_PRON	how_are_you-doing?	Comment_allez_vous?	ID=1482	S=73
+9	كلش	كلش	كُلّشَيْء	كلش/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)		everything,	ID=535	S=31
+9	نفهمك	نفهمك	فَهَّمَ	فهم/IV	(null)/IVSUFF_SUBJ:1S+ك/IVSUFF_DO:2MS	understand	comprendre	ID=11891	S=591
+9	مك	مك	أُمّك	م/NOUN_CONCRETE	ك/POSS_PRON	mother	mère	ID=20509	S=933
+9	نزيد	نزيد	أَضَافَ	زيد/IV	(null)/IVSUFF_SUBJ:1S	add	ajouter	ID=2580	S=135
+9	ولات	ولات	صَار	ولا/PV	ت/PV SUFF_SUBJ :3FS		become;begin_to	ID=491	S=30
+9	ماكنش	ما_كنش	ماكان	كن/PV	ش/NEG_PART	was,were	était,_étaient	ID=866	S=46
+9	شاه	شاه	مَاذاهو	شا/INTERROG_PART	ه/POSS_PRON	what	quoi	ID=9333	S=428
+9	فوهران	فوهران	وَهرَان	وهران/NOUN_PROP		Oran	Oran	ID=3120	S=180
+9	نخدم	نخدم	أَعْمَل	خدم/IV	(null)/IVSUFF_SUBJ:1S	work	travail	ID=3010	S=168
+9	لكم	لكم	لَكُم	ل/PREP	كم/PRON_2MP		to;for_+_you_[masc.pl.]_(you_have)	ID=11078	S=557
+9	بلع	بلع	اصمت	بلع/CV	(null)/CVSUFF_SUBJ :2MS	shut_your_mouth	ferme_ta_bouche	ID=12993	S=633
+9	لوهران	لوهران	وهران	وهران/NOUN_PROP		Oran	Oran	ID=1411	S=70
+9	طلع	طلع	طَلَعَ	طلع/PV	(null)/PV SUFF_SUBJ :3MS	go_up	monter	ID=1915	S=90
+9	بلاصة	بلاصة	مَكَان	بلاص/FOREIGN	ة/NSUFF_FEM_SG	place	place	ID=6958	S=351
+9	دونك	دونك	إذن	دونك/FOREIGN		so	donc	ID=5295	S=273
+9	تفضل	تفضل	تَفَضَّل	تفضل/CV	(null)/CVSUFF_SUBJ :2MS	come_in	entrez	ID=13172	S=637
+9	عرس	عرس	عُرْس	عرس/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)	wedding	marriage	ID=3192	S=187
+9	وحدين	وحدين	أَشْخَاص	وحد/NOUN	ين/NSUFF_MASC_PL_GEN	some_people	certaines_personnes	ID=5266	S=273
+9	منها	منها	مِن	من/PREP	ها/PRON_3FS	from	de	ID=265	S=17
+9	تالية	تالية	الأخيرة	تالي/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG+(null)/CASE_INDEF_(ACC_GEN)	last	le_dernier	ID=3438	S=198
+9	خرجت	خرجت	خَرَج	خرج/PV	ت/PV SUFF_SUBJ :1S	go_out	sortir	ID=719	S=39
+9	بيان	بيان	جَيِّد	بيان/FOREIGN		good	bien	ID=3529	S=202
+9	مول	مول	صاحِب	مول/NOUN_ABSTRACT		owner	propriétaire	ID=1547	S=75
+9	فرونسي	فرونسي	فَرِنْسِي	فرونسي/FOREIGN		French	Français	ID=1849	S=88
+9	شعب	شعب	الشَعْب	شعب/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)	people,nation	peuple	ID=1979	S=93
+9	شيرات	شيرات	البَنَات	شير/NOUN_ABSTRACT	ات/NSUFF_FEM_PL		girls	ID=2830	S=152
+9	تلقى	تلقى	تَجِد	تلقى/IV	(null)/IVSUFF_SUBJ : 2MS	find	trouver	ID=9392	S=431
+9	قالولي	قالولي	قَال	قال/PV	و/PVSUFF_SUBJ:3MP+ل/PREP+ي/POSS_PRON	said	dire	ID=3984	S=220
+8	عشية	عشية	العَشِيَّة	عشي/NOUN_ABSTRACT	ة/NSUFF_FEM_SG	evening	Soir	ID=3610	S=205
+8	تشوفي	تشوفي	شَافَ	شوف/IV	ي/IVSUFF_SUBJ:2FS	see	voir	ID=7785	S=378
+8	حمار	حمار	حِمَار	حمار/NOUN_CONCRETE	(null)/CASE_DEF_GEN	donkey	âne	ID=22000	S=1019
+8	خالتي	خالتي	خَاَلة	خال/NOUN_ACTIVE_PART	ت/NSUFF_FEM_SG+ي/POSS_PRON	maternal_aunt	tante_maternelle	ID=5998	S=315
+8	للبحر	للبحر	البَحر	بحر/NOUN_CONCRETE	(null)/CASE_DEF_GEN	sea	mer	ID=1436	S=71
+8	هود	هود	هود	هود/NOUN_PROP_FOREIGN			houd	ID=1093	S=57
+8	نقعد	نقعد	أقعَدُ	قعد/IV	(null)/IVSUFF_SUBJ:1S	stay	rester	ID=707	S=39
+8	جايين	جايين	قَادِمِين	جاي/NOUN_ACTIVE_PART	ين/NSUFF_MASC_PL_GEN	come	venir	ID=11112	S=558
+8	عريس	عريس	العَرِيس	عريس/NOUN_CONCRETE		the_groom	le_marié	ID=8774	S=414
+8	يا ا	يا	يَا	يا/VOC_PART		oh,you	Oh,_vous	ID=12328	S=609
+8	عندهم	عندهم	عِنْد	عند/ADV	هم/POSS_PRON	have	ont	ID=15818	S=737
+8	هيا	هيا	هِيَ	هيا/PRON_3FS		it,she	il,elle	ID=5017	S=263
+8	غاشي	غاشي	ناس	غاشي/NOUN		people	gens	ID=98	S=8
+8	خص	خص	يَحْتَاج	خص/PV	(null)/PV SUFF_SUBJ :3MS	need	avoir_besoin	ID=9751	S=459
+8	تقولي	تقول	تَقُول	قول/IV	(null)/IVSUFF_SUBJ : 2MS	say	dire	ID=3721	S=209
+8	سنين	سنين	سِنّ	سن/ADJ_QUALIT	ين/NSUFF_MASC_PL_ACC	teeth	les_dents	ID=1826	S=87
+8	يقولوا	يقولوا	قالَ	قول/IV	وا/IVSUFF_SUBJ:3MP	say,_tell	dire	ID=355	S=22
+8	ادي	ادي	أَدَّى	ادي/CV	(null)/CVSUFF_SUBJ :2MS	do	faire	ID=14411	S=680
+8	قضية	قضية	قَضِيَّة	قضي/NOUN_ABSTRACT	ة/NSUFF_FEM_SG+(null)/CASE_DEF_GEN	problem	problème	ID=3265	S=191
+8	بلعي	بلع	اصمت	بلع/CV	(null)/CVSUFF_SUBJ :2MS	shut_your_mouth	ferme_ta_bouche	ID=19007	S=876
+8	حال	حال	حَال	حال/NOUN_ABSTRACT	(null)/CASE_INDEF_(ACC_GEN)		day	ID=90	S=7
+8	باغيين	باغيين	رَاغِب	باغي/NOUN_ACTIVE_PART	ين/NSUFF_MASC_PL_ACC	want,desire	vouloir	ID=4411	S=238
+8	ا	ا	يَا	ا/VOC_PART		oh	oh	ID=2631	S=144
+8	قالوله	قالوله	قَالَ	قال/PV	و/PVSUFF_SUBJ:3MP+ل/PREP+ه/PVSUFF_DO:3MS	said	dire	ID=172	S=12
+8	ولي	ولي	اِرْجَع	ولي/CV	(null)/CVSUFF_SUBJ :2MS	return	retourner	ID=4900	S=258
+8	كاينة	كاينة	هُناكَ	كاين/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	There_is	il_y_a	ID=11721	S=585
+8	زينو	زينو	زِينُو	زينو/NOUN_PROP		zino	zinou	ID=5673	S=289
+8	بون	بون	حسنا	بون/FOREIGN		well	bon	ID=993	S=51
+8	مصطفى	مصطفى	مُصْطَفى	مصطفى/NOUN_PROP		mustafa	mustapha	ID=5675	S=289
+8	بزوز	بزوز	بَزْر(أطْفَالالصِغَار)	بزوز/NOUN_CONCRETE		kids	les_enfants	ID=7125	S=355
+8	بنعمي	بنعمي	ياإلهي	بنعمي/INTERJ		god!	mon_dieu	ID=75	S=6
+8	عبد	عبد	عَبْد	عبد/NOUN_CONCRETE	(null)/CASE_INDEF_(ACC_GEN)		Humain;x;_mankind	ID=5007	S=263
+8	نعرف	نعرف	عَرَفَ	عرف/IV	(null)/IVSUFF_SUBJ:1S	know	connais	ID=11250	S=566
+8	نخرج	نخرج	خَرَجَ	خرج/IV	(null)/IVSUFF_SUBJ:1S	go_out,_leave	sortir,_partir	ID=4490	S=242
+8	باينة	باينة	وَاضِحَة	باين/NOUN_ACTIVE_PART	ة/NSUFF_FEM_SG	obvious,_clear	évidente,_claire	ID=2857	S=154
+8	اسكت	اسكت	اُسْكُت	اسكت/CV	(null)/CVSUFF_SUBJ :2MS	Shut_up	Fermez-la	ID=18068	S=833
+8	دليلة	دليلة	دَلِيلة	دليلة/NOUN_PROP		dalila	dalila	ID=2762	S=150
+8	يسلمك	يسلمك	يُسَلِم	سلم/IV	(null)/IVSUFF_SUBJ: 3MS +ك/IVSUFF_DO:2MS	thank_you	remercie	ID=2946	S=161
+8	بروبلام	بروبلام	مُشْكِل	بروبلام/FOREIGN		problem	problème	ID=3108	S=179
+8	دكتور	دكتور	دُكْتُور	دكتور/FOREIGN	(null)/CASE_DEF_NOM	doctor	docteur	ID=9393	S=431
+8	بيا	بيا	بِي	بي/PREP	ا/POSS_PRON	with	avec	ID=13759	S=656
+8	جزايري	جزايري	جَزائِرِيّ	جزاير/NOUN_RELATIVE	ي/RELATIVE_YA	Algerian	Algérien	ID=2474	S=122
+8	داها	داها	أَخَدَ	دا/PV	(null)/PVSUFF_SUBJ:3MS+ها/PVSUFF_DO:3FS	take	prendre	ID=163	S=12
+8	دخلوا	دخلو	دَمَجَ	دخل/PV	و/PVSUFF_SUBJ:3MP	to_integrate	intégrer	ID=25540	S=1164
+8	يقولك	يقولك	يَقُوللك	قول/IV	(null)/IVSUFF_SUBJ: 3MS +ل/PREP+ك/POSS_PRON	say,_tell	dire	ID=1107	S=57
+8	سبع	سبع	الأَسَد	سبع/NOUN_CONCRETE		lion	lion	ID=15522	S=722
+8	نخاف	نخاف	أخَاف	خاف/IV	(null)/IVSUFF_SUBJ:1S	be_scared,be_worried_(of)	avoir_peur,_s'inquiéter_(de)	ID=2838	S=152
+8	6	6		6/NUMBER		6	6	ID=5345	S=275
+8	ارواح	ارواح	تَعَال	ارواح/CV	(null)/CVSUFF_SUBJ :2MS		come,_let's	ID=1456	S=72
+8	مساكين	مساكين	مِسْكِين	مساك/ADJ_INTENS	ين/NSUFF_MASC_PL_GEN	poor,_miserable	pauvre,_misérable	ID=8442	S=402
+8	مكان	مكان	كَان	كان/PV	(null)/PV SUFF_SUBJ :3MS		be,was,were	ID=799	S=43
+8	الحمد	الحمد	حَمْد	حمد/GERUND		commendation,_praise	éloge,_louange	ID=6742	S=344
+8	عليهم	عليهم	عَلَى	علي/PREP	هم/PRON_3MP	on_them	sur_eux	ID=5257	S=272
+8	لنا	لنا	لِ	ل/PREP	نا/PRON_1P	to,_for_+_us	à,_pour_nous	ID=16550	S=771
+8	يهدروا	يهدروا	يَتَكَلَّم	هدر/IV	وا/IVSUFF_SUBJ:MP_MOOD:SJ	speak	parler	ID=5414	S=279
+7	وخداخور	وخداخور	وخُدآخَر	وخداخور/ADJ_QUALIT		other	autre	ID=1640	S=79
+7	طاح	طاح	وَقَعَ	طاح/PV	(null)/PV SUFF_SUBJ :3MS	fall_down,_take_place	tomber,_avoir_lieu	ID=3836	S=213
+7	تاعكم	تاعكم	لَكُم	تاع/PREP	كم/POSS_PRON	to_you	à_toi	ID=5581	S=284
+7	50	50		50/NUMBER			50	ID=1836	S=87
+7	)	)	)	)/PUNC			)	ID=1627	S=78
+7	وحده	وحده	وَحْدَه	وحد/NOUN_ABSTRACT	ه/POSS_PRON	alone	seul	ID=10693	S=542
+7	قعدوا	قعدوا	قَعَدَ	قعد/PV	وا/PVSUFF_DO:3MP	keep	continuer	ID=759	S=41

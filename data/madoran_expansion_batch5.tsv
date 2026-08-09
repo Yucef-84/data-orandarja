@@ -1,0 +1,65 @@
+id	cefr	topic	arabic	source_form	latin	ko	en	kind	marker_type	oran_marker	evidence	status	source_id	source_locator	note
+OD-0369	A1	function	عند	عند	3and	~에; ~에게	at; to	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 301; sentence 19	위치·소유 구문에 사용
+OD-0370	A1	verbs	كان	كان	kan	그는 ~였다	he was	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 89; sentence 7	MADOran PV subject 3MS
+OD-0371	A1	verbs	قال	قال	qal	그는 말했다	he said	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 702; sentence 39	MADOran PV subject 3MS
+OD-0372	A1	verbs	يقول	يقول	yqul	그는 말한다	he says; tells	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2165; sentence 100	MADOran y/IV3MS
+OD-0373	A1	places	وهران	وهران	wahran	오랑	Oran	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1393; sentence 70	도시명
+OD-0374	A1	verbs	دير	دير	dir	해!	do!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 342; sentence 22	표면형 기준 2인칭 남성 명령형; 원 코퍼스 형태주석 3FS와 충돌
+OD-0375	A1	family	خويا	خويا	khuya	내 형제; 친구	my brother; mate	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1166; sentence 59	친근한 호칭 가능
+OD-0376	A1	verbs	تشوف	تشوف	tchuf	너는 본다(남성)	you see (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1412; sentence 70	MADOran t/IV2MS
+OD-0377	A1	verbs	كنا	كنا	kna	우리는 ~였다	we were	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1075; sentence 57	MADOran PV subject 1P
+OD-0378	A1	verbs	نهدر	نهدر	nehder	나는 말한다	I speak; talk	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2919; sentence 156	MADOran n/IV1S
+OD-0379	A1	verbs	يروح	يروح	yru7	그는 간다	he goes	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1559; sentence 76	MADOran y/IV3MS
+OD-0380	A1	verbs	تكون	تكون	tkun	그녀는 ~이다	she is	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3589; sentence 204	MADOran t/IV3FS
+OD-0381	A1	verbs	تبغي	تبغي	tbghi	너는 원한다(남성)	you want (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 283; sentence 19	MADOran t/IV2MS
+OD-0382	A1	verbs	يجي	يجي	yji	그는 온다	he comes	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1450; sentence 72	MADOran y/IV3MS
+OD-0383	A1	daily	حاجة	حاجة	7aja	물건; 것	thing	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 361; sentence 22	
+OD-0384	A1	people	ناس	ناس	nas	사람들	people	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 128; sentence 9	집합 명사
+OD-0385	A1	quantity	كل	كل	kul	모든; 각각의	all; every	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 248; sentence 16	
+OD-0386	A1	shopping	دراهم	دراهم	drahem	돈; 디르함	money; dirhams	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1383; sentence 70	복수·집합형
+OD-0387	A1	verbs	تجيب	تجيب	tjib	너는 가져온다(남성)	you bring (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 457; sentence 29	MADOran t/IV2MS
+OD-0388	A1	verbs	ندي	ندي	ndi	나는 가져간다	I take	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 262; sentence 17	MADOran n/IV1S
+OD-0389	A1	function	تاني	تني	tani	또한; 또	also; again	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 18794; sentence 866	MADOran diac=تاني로 정규화
+OD-0390	A1	family	ختي	ختي	khti	내 자매	my sister	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2656; sentence 145	1인칭 소유 접미사
+OD-0391	A1	state	رانا	رنا	rana	우리는 ~이다	we are	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2060; sentence 95	MADOran diac=رانا; 1인칭 복수
+OD-0392	A2	verbs	تزيد	تزيد	tzid	너는 계속한다(남성)	you continue (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 177; sentence 12	MADOran t/IV2MS
+OD-0393	A2	daily	هدرة	هدرة	hedra	말; 이야기	speech; talk	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 836; sentence 45	
+OD-0394	A1	verbs	تعطي	تعطي	t3ti	너는 준다(남성)	you give (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6053; sentence 319	MADOran t/IV2MS
+OD-0395	A2	function	زعما	زعما	za3ma	그러니까; 이를테면; 내 말은	I mean; like; supposedly	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1988; sentence 94	문맥 의존 다의적 담화 표지
+OD-0396	A1	verbs	جيت	جيت	jit	나는 왔다	I came; arrived	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 585; sentence 34	MADOran PV subject 1S
+OD-0397	A1	verbs	تدخل	تدخل	tdkhol	그녀는 들어간다	she enters	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10551; sentence 534	MADOran t/IV3FS
+OD-0398	A1	time	خطرة	خطرة	khatra	한 번	once	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 142; sentence 10	
+OD-0399	A2	verbs	يقد	يقد	yqed	그는 할 수 있다	he can	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9353; sentence 429	MADOran y/IV3MS
+OD-0400	A1	verbs	تخرج	تخرج	tkhrej	너는 나간다(남성)	you go out (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1000; sentence 51	MADOran t/IV2MS
+OD-0401	A1	number	وحدة	وحدة	wa7da	하나(여성형)	one (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2365; sentence 110	여성형 수사
+OD-0402	A1	verbs	درت	درت	dert	나는 했다	I did	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 712; sentence 39	MADOran PV subject 1S
+OD-0403	A1	family	ولدي	ولدي	weldi	내 아들	my son	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1498; sentence 73	1인칭 소유 접미사
+OD-0404	A1	verbs	شفت	شفت	cheft	너는 봤다(남성)	you saw (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10; sentence 1	MADOran PV subject 2MS
+OD-0405	A1	state	باغية	باغية	baghya	그녀는 원한다	she wants	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4489; sentence 242	여성 단수 능동분사
+OD-0406	A1	verbs	بغيت	بغيت	bghit	나는 원했다	I wanted	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 30; sentence 3	MADOran PV subject 1S
+OD-0407	A1	verbs	خلي	خلي	khalli	놔둬!; 허락해!	let!; leave!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1819; sentence 86	MADOran CV subject 2MS
+OD-0408	A1	greeting	سلام	سلام	slam	평화; 안녕	peace; hello	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1479; sentence 73	인사 의미는 문맥 의존
+OD-0409	A1	verbs	جاب	جاب	jab	그는 가져왔다	he brought; got	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 570; sentence 33	MADOran PV subject 3MS
+OD-0410	A1	verbs	قول	قول	gul	말해!	tell!; say!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1448; sentence 72	MADOran CV subject 2MS
+OD-0411	A1	verbs	ياكل	ياكل	yakel	그는 먹는다	he eats	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1981; sentence 93	MADOran y/IV3MS
+OD-0412	A1	verbs	يلقا	يلقا	ylqa	그는 찾는다	he finds	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6611; sentence 340	MADOran y/IV3MS
+OD-0413	A1	politeness	معليش	معليش	ma3lich	괜찮아	it is okay	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1546; sentence 75	
+OD-0414	A2	daily	حق	حق	7aqq	진실; 권리	truth; right	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2029; sentence 95	문맥별 의미
+OD-0415	A1	school	كلمة	كلمة	kelma	단어	word	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3687; sentence 207	
+OD-0416	A2	verbs	تتزوج	تتزوج	tetzawaj	그녀는 결혼한다	she gets married	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2764; sentence 150	MADOran t/IV3FS
+OD-0417	A1	people	شير	شير	chir	소년	boy	word	lexicon	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2308; sentence 107	Oran 지역 어휘
+OD-0418	A1	state	رايح	رايح	raye7	가는 중인(남성)	going (masculine)	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5856; sentence 307	남성 단수 능동분사
+OD-0419	A1	verbs	نعيط	نعيط	n3ayet	나는 전화한다; 부른다	I call	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4085; sentence 224	MADOran n/IV1S
+OD-0420	A1	time	مازال	مازال	mazal	아직; 여전히	still	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 91; sentence 7	
+OD-0421	A2	emotion	خاطر	خاطر	khater	마음; 생각	mind; thought	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12520; sentence 617	단독 명사 표제어
+OD-0422	A2	verbs	نولي	نولي	nwelli	나는 ~이 된다	I become	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4446; sentence 239	MADOran n/IV1S
+OD-0423	A1	food	قهوة	قهوة	qahwa	커피	coffee	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 63; sentence 5	
+OD-0424	A1	places	بلاد	بلاد	blad	나라	country	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9539; sentence 438	
+OD-0425	A1	verbs	اسمع	اسمع	esma3	들어!	listen!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9575; sentence 440	MADOran CV subject 2MS
+OD-0426	A2	daily	حياة	حياة	7ayat	삶	life	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6601; sentence 339	
+OD-0427	A1	verbs	نسمع	نسمع	nsem3	나는 듣는다	I hear	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 835; sentence 45	MADOran n/IV1S
+OD-0428	A1	verbs	تحطي	تحطي	t7otti	너는 놓는다(여성)	you put (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 19368; sentence 890	MADOran t/IV2FS
+OD-0429	A1	verbs	يسكن	يسكن	yesken	그는 산다; 거주한다	he resides; lives	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1728; sentence 83	MADOran y/IV3MS
+OD-0430	A2	verbs	صرا	صرا	sra	일어났다; 발생했다	happened	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4626; sentence 247	MADOran PV subject 3MS
+OD-0431	A1	family	بابا	بابا	baba	아빠	dad	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4148; sentence 227	
+OD-0432	A2	daily	صوالح	صوالح	swale7	물건들; 일들; 볼일	things; affairs; errands	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8882; sentence 416	복수·집합형; 문맥별 의미

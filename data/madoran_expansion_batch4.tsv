@@ -1,0 +1,65 @@
+id	cefr	topic	arabic	source_form	latin	ko	en	kind	marker_type	oran_marker	evidence	status	source_id	source_locator	note
+OD-0305	A1	function	في	في	fi	~에; ~안에	in	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10000; sentence 496	전치사
+OD-0306	A1	function	ما	ما	ma	~않다	not	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10012; sentence 499	부정 표지
+OD-0307	A1	function	و	و	w	그리고; ~와	and	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 20507; sentence 933	접속사
+OD-0308	A1	function	من	من	men	~에서; ~부터	from	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10072; sentence 507	전치사
+OD-0309	A1	function	كي	كي	ki	~할 때	when	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1; sentence 1	접속사
+OD-0310	A1	function	غير	غي	ghir	오직; 단지	only; just	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11431; sentence 574	source_form غي를 표제 철자 غير로 정규화
+OD-0311	A1	function	على	على	3la	~위에; ~에	on	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10057; sentence 505	전치사
+OD-0312	A1	function	مع	مع	m3a	~와 함께	with	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10092; sentence 509	전치사
+OD-0313	A1	function	تاع	تاع	ta3	~의	of	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10307; sentence 524	소유·속격 표지
+OD-0314	A1	function	باش	بش	bach	~하기 위해; ~하도록	so that; in order to	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13809; sentence 658	source_form بش를 표제 철자 باش로 정규화
+OD-0315	A1	function	اللي	اللي	lli	~하는 사람; ~인 것	who; that; which	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12269; sentence 605	관계대명사
+OD-0316	A1	function	حتى	حتى	7tta	~까지	until; up to	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10052; sentence 504	전치사
+OD-0317	A2	function	بلي	بلي	belli	~라고; ~라는 것	that	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11164; sentence 562	종속절 표지
+OD-0318	A1	function	ماشي	ماشي	machi	~이 아니다	not; is not	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12087; sentence 599	명사·형용사 부정
+OD-0319	A2	function	قاع	قاع	ga3	전혀 ~않다	at all	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10888; sentence 549	강조 부정 문맥
+OD-0320	A1	function	هاك	هاك	hak	이렇게	this way; like this	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10749; sentence 544	
+OD-0321	A1	politeness	حمبوك	حمبوك	7embuk	제발	please	word	lexicon	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1008; sentence 52	부탁 표현
+OD-0322	A1	function	بصح	بس	bsa7	하지만	but; however	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12864; sentence 629	source_form بس를 MADOran diac بصح에 따라 정규화
+OD-0323	A1	function	ولا	ولا	wella	또는	or	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10083; sentence 508	접속사
+OD-0324	A2	function	تسما	تسما	tsema	그러니까; 그래서	so; therefore	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11039; sentence 555	담화 연결어
+OD-0325	A1	time	بكري	بكري	bekri	일찍	early	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10346; sentence 526	
+OD-0326	A2	function	بلاك	بلاك	belak	아마; 어쩌면	perhaps; maybe	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14150; sentence 671	
+OD-0327	A1	position	هنايا	هنايا	hnaya	여기	here	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12031; sentence 597	
+OD-0328	A1	position	تما	تما	temma	거기	there	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13338; sentence 643	
+OD-0329	A2	function	باه	باه	bah	~하기 위해	to; in order to	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10637; sentence 538	목적 접속사
+OD-0330	A1	position	وراه	وراه	wrah	그의 뒤에	behind him	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9725; sentence 453	3인칭 남성 접미사 포함
+OD-0331	A2	function	اذا	اذا	ida	만약	if	word	grammar	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12322; sentence 608	조건 표지
+OD-0332	A2	function	وقيلا	وقيلا	wgila	아마	perhaps; maybe	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11285; sentence 566	
+OD-0333	A1	position	تماك	تماك	temmak	저기	there	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13213; sentence 639	
+OD-0334	A1	position	قدامك	قدامك	qddamek	네 앞에	in front of you	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11914; sentence 592	2인칭 남성 접미사 포함
+OD-0335	A2	manner	بشوية	بشوية	bchwiyya	천천히	slowly	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16627; sentence 775	
+OD-0336	A1	questions	وينتا؟	وينت	winta?	언제?	when?	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15385; sentence 715	MADOran diac=وينتا; 문장부호는 교육용
+OD-0337	A2	calendar	نوفمبر	نوفمبر	nufember	11월	November	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 26020; sentence 1177	
+OD-0338	A2	calendar	ديسمبر	ديسمبر	disember	12월	December	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13441; sentence 646	
+OD-0339	A1	places	بونك	بونك	bonk	은행	bank	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16590; sentence 773	
+OD-0340	A1	work	بيرو	بيرو	biro	사무실	office	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 4568; sentence 245	
+OD-0341	A2	work	وزين	وزين	uzin	공장	factory	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 21956; sentence 1015	프랑스어 usine 계열
+OD-0342	A2	work	فيرما	فيرما	firma	농장	farm	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 21950; sentence 1015	
+OD-0343	A1	nature	شمس	فشمس	chems	태양	sun	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1870; sentence 89	source_form의 f/PREP를 제거해 표제화
+OD-0344	A2	nature	سما	لسما	sma	하늘	sky	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 3075; sentence 175	source_form의 정관사를 제거해 표제화
+OD-0345	A1	nature	بحر	بحر	b7ar	바다	sea	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10691; sentence 542	
+OD-0346	A1	nature	شجرة	شجرة	chajra	나무	tree	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 22208; sentence 1031	
+OD-0347	A1	nature	ورد	ورد	ward	꽃	flower	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16293; sentence 760	
+OD-0348	A1	animals	حيوان	الحيوان	7ayawan	동물	animal	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9540; sentence 438	source_form의 정관사를 제거해 표제화
+OD-0349	A1	animals	كلاب	كلاب	klab	개들	dogs	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 23602; sentence 1086	복수형
+OD-0350	A1	animals	قط	قط	qett	고양이	cat	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 24231; sentence 1106	Latin은 학습용 정규화
+OD-0351	A1	animals	حويتات	حويتات	7witat	작은 물고기들	small fish; fishes	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 26792; sentence 1204	지소 복수형
+OD-0352	A2	animals	عود	عود	3ud	말	horse	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13069; sentence 634	다의어이므로 동물 문맥 한정
+OD-0353	A1	food	دجاج	دجاج	djaj	닭; 닭고기	chicken	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13021; sentence 633	
+OD-0354	A1	food	روز	روز	ruz	쌀	rice	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13030; sentence 633	
+OD-0355	A1	food	زيت	زيت	zit	기름	oil	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7406; sentence 365	
+OD-0356	A1	food	تمر	تمر	tmar	대추야자	dates	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8868; sentence 416	과일 집합형
+OD-0357	A1	food	بنان	بنان	banan	바나나	banana	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10415; sentence 528	
+OD-0358	A1	food	بصل	بصل	bsel	양파	onion	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7435; sentence 366	
+OD-0359	A1	food	كروطة	كروطة	karota	당근	carrot	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 7465; sentence 367	단수 표제형
+OD-0360	A1	weather	باردة	باردة	barda	차가운(여성형)	cold (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 19376; sentence 890	여성 단수형
+OD-0361	A2	emotion	ينخلع	ينخلع	yenkhle3	그는 놀란다; 겁먹는다	he gets surprised; frightened	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16487; sentence 768	MADOran passive IV
+OD-0362	A2	school	عبرة	عبرة	3ebra	교훈	lesson; moral	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5970; sentence 313	학교 수업보다 교훈 의미
+OD-0363	A1	school	بابيي	ببابيي	papyi	종이	paper	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2480; sentence 122	source_form의 b/PREP를 제거해 표제화
+OD-0364	A1	school	ماركار	ماركار	markar	마커펜	marker pen	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 6380; sentence 332	
+OD-0365	A2	school	معلمات	المعلمات	m3allmat	여교사들	female teachers	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 29864; sentence 1318	source_form의 정관사를 제거; 여성 복수
+OD-0366	A1	emotion	فرحت	فرحت	far7et	그녀는 기뻤다	she was happy	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 485; sentence 30	MADOran feminine suffix
+OD-0367	A2	emotion	منارفية	منارفية	mnervya	화난(여성형)	angry (feminine)	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11884; sentence 590	프랑스어 énervée 계열
+OD-0368	A2	emotion	عكلي	عكلي	3akli	못생긴	ugly	word	loanword	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 26389; sentence 1190	코퍼스 외형 평가 용례

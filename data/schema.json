@@ -1,0 +1,25 @@
+{
+  "dataset": "oran_darija_a1_starter",
+  "version": "0.1.0",
+  "encoding": "UTF-8",
+  "delimiter": "tab",
+  "primary_key": "id",
+  "fields": {
+    "id": "OD-0001 형식의 고유 ID",
+    "cefr": "A1 또는 A2",
+    "topic": "학습 주제",
+    "arabic": "아랍 문자 Darija",
+    "source_form": "직접 확인 항목의 원자료 대응형. 조합 항목은 빈 문자열",
+    "latin": "학습용 정규화 ASCII 전사",
+    "ko": "한국어 뜻",
+    "en": "영어 뜻",
+    "kind": "word | phrase | pattern",
+    "marker_type": "phonology | grammar | lexicon | none | uncertain",
+    "oran_marker": "Oran 지역성의 구체적 근거. 없으면 common",
+    "evidence": "CORVAM_DIRECT | ORAN_STUDY | ALGERIAN_COMMON | PEDAGOGICAL_COMPOSED",
+    "status": "attested | study_backed | native_review_required | disputed",
+    "source_id": "SOURCES.md의 출처 ID",
+    "source_locator": "녹음 전사 구간, 연구 절/쪽 등 확인 위치",
+    "note": "변이·사용상 주의"
+  }
+}

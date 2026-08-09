@@ -1,0 +1,65 @@
+id	cefr	topic	arabic	source_form	latin	ko	en	kind	marker_type	oran_marker	evidence	status	source_id	source_locator	note
+OD-0129	A1	people	انا	انا	ana	나	I	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10924; sentence 551	독립 주격 1인칭 단수
+OD-0130	A1	people	نتا	نتا	nta	너(남성)	you (masculine singular)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10629; sentence 538	2인칭 남성 단수
+OD-0131	A1	people	نتي	نتي	nti	너(여성)	you (feminine singular)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10773; sentence 545	2인칭 여성 단수
+OD-0132	A1	people	هو	هو	hwa	그	he	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10758; sentence 544	huwa 변이 가능
+OD-0133	A1	people	هي	هي	hiya	그녀	she	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11086; sentence 557	
+OD-0134	A1	people	حنا	حنا	7na	우리	we; us	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10695; sentence 542	
+OD-0135	A1	people	نتوما	نتوما	ntuma	너희	you (plural)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11104; sentence 558	
+OD-0136	A1	people	هوما	هوما	huma	그들	they	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 17914; sentence 827	
+OD-0137	A1	demonstrative	هاد	هاد	had	이; 이~	this; this ~	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11082; sentence 557	주로 명사 앞 근칭 한정형
+OD-0138	A1	demonstrative	هادي	هادي	hadi	이것(여성형)	this (feminine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10309; sentence 524	
+OD-0139	A1	demonstrative	هادو	هادو	hadu	이것들	these	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13908; sentence 663	
+OD-0140	A1	demonstrative	هداك	هداك	hdak	저것(남성형)	that (masculine)	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10583; sentence 536	
+OD-0141	A1	questions	شكون؟	شكون	chkun?	누구?	who?	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12989; sentence 632	문장부호는 교육용 추가
+OD-0142	A1	questions	وين؟	وين	win?	어디?	where?	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12116; sentence 600	문장부호는 교육용 추가
+OD-0143	A1	questions	علاه؟	عله	3lah?	왜?	why?	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10812; sentence 547	source_form عله를 표제 철자 علاه로 정규화
+OD-0144	A1	questions	شعال؟	شعال	ch3al?	얼마나; 몇?	how much; how many?	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 101; sentence 8	문장부호는 교육용 추가
+OD-0145	A1	family	ولد	ولد	weld	아이; 아들	child; son	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10009; sentence 498	
+OD-0146	A1	family	بنت	بنت	bent	딸; 여자아이	daughter; girl	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14152; sentence 671	
+OD-0147	A1	family	ماما	ماما	mama	엄마	mother; mom	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 16182; sentence 756	
+OD-0148	A1	people	راجل	راجل	rajel	남자	man	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 14829; sentence 694	남편 의미는 문맥 의존
+OD-0149	A1	body	يد	يد	yed	손	hand	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10179; sentence 516	
+OD-0150	A1	body	عين	عين	3in	눈	eye	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10001; sentence 496	
+OD-0151	A1	body	فم	فم	femm	입	mouth	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 29603; sentence 1309	Latin은 학습용 정규화; 정확한 모음값은 음성 검수 대상
+OD-0152	A1	body	وجه	وجه	wejh	얼굴	face	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11964; sentence 594	앞면 의미는 문맥 의존
+OD-0153	A1	home	دار	دار	dar	집; 가정	house; home	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10200; sentence 519	
+OD-0154	A1	home	باب	باب	bab	문; 출입구	door; gate	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12586; sentence 619	
+OD-0155	A1	time	دروك	دروك	drok	지금	now	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10935; sentence 551	
+OD-0156	A1	time	ليوم	ليوم	lyum	오늘	today	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1488; sentence 73	
+OD-0157	A1	time	غدوة	غدوة	ghodwa	내일	tomorrow	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 15392; sentence 715	아침을 명시하려면 صباح과 결합
+OD-0158	A1	time	ليل	ليل	lil	밤	night	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 12403; sentence 611	
+OD-0159	A1	time	صباح	صباح	sba7	아침	morning	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 44; sentence 4	
+OD-0160	A1	time	وقت	وقت	waqt	시간	time	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11689; sentence 584	
+OD-0161	A1	time	عام	عام	3am	해; 년	year	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1189; sentence 61	
+OD-0162	A1	time	قبل	قبل	qbel	전에	before	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11079; sentence 557	
+OD-0163	A1	time	بعد	بعد	b3d	후에	after	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 11532; sentence 578	
+OD-0164	A1	places	طريق	طريق	triq	길; 도로	road; way	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1004; sentence 51	
+OD-0165	A1	places	جامعة	جامعة	jam3a	대학교	university	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2801; sentence 151	
+OD-0166	A1	verbs	روح	روح	ru7	가!	go!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1914; sentence 90	명령형
+OD-0167	A1	verbs	شوف	شوف	chuf	봐!	look!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 132; sentence 9	CV 명령형; 주의 환기 용법으로 ‘들어봐’ 가능
+OD-0168	A1	verbs	يعرف	يعرف	ye3ref	그는 안다	he knows	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9237; sentence 426	미완료 3인칭 남성 단수
+OD-0169	A1	verbs	شرب	شرب	chreb	마셔!	drink!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 19592; sentence 897	MADOran Stem=شرب/CV 명령형
+OD-0170	A1	verbs	فهم	فهم	fhem	이해해!	understand!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10996; sentence 552	MADOran Stem=فهم/CV 명령형
+OD-0171	A1	verbs	عيط	عيط	3ayet	전화했다; 불렀다	called	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1252; sentence 63	완료 3인칭 남성 단수
+OD-0172	A1	verbs	عيش	عيش	3ich	살아!	live!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 9535; sentence 438	MADOran Stem=عيش/CV 명령형
+OD-0173	A1	verbs	يلعب	يلعب	yel3eb	그는 논다	he plays	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1089; sentence 57	미완료 3인칭 남성 단수
+OD-0174	A1	verbs	خرج	خرج	khrej	나갔다	went out	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 735; sentence 40	완료 3인칭 남성 단수
+OD-0175	A1	verbs	دخل	دخل	dkhel	들어갔다	entered	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 205; sentence 13	완료 3인칭 남성 단수
+OD-0176	A1	verbs	وصل	وصل	wsel	도착했다	arrived; reached	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 169; sentence 12	완료 3인칭 남성 단수
+OD-0177	A1	verbs	عاود	عاود	3awed	다시 했다; 반복했다	repeated; did again	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1635; sentence 79	MADOran Stem=عاود/PV 완료형
+OD-0178	A1	verbs	كمل	كمل	kemmel	끝냈다	finished	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1938; sentence 91	완료 3인칭 남성 단수
+OD-0179	A1	verbs	خصني	خصني	khasni	나는 필요하다	I need	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 2931; sentence 158	어간과 1인칭 접어대명사가 결합한 단일 토큰
+OD-0180	A1	verbs	قعد	قعد	q3ed	앉았다; 머물렀다	sat; stayed	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 119; sentence 8	완료형; 문맥별 의미 확인
+OD-0181	A1	verbs	جيب	جيب	jib	가져와!	bring!	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1404; sentence 70	명령형
+OD-0182	A2	verbs	تكري	تكري	tekri	너는 빌린다	you rent	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 13400; sentence 645	MADOran Proclitic=t/IV2MS; Enclitic subject=2MS로 2인칭 남성 단수 확인
+OD-0183	A1	verbs	يخاف	يخاف	ykhaf	그는 두려워한다	he is afraid	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 10074; sentence 507	미완료 3인칭 남성 단수
+OD-0184	A1	adjectives	كبير	كبير	kbir	큰	big	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 5465; sentence 281	남성 단수
+OD-0185	A1	adjectives	صغير	صغير	sghir	작은	small	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1213; sentence 61	남성 단수
+OD-0186	A1	adjectives	بارد	بارد	bared	차가운	cold	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 8375; sentence 400	남성 단수
+OD-0187	A1	position	فوق	فوق	fuq	위에	above; on	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1892; sentence 90	
+OD-0188	A1	quantity	بزاف	بزاف	bezzaf	많이; 매우	a lot; very	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 77; sentence 6	
+OD-0189	A1	quantity	شوي	شوي	chwi	조금	a little; some	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 632; sentence 36	
+OD-0190	A1	quantity	والو	والو	walu	아무것도 없음	nothing	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 296; sentence 19	
+OD-0191	A1	quantity	كلشي	كلشي	kulchi	모든 것	everything	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 1699; sentence 82	
+OD-0192	A1	daily	مشكل	مشكل	mochkil	문제	problem	word	none	direct corpus	MADORAN_DIRECT	attested	S6	MADOran token 801; sentence 43	
