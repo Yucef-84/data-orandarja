@@ -29,3 +29,8 @@
 - `ALGERIAN_COMMON`인데 Oran 고유라고 주장하는 note 탐지
 - 아랍 문자/Latin/번역 중 하나가 누락된 행 탐지
 - 학습·검증 분할 시 같은 어근·동일 패턴의 근접 문장을 서로 다른 분할로 누출하지 않기
+- `scripts/build_balanced_dataset.ps1`은 보류·특수 상태(`disputed`, `native_review_required`,
+  `metalinguistic_only`, `fragment_only`, `construction_specific`)를
+  `data/oran_darija_learner_ready.tsv`에서 제외한다.
+- learner-ready export는 현재 883행이며, A1/A2 444/444 균형을 회복하기 전에는 최종 배포본으로 표시하지 않는다.
+- 500행 레거시 입력과 388행 추가 파일을 통한 재빌드는 교정 전 값을 되살릴 수 있으므로 릴리스 입력으로 금지한다.

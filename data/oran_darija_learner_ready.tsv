@@ -1,6 +1,5 @@
-﻿"id"	"cefr"	"topic"	"arabic"	"source_form"	"latin"	"ko"	"en"	"kind"	"marker_type"	"oran_marker"	"evidence"	"status"	"source_id"	"source_locator"	"note"
+"id"	"cefr"	"topic"	"arabic"	"source_form"	"latin"	"ko"	"en"	"kind"	"marker_type"	"oran_marker"	"evidence"	"status"	"source_id"	"source_locator"	"note"
 "OD-0001"	"A1"	"greeting"	"السلام عليكم"	"السلام عليكم"	"s-slam 3likum"	"안녕하세요"	"peace be upon you"	"phrase"	"none"	"common"	"CORVAM_DIRECT"	"attested"	"S1"	"S1 Audio 1, transcript (4)"	"인사"
-"OD-0002"	"A1"	"greeting"	"وعليكم السلام"	"وعليكم السلام"	"w 3likum s-slam"	"안녕하세요(응답)"	"and upon you peace"	"phrase"	"none"	"locator_mismatch"	"CORVAM_LOCATOR_MISMATCH"	"disputed"	"S1"	"S1 Audio 1, transcript (4-5)"	"지정 locator의 실제 응답 표면형과 불일치; 재검증 전 direct/attested로 사용하지 않음"
 "OD-0003"	"A1"	"greeting"	"صحة"	""	"sa77a"	"괜찮아; 좋아"	"okay; all right"	"phrase"	"lexicon"	"sa77a"	"ORAN_STUDY"	"study_backed"	"S1"	"S1 Lexicon: sa77a = ok/all right"	"연결된 Oran 연구의 직접 gloss로 제한"
 "OD-0004"	"A1"	"greeting"	"صحيت"	""	"sa77it"	"고마워"	"thank you"	"phrase"	"lexicon"	"sa77it"	"ORAN_STUDY"	"study_backed"	"S1"	"S1 Lexicon: sa77it = thanks"	"Oran 기술 어휘"
 "OD-0005"	"A1"	"greeting"	"بلا جميل"	""	"bla jmil"	"천만에"	"you are welcome"	"phrase"	"lexicon"	"bla jmil"	"ORAN_STUDY"	"study_backed"	"S1"	"S1 Lexicon: bla jmil = you are welcome"	"Morocco와 공유하는 서부형"

@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 DATASET = Path(__file__).parents[1] / "data" / "oran_darija_verified.tsv"
-SPECIAL = {"metalinguistic_only", "fragment_only", "construction_specific"}
+SPECIAL = {"disputed", "metalinguistic_only", "fragment_only", "construction_specific", "native_review_required"}
 
 
 def main() -> None:

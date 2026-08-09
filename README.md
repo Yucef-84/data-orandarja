@@ -5,12 +5,13 @@
 
 ## 현재 규모
 
-- 현재 안전 핵심본: **888개** (`data/oran_darija_verified.tsv`)
+- 검토 후보 코퍼스: **888개** (`data/oran_darija_verified.tsv`)
+- learner-ready export: **883개** (`data/oran_darija_learner_ready.tsv`); `disputed`·특수 구성/메타언어 항목 제외
 - 수준: A1 444개, A2 444개
 - 직접 근거: CORVAM Oran, Guerrero의 Oran 연구, MADOran V2
 - 검증: 확장 묶음마다 오른쪽 ChatGPT가 전 행을 검사하고 수정본을 재검증
 - 목적: A1–A2 입문 학습, 암기 카드, 짧은 대화·패턴 연습
-- 현재 작업 상태: A1·A2 균형 안전 핵심본 완성
+- 현재 작업 상태: 888행 검토 후보본 완성; 원어민 검수 및 learner-ready A1/A2 재균형 전
 - 출판·음성 녹음 전 필수 조건: Oran 출생·성장 화자 2인의 독립 검수
 
 ## 라이선스
@@ -25,6 +26,7 @@ Oran 직접 근거가 부족한 행이 확인되었으므로 현재 학습·배�
 ## 파일
 
 - `data/oran_darija_verified.tsv`: 현재 Oran 안전 핵심본
+- `data/oran_darija_learner_ready.tsv`: 보류·특수 상태를 제외한 학습용 export (자동 생성)
 - `data/oran_darija_a1a2.tsv`: 초기 128행 작업 기록
 - `data/madoran_expansion_batch*.tsv`: MADOran 직접 근거 확장 및 검증 단위
 - `data/schema.json`: 필드 정의와 허용값
@@ -50,6 +52,9 @@ Oran 직접 근거가 부족한 행이 확인되었으므로 현재 학습·배�
 - `ORAN_STUDY`: Guerrero(2015) 및 CORVAM의 Oran 기술에 근거
 - `ALGERIAN_COMMON`: 널리 쓰이는 알제리형이며 Oran 고유성은 주장하지 않음
 - `PEDAGOGICAL_COMPOSED`: 확인된 어휘·문법으로 만든 짧은 교육용 조합
+- `CORVAM_LEMMA_FROM_ATTESTED` / `MADORAN_LEMMA_FROM_ATTESTED`: 실제 표면형에서 분리한 표제형
+- `MADORAN_CONSTRUCTION_SPECIFIC`: 특정 구성에서만 확인된 의미
+- `CORVAM_LOCATOR_MISMATCH`: locator와 표면형이 불일치하여 보류
 
 ## 검수 상태
 
@@ -57,6 +62,8 @@ Oran 직접 근거가 부족한 행이 확인되었으므로 현재 학습·배�
 - `study_backed`: Oran 연구의 기술 또는 어휘 목록으로 확인
 - `native_review_required`: 자연스러운 교육용 조합이나, 공개 코퍼스의 문장 단위 직접 증거가 부족함
 - `disputed`: 두 원어민 검수자가 불일치하여 보류
+- `lemma_from_attested`: 원자료 표면형에서 추출한 표제형
+- `metalinguistic_only` / `fragment_only` / `construction_specific`: 독립 학습 표제어로 배포하지 않는 특수 상태
 
 `native_review_required` 행은 학습 초안으로는 사용할 수 있지만, 음성 녹음·모델 학습·출판 전에는
 반드시 Oran 원어민 검수를 거쳐야 한다.

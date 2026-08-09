@@ -10,14 +10,15 @@
 | 고유 ID | 888 |
 | 고유 Arabic 표제어 | 888 |
 | 필수값 누락 | 0 |
-| 보류·논쟁 상태 | 0 |
+| 보류·특수 상태 | 5 |
 | 신규 MADOran 원문 위치 오류 | 0 |
 
 ## 범위와 근거
 
 이 파일은 알제(Algiers) 도시어가 아니라 **Oran/Wahran 도시 방언** 학습용
-안전 핵심본이다. CORVAM Oran, Guerrero의 Oran 연구와 MADOran V2를 근거로
+검토 후보본이다. CORVAM Oran, Guerrero의 Oran 연구와 MADOran V2를 근거로
 하며, 이번 균형 확장 388행은 모두 MADOran의 실제 token과 sentence에 연결된다.
+보류·특수 상태 5행은 learner-ready export에서 제외한다.
 
 ## 검증 흐름
 
@@ -30,7 +31,8 @@
 
 ## 기준 파일
 
-- 학습·배포 기준: `data/oran_darija_verified.tsv`
+- 검토 후보 기준: `data/oran_darija_verified.tsv`
+- learner-ready 기준: `data/oran_darija_learner_ready.tsv` (특수·보류 상태 제외, 현재 883행)
 - 신규 A2 확장본: `data/madoran_expansion_a2_388_final.tsv`
 - 수정행 재검증본: `data/a2_final_corrected_rows_recheck.tsv`
 
