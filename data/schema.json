@@ -1,6 +1,6 @@
 {
-  "dataset": "oran_darija_a1_starter",
-  "version": "0.1.0",
+  "dataset": "oran_darija_a1_a2_verified_core",
+  "version": "0.2.0",
   "encoding": "UTF-8",
   "delimiter": "tab",
   "primary_key": "id",
@@ -15,9 +15,9 @@
     "en": "영어 뜻",
     "kind": "word | phrase | pattern",
     "marker_type": "phonology | grammar | lexicon | none | uncertain",
-    "oran_marker": "Oran 지역성의 구체적 근거. 없으면 common",
-    "evidence": "CORVAM_DIRECT | ORAN_STUDY | ALGERIAN_COMMON | PEDAGOGICAL_COMPOSED",
-    "status": "attested | study_backed | native_review_required | disputed",
+    "oran_marker": "Oran 지역성의 구체적 근거. 없으면 common; lemma_from_attested 등 파생 상태도 명시",
+    "evidence": "CORVAM_DIRECT | ORAN_STUDY | ALGERIAN_COMMON | PEDAGOGICAL_COMPOSED | MADORAN_DIRECT | MADORAN_LEMMA_FROM_ATTESTED | MADORAN_METALINGUISTIC | MADORAN_FRAGMENT_ONLY | MADORAN_CONSTRUCTION_SPECIFIC",
+    "status": "attested | lemma_from_attested | metalinguistic_only | fragment_only | construction_specific | study_backed | native_review_required | disputed",
     "source_id": "SOURCES.md의 출처 ID",
     "source_locator": "녹음 전사 구간, 연구 절/쪽 등 확인 위치",
     "note": "변이·사용상 주의"
