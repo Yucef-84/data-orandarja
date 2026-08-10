@@ -59,5 +59,8 @@
       "rows": 1,
       "provenance_events": 3
     }
-  ]
+  ],
+  "content_review_status": "headgpt_passed",
+  "review_id": "MADORAN-ENRICH-002-REVIEW-01",
+  "reviewed_commit": "1a1a2dd"
 }

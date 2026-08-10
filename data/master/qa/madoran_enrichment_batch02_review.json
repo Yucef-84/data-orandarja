@@ -1,0 +1,61 @@
+{
+  "review_id": "MADORAN-ENRICH-002-REVIEW-01",
+  "batch_id": "MADORAN-ENRICH-002",
+  "reviewed_commit": "1a1a2dd",
+  "reviewer": "HeadGPT",
+  "headgpt_result": "PASS",
+  "p0": "NONE",
+  "p1": "NONE",
+  "qa_passed_rows": 46,
+  "flagged_rows": [
+    "75",
+    "78",
+    "83",
+    "84",
+    "85",
+    "86",
+    "89",
+    "95",
+    "96",
+    "100",
+    "109",
+    "112",
+    "113",
+    "117",
+    "118",
+    "121",
+    "125",
+    "127"
+  ],
+  "not_started_rows": 1228,
+  "batch02_state_before": {
+    "draft": 46,
+    "flagged": 18
+  },
+  "batch02_state_after": {
+    "qa_passed": 46,
+    "flagged": 18
+  },
+  "total_enrichment_state_after": {
+    "qa_passed": 108,
+    "flagged": 20,
+    "draft": 0,
+    "not_started": 1228
+  },
+  "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+  "source_gate": "PASS",
+  "linguistic_fields_modified": 0,
+  "processing_flags_modified": 0,
+  "arabic_modified": 0,
+  "provenance_events_before": 2274,
+  "provenance_events_after": 2274,
+  "provenance_modified": 0,
+  "outside_target_mutations": 0,
+  "reviewed_at": "2026-08-10T22:40:53Z",
+  "next_batch": {
+    "batch_id": "MADORAN-ENRICH-003",
+    "sentno_start": 129,
+    "sentno_end": 192,
+    "row_count": 64
+  }
+}
