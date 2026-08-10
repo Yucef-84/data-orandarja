@@ -26,6 +26,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 
 CORRECTION_QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch02_correction_qa.json"
 CORRECTION02_QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch02_correction02_qa.json"
+CORRECTION03_QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch02_correction03_qa.json"
 
 
 class MadoranEnrichmentBatch02Tests(unittest.TestCase):
@@ -80,7 +81,7 @@ class MadoranEnrichmentBatch02Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 2256)
+        self.assertEqual(event_check["events"], 2271)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 1449)
@@ -88,8 +89,8 @@ class MadoranEnrichmentBatch02Tests(unittest.TestCase):
     def test_batch02_qa_evidence_passes(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
-        self.assertEqual(qa["new_provenance_events"], 822)
-        self.assertEqual(qa["total_provenance_events"], 2256)
+        self.assertEqual(qa["new_provenance_events"], 837)
+        self.assertEqual(qa["total_provenance_events"], 2271)
         self.assertEqual(qa["draft_rows"], 46)
         self.assertEqual(qa["flagged_rows"], 18)
         self.assertEqual(qa["processing_flags_populated_rows"], 39)
@@ -122,6 +123,18 @@ class MadoranEnrichmentBatch02Tests(unittest.TestCase):
         self.assertEqual(qa["draft_rows"], 46)
         self.assertEqual(qa["flagged_rows"], 18)
         self.assertEqual(qa["processing_flags_populated_rows"], 39)
+        self.assertEqual(qa["arabic_modified"], 0)
+        self.assertEqual(qa["validator"], "PASS")
+
+    def test_batch02_correction03_qa_evidence_passes(self):
+        qa = json.loads(CORRECTION03_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["result"], "PASS")
+        self.assertEqual(qa["correction_id"], "MADORAN-ENRICH-002-CORRECTION-03")
+        self.assertEqual(qa["corrected_rows"], ["85", "97", "99", "100", "117", "121"])
+        self.assertEqual(qa["changed_fields"], 15)
+        self.assertEqual(qa["new_provenance_events"], 15)
+        self.assertEqual(qa["provenance_events_before"], 2256)
+        self.assertEqual(qa["provenance_events_after"], 2271)
         self.assertEqual(qa["arabic_modified"], 0)
         self.assertEqual(qa["validator"], "PASS")
 
