@@ -5,7 +5,7 @@
   "sentno_start": 65,
   "sentno_end": 128,
   "target_rows": 64,
-  "draft_rows": 50,
+  "draft_rows": 49,
   "flagged_rows": [
     "78",
     "83",
@@ -14,6 +14,7 @@
     "86",
     "89",
     "95",
+    "96",
     "100",
     "112",
     "113",
@@ -28,7 +29,7 @@
   "morphology_reads": 0,
   "arabic_modified": 0,
   "validator": "PASS",
-  "generated_at": "2026-08-10T14:36:51Z",
+  "generated_at": "2026-08-10T14:58:03Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch02_sentno_0065_0128.tsv",
     "manifest": "data/master/enrichment/batches/batch02_manifest.json"
