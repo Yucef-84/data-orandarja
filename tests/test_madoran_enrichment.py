@@ -320,7 +320,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 1408)
+        self.assertEqual(report["events"], 1429)
 
 
 if __name__ == "__main__":

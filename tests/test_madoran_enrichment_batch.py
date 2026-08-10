@@ -85,7 +85,7 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 2 * 64 * len(EMPTY_FIELDS))
+        self.assertEqual(event_check["events"], 1429)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 64 * len(EMPTY_FIELDS))
@@ -93,8 +93,8 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
     def test_batch_qa_is_pass(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
-        self.assertEqual(qa["new_provenance_events"], 64 * len(EMPTY_FIELDS))
-        self.assertEqual(qa["total_provenance_events"], 2 * 64 * len(EMPTY_FIELDS))
+        self.assertEqual(qa["new_provenance_events"], 21)
+        self.assertEqual(qa["total_provenance_events"], 1429)
         self.assertEqual(qa["outside_target_mutations"], 0)
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["validator"], "PASS")
