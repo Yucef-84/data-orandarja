@@ -8,6 +8,7 @@ from scripts.build_native_contextual_review_summary_skeleton import build_summar
 from scripts.build_native_contextual_review_templates import build_templates
 from scripts.merge_native_contextual_reviews import merge_reviews
 from scripts.promote_native_contextual_rows import promote_native_rows
+from scripts.validate_contextual_batch02 import validate as validate_batch02
 from scripts.validate_contextual_expansion import validate as validate_expansion
 
 
@@ -119,6 +120,40 @@ class NativeReviewPlumbingTests(unittest.TestCase):
             promoted_report = validate_expansion(batch_paths)
             self.assertEqual(promoted_report["p0_errors"], [], promoted_report)
             self.assertEqual(promoted_report["learner_ready"], 183)
+            batch02_report = validate_batch02(batch01_path=batch_paths[0], batch02_path=batch_paths[1])
+            self.assertEqual(batch02_report["p0_errors"], [], batch02_report)
+
+    def test_promotion_rejects_a_perfect_subset_scope(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            template_paths = build_templates(PACKET, root / "templates")
+            for path in template_paths:
+                self._complete_reviewer_template(path)
+            merged_path = root / "reviews.tsv"
+            merge_reviews(tuple(template_paths), PACKET, merged_path)
+            skeleton_path = root / "summary.tsv"
+            build_summary_skeleton(merged_path, PACKET, skeleton_path)
+            summary_rows = read_rows(skeleton_path)
+            with skeleton_path.open(encoding="utf-8-sig", newline="") as handle:
+                fields = list(csv.DictReader(handle, delimiter="\t").fieldnames or [])
+            for row in summary_rows:
+                row["final_native_status"] = "native2_approved"
+            with skeleton_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t", lineterminator="\n")
+                writer.writeheader()
+                writer.writerows(summary_rows)
+
+            subset_paths = [root / "subset.tsv"]
+            source_rows = read_rows(BATCH01)[:96]
+            with subset_paths[0].open("w", encoding="utf-8", newline="") as handle:
+                fields = list(source_rows[0])
+                writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t", lineterminator="\n")
+                writer.writeheader()
+                writer.writerows(source_rows)
+            result = promote_native_rows(merged_path, skeleton_path, subset_paths, apply=True)
+            self.assertEqual(result["gate"]["gate_status"], "BLOCKED")
+            self.assertFalse(result["applied"])
+            self.assertTrue(any("complete canonical 183-row pilot scope" in error for error in result["gate"]["p0_errors"]))
 
 
 if __name__ == "__main__":

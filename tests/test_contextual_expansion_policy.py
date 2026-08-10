@@ -45,14 +45,16 @@ class ContextualExpansionPolicyTests(unittest.TestCase):
         self.assertEqual(report["rows_raw"], 200)
         self.assertEqual(report["active"], 183)
         self.assertEqual(report["hold"], 17)
-        self.assertEqual(report["learner_ready"], 0)
+        self.assertEqual(
+            report["learner_ready"],
+            report["review_status"].get("native2_approved", 0),
+        )
 
-    def test_native_review_manifest_is_separate_and_empty(self):
+    def test_native_review_manifest_has_official_schema(self):
         with NATIVE_REVIEWS.open(encoding="utf-8", newline="") as handle:
             reader = csv.reader(handle, delimiter="\t")
             header = next(reader)
             rows = list(reader)
-        self.assertEqual(rows, [])
         self.assertEqual(
             header,
             [
@@ -65,6 +67,7 @@ class ContextualExpansionPolicyTests(unittest.TestCase):
                 "reviewed_at",
             ],
         )
+        self.assertIn(len(rows), {0, 366})
 
     def test_validator_rejects_prohibited_derivation_and_spoofed_source(self):
         source = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"

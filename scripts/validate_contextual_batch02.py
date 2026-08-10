@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import re
 from collections import Counter
@@ -24,8 +25,8 @@ SOURCE = (
 )
 
 CANONICAL_SHA256 = "96cc35a441c91ee70bd1edd70c6c0d48646f7b808b08f140a88b5d98d642eaf6"
-BATCH01_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
-BATCH02_SHA256 = "9d3b25877405975fc2623d7664ac23b489784f8c3f0e431d4b8ae00a163531df"
+BATCH01_GPT_STAGE_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
+BATCH02_GPT_STAGE_SHA256 = "9d3b25877405975fc2623d7664ac23b489784f8c3f0e431d4b8ae00a163531df"
 FIELDS = [
     "sample_id", "language", "variety", "cefr", "domain", "topic",
     "sample_type", "arabic", "source_form", "latin", "ko", "en",
@@ -36,6 +37,9 @@ FIELDS = [
 DOMAINS = {"school_work", "city_transport", "body_health", "food_shopping"}
 CEFR_QUOTA = {"A1": 45, "A2": 59}
 REVIEW_STATUSES = {"source_verified", "gpt_reviewed", "native1_reviewed", "native2_approved", "hold"}
+IMMUTABLE_FIELDS = [field for field in FIELDS if field not in {"review_status", "learner_ready"}]
+BATCH01_IMMUTABLE_SHA256 = "4e4c706a8a9dcd6aa5dbf2fe6ebf0f28db2808bb995ea7581f5e76e1e7934907"
+BATCH02_IMMUTABLE_SHA256 = "ec1d117db46c104dc901017082bb6155ba84a0d29977911ce3b3507f024456a6"
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -48,29 +52,51 @@ def normalize_arabic(value: str) -> str:
     return re.sub(r"\s+", " ", value.strip())
 
 
+def immutable_sha256(rows: list[dict[str, str]]) -> str:
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(
+        output,
+        fieldnames=IMMUTABLE_FIELDS,
+        delimiter="\t",
+        lineterminator="\n",
+        quoting=csv.QUOTE_ALL,
+    )
+    writer.writeheader()
+    writer.writerows({field: row.get(field, "") for field in IMMUTABLE_FIELDS} for row in rows)
+    return hashlib.sha256(output.getvalue().encode("utf-8")).hexdigest()
+
+
 def locator_number(locator: str) -> int | None:
     match = re.fullmatch(r"MADOran_Sentences\.tsv:Sentno=(\d+)", locator.strip())
     return int(match.group(1)) if match else None
 
 
-def validate() -> dict[str, object]:
+def validate(
+    canonical_path: Path = CANONICAL,
+    batch01_path: Path = BATCH01,
+    batch02_path: Path = BATCH02,
+    source_path: Path = SOURCE,
+) -> dict[str, object]:
     errors: list[str] = []
-    canonical_bytes = CANONICAL.read_bytes()
-    batch01_bytes = BATCH01.read_bytes()
+    canonical_bytes = canonical_path.read_bytes()
+    batch01_bytes = batch01_path.read_bytes()
     canonical_sha = hashlib.sha256(canonical_bytes).hexdigest()
     batch01_sha = hashlib.sha256(batch01_bytes).hexdigest()
-    batch02_sha = hashlib.sha256(BATCH02.read_bytes()).hexdigest()
+    batch02_bytes = batch02_path.read_bytes()
+    batch02_sha = hashlib.sha256(batch02_bytes).hexdigest()
     if canonical_sha != CANONICAL_SHA256:
         errors.append(f"canonical SHA changed: {canonical_sha}")
-    if batch01_sha != BATCH01_SHA256:
-        errors.append(f"Batch01 SHA changed: {batch01_sha}")
-    if batch02_sha != BATCH02_SHA256:
-        errors.append(f"Batch02 SHA changed: {batch02_sha}")
+    batch01_rows = read_tsv(batch01_path)
+    rows = read_tsv(batch02_path)
+    batch01_immutable_sha = immutable_sha256(batch01_rows)
+    batch02_immutable_sha = immutable_sha256(rows)
+    if batch01_immutable_sha != BATCH01_IMMUTABLE_SHA256:
+        errors.append(f"Batch01 immutable content SHA changed: {batch01_immutable_sha}")
+    if batch02_immutable_sha != BATCH02_IMMUTABLE_SHA256:
+        errors.append(f"Batch02 immutable content SHA changed: {batch02_immutable_sha}")
 
-    canonical_rows = read_tsv(CANONICAL)
-    batch01_rows = read_tsv(BATCH01)
-    rows = read_tsv(BATCH02)
-    source_rows = read_tsv(SOURCE)
+    canonical_rows = read_tsv(canonical_path)
+    source_rows = read_tsv(source_path)
     source_by_no = {int(row["Sentno"]): row["Sentence"] for row in source_rows}
     canonical_ids = {row["id"] for row in canonical_rows}
     canonical_arabic = {normalize_arabic(row["arabic"]) for row in canonical_rows}
@@ -180,6 +206,8 @@ def validate() -> dict[str, object]:
         "canonical_sha256": canonical_sha,
         "batch01_sha256": batch01_sha,
         "batch02_sha256": batch02_sha,
+        "batch01_immutable_sha256": batch01_immutable_sha,
+        "batch02_immutable_sha256": batch02_immutable_sha,
         "rows": len(rows),
         "cefr_counts": dict(cefr_counts),
         "domain_counts": dict(domain_counts),

@@ -1,7 +1,4 @@
 import csv
-import json
-import subprocess
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -23,14 +20,18 @@ class NativePilotGateTests(unittest.TestCase):
         self.assertTrue(all(row["gpt_review_status"] == "gpt_reviewed" for row in rows))
 
     def test_gate_is_blocked_without_external_native_reviews(self):
-        result = subprocess.run(
-            [sys.executable, str(VALIDATOR)],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-        )
-        self.assertEqual(result.returncode, 1)
-        report = json.loads(result.stdout)
+        with tempfile.TemporaryDirectory() as temp_dir:
+            review_path = Path(temp_dir) / "reviews.tsv"
+            summary_path = Path(temp_dir) / "summary.tsv"
+            review_path.write_text(
+                "sample_id\treviewer_id\toran_native_confirmed\trating\tsuggested_arabic\tcomment\treviewed_at\n",
+                encoding="utf-8",
+            )
+            summary_path.write_text(
+                "sample_id\treviewer1_rating\treviewer2_rating\tagreement\tfinal_native_status\tresolution_note\n",
+                encoding="utf-8",
+            )
+            report = validate_native_pilot(review_path, summary_path)
         self.assertEqual(report["gate_status"], "BLOCKED")
         self.assertEqual(report["metrics"]["target_active"], 183)
         self.assertEqual(report["metrics"]["review_rows"], 0)
