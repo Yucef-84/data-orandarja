@@ -22,7 +22,8 @@
   "rows": 1356,
   "completed_rows": 0,
   "enrichment_state": "not_started",
+  "enrichment_output_action": "preserved",
   "morphology_dependency": "not_read",
   "output": "data/master/enrichment/madoran_sentence_enrichment.tsv",
-  "provenance_events": "tmplsr5o3z3/events.jsonl"
+  "provenance_events": "tmpv9l14wzc/events.jsonl"
 }

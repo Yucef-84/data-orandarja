@@ -285,6 +285,43 @@ def write_tsv(path: Path, rows: list[dict[str, str]]) -> None:
         writer.writerows(rows)
 
 
+def scaffold_rows(source_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [
+        {
+            "source_uid": row["source_uid"],
+            "sentno": row["sentno"],
+            **{field: "" for field in EMPTY_FIELDS},
+            "enrichment_state": "not_started",
+        }
+        for row in source_rows
+    ]
+
+
+def load_or_create_enrichment(source_rows: list[dict[str, str]]) -> tuple[list[dict[str, str]], bool]:
+    """Create the scaffold once; preserve any later enrichment byte-for-byte."""
+
+    if not ENRICHMENT_OUT.exists():
+        rows = scaffold_rows(source_rows)
+        write_tsv(ENRICHMENT_OUT, rows)
+        return rows, False
+
+    rows = read_tsv(ENRICHMENT_OUT)
+    if not rows or list(rows[0]) != ENRICHMENT_FIELDS:
+        raise RuntimeError("existing enrichment output has an invalid header or no rows")
+    if len(rows) != len(source_rows):
+        raise RuntimeError(
+            f"existing enrichment output row count changed: expected {len(source_rows)}, got {len(rows)}"
+        )
+    expected_keys = [(row["source_uid"], row["sentno"]) for row in source_rows]
+    actual_keys = [(row.get("source_uid", ""), row.get("sentno", "")) for row in rows]
+    if actual_keys != expected_keys:
+        raise RuntimeError("existing enrichment output source linkage changed")
+    allowed_states = {"not_started", "draft", "qa_passed", "reviewed", "flagged"}
+    if any(row.get("enrichment_state") not in allowed_states for row in rows):
+        raise RuntimeError("existing enrichment output contains an invalid enrichment_state")
+    return rows, True
+
+
 def build() -> dict[str, object]:
     gate = source_gate()
     if gate["result"] != "PASS":
@@ -295,24 +332,24 @@ def build() -> dict[str, object]:
     expected_sentnos = [str(index) for index in range(1, 1357)]
     if [row.get("sentno", "") for row in source_rows] != expected_sentnos:
         raise ValueError("canonical source Sentno coverage is not exactly 1..1356")
-    rows = [
-        {
-            "source_uid": row["source_uid"],
-            "sentno": row["sentno"],
-            **{field: "" for field in EMPTY_FIELDS},
-            "enrichment_state": "not_started",
-        }
-        for row in source_rows
-    ]
-    write_tsv(ENRICHMENT_OUT, rows)
+    rows, preserved_existing_enrichment = load_or_create_enrichment(source_rows)
     EVENTS_OUT.parent.mkdir(parents=True, exist_ok=True)
     EVENTS_OUT.touch(exist_ok=True)
     report = {
         "result": "PASS",
         "source_gate": gate,
         "rows": len(rows),
-        "completed_rows": 0,
-        "enrichment_state": "not_started",
+        "completed_rows": sum(
+            1 for row in rows if row.get("enrichment_state") != "not_started"
+        ),
+        "enrichment_state": (
+            "not_started"
+            if all(row.get("enrichment_state") == "not_started" for row in rows)
+            else "preserved_existing"
+        ),
+        "enrichment_output_action": (
+            "preserved" if preserved_existing_enrichment else "created"
+        ),
         "morphology_dependency": "not_read",
         "output": ENRICHMENT_OUT.relative_to(ROOT).as_posix(),
         "provenance_events": EVENTS_OUT.relative_to(ROOT).as_posix(),

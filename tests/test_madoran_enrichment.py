@@ -193,6 +193,28 @@ class MadoranEnrichmentTests(unittest.TestCase):
             self.assertEqual(report["result"], "PASS")
             self.assertEqual(events_path.read_text(encoding="utf-8"), event_text)
 
+    def test_scaffold_rebuild_preserves_existing_enrichment_values(self):
+        existing_rows = [dict(row) for row in self.enrichment_rows]
+        existing_rows[0]["latin"] = "existing enrichment"
+        existing_rows[0]["enrichment_state"] = "draft"
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            directory_path = Path(directory)
+            enrichment_path = directory_path / "enrichment.tsv"
+            events_path = directory_path / "events.jsonl"
+            qa_path = directory_path / "qa.json"
+            scaffold.write_tsv(enrichment_path, existing_rows)
+            before_bytes = enrichment_path.read_bytes()
+            with (
+                patch.object(scaffold, "ENRICHMENT_OUT", enrichment_path),
+                patch.object(scaffold, "EVENTS_OUT", events_path),
+                patch.object(scaffold, "QA_OUT", qa_path),
+            ):
+                report = scaffold.build()
+            self.assertEqual(report["result"], "PASS")
+            self.assertEqual(report["enrichment_output_action"], "preserved")
+            self.assertEqual(report["completed_rows"], 1)
+            self.assertEqual(enrichment_path.read_bytes(), before_bytes)
+
     def test_schema_declares_morphology_dependency_gate(self):
         schema = json.loads(
             (ROOT / "data" / "master" / "enrichment" / "enrichment_schema.json").read_text(
