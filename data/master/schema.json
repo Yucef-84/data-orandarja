@@ -77,5 +77,55 @@
     "speech_act": "optional open vocabulary",
     "register": "optional open vocabulary",
     "genre": "optional open vocabulary"
+  },
+  "layer_status_path": "data/master/state/madoran_layer_status.json",
+  "morphology_issue_path": "data/master/issues/madoran_morphology_upstream_defect.json",
+  "enrichment_layer": {
+    "path": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+    "schema_path": "data/master/enrichment/enrichment_schema.json",
+    "provenance_path": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl",
+    "key_fields": [
+      "source_uid",
+      "sentno"
+    ],
+    "fields": [
+      "source_uid",
+      "sentno",
+      "latin",
+      "english",
+      "korean",
+      "cefr_level",
+      "difficulty_score",
+      "domain",
+      "topic",
+      "genre",
+      "speech_act",
+      "register",
+      "context_dependency",
+      "enrichment_state"
+    ],
+    "source_only_fields": [
+      "latin",
+      "english",
+      "korean",
+      "cefr_level",
+      "difficulty_score",
+      "domain",
+      "topic",
+      "genre",
+      "speech_act",
+      "register",
+      "context_dependency"
+    ],
+    "morphology_dependent_fields": [
+      "lemma_features",
+      "root_features",
+      "pattern_features",
+      "morphology_vocabulary",
+      "morphology_learning_units"
+    ],
+    "initial_state": "not_started",
+    "arabic_original_policy": "canonical source only; do not copy or overwrite in enrichment",
+    "dependency_gate": "morphology-dependent fields are forbidden unless morphology_gate == PASS"
   }
 }

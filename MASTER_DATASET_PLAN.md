@@ -44,8 +44,13 @@ classification axis (`A1` through `C2`), not a quota or a source filter.
 
 ## Execution gates
 
-The first gate is source and morphology integrity. No enrichment or learning
-unit generation begins until both source and morphology QA pass:
+The project uses layered gates so an upstream morphology defect cannot block
+safe work that depends only on the immutable source sentence layer. The
+foundation, source, and source-provenance gates must pass before any derived
+asset is written. Source-only enrichment is then `READY` even while the
+morphology gate is blocked. Morphology-dependent enrichment, morphology
+features, and morphology-dependent learning units remain blocked until the
+morphology gate passes:
 
 - 1,356 unique `Sentno` values, exactly 1..1356;
 - source `WordCount` sum 30,919;
@@ -54,6 +59,11 @@ unit generation begins until both source and morphology QA pass:
 - no orphan or unlinked tokens;
 - per-sentence WordCount and Wordno sequences match exactly;
 - no source or morphology mutation.
+
+The current layer decision is recorded in
+`data/master/state/madoran_layer_status.json` under HeadGPT decision
+`HEAD-MADORAN-2026-08-10-01`. The unresolved upstream defect is recorded in
+`data/master/issues/madoran_morphology_upstream_defect.json`.
 
 The current local snapshot is expected to expose any upstream inconsistency;
 the builder must report it rather than fabricate annotations. The four
@@ -72,10 +82,17 @@ file hashes and blob IDs are recorded in
 
 ## Next phases after the first gate
 
-1. Enrich all 1,356 source rows without altering `arabic_original`.
-2. Add morphology-aware features and six-level CEFR/difficulty annotations.
-3. Derive learning units with source spans.
-4. Run automated QA, LLM cross-checks, and native audits for modified or
-   generated Darija.
-5. Generate purpose-specific exports and use additional licensed Oran sources
-   only where the measured distribution is insufficient.
+1. Create and validate the source-only enrichment scaffold at
+   `data/master/enrichment/madoran_sentence_enrichment.tsv`; it contains one
+   row per canonical source sentence and does not copy `arabic_original`.
+2. Enrich the 1,356 source rows in provenance-tracked batches with Latin,
+   English, Korean, CEFR, difficulty, and source-grounded semantic labels.
+3. Derive source-exact learning units with explicit source spans; keep
+   morphology-dependent units blocked.
+4. Add morphology-aware features and morphology-dependent exports only after
+   a corrected official artifact satisfies the acceptance policy in the issue
+   record.
+5. Run automated QA, HeadGPT cross-checks, and native audits for modified or
+   generated Darija, then generate purpose-specific exports.
+6. Use additional licensed Oran sources only where the measured distribution
+   is insufficient and provenance permits their inclusion.

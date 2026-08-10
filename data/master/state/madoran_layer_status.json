@@ -1,0 +1,30 @@
+{
+  "status_schema_version": "1.0.0",
+  "decision_id": "HEAD-MADORAN-2026-08-10-01",
+  "updated_from_commit": "e18c83d",
+  "foundation": "PASS",
+  "source": "PASS",
+  "source_provenance": "PASS",
+  "morphology": "BLOCKED_UPSTREAM_DEFECT",
+  "format_reconciliation": "UPSTREAM_DEFECT_CONFIRMED",
+  "source_only_enrichment": "READY",
+  "morphology_dependent_enrichment": "BLOCKED",
+  "learning_units": "NOT_STARTED",
+  "exports": "NOT_STARTED",
+  "counts": {
+    "canonical_source_rows": 1356,
+    "canonical_word_count": 30919,
+    "enrichment_rows": 1356,
+    "enrichment_completed_rows": 0
+  },
+  "dependency_policy": {
+    "source_only_pipeline_reads_morphology": false,
+    "morphology_dependent_outputs_require_morphology_pass": true,
+    "arabic_original_immutable": true
+  },
+  "evidence_files": [
+    "data/master/qa/madoran_master_qa.json",
+    "data/master/qa/madoran_format_reconciliation.json",
+    "data/master/provenance_manifest.json"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "issue_id": "MADORAN-MORPHOLOGY-2026-08-10",
+  "status": "BLOCKED_UPSTREAM_DEFECT",
+  "upstream_version": "MADOran V2",
+  "upstream_doi": "10.17632/pgr766jbhp.2",
+  "expected_positions": 30919,
+  "actual_rows": 30915,
+  "valid_positions": 30910,
+  "orphan_rows": 5,
+  "missing_positions": [
+    [345, 14],
+    [345, 16],
+    [583, 2],
+    [583, 11],
+    [695, 7],
+    [1226, 4],
+    [1226, 5],
+    [1226, 6],
+    [1226, 7],
+    [1226, 8],
+    [1226, 9],
+    [1226, 10],
+    [1226, 11],
+    [1226, 12]
+  ],
+  "extra_positions": [
+    [345, 22],
+    [345, 23],
+    [583, 30],
+    [583, 31],
+    [695, 29]
+  ],
+  "official_formats_checked": [
+    "MADOran.tsv",
+    "MADOran.csv",
+    "MADOran.json",
+    "MADOran.db"
+  ],
+  "cross_format_result": "UPSTREAM_DEFECT_CONFIRMED",
+  "repaired": false,
+  "synthetic_rows_added": 0,
+  "blocks": [
+    "morphology_features",
+    "morphology_exports",
+    "morphology_dependent_enrichment",
+    "morphology_dependent_learning_units"
+  ],
+  "does_not_block": [
+    "source_enrichment",
+    "translation",
+    "latin",
+    "cefr",
+    "semantic_classification",
+    "source_exact_learning_units"
+  ],
+  "evidence_files": [
+    "data/master/qa/madoran_master_qa.json",
+    "data/master/qa/madoran_format_reconciliation.json",
+    "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.tsv",
+    "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.csv",
+    "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.json",
+    "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.db"
+  ],
+  "corrected_artifact_acceptance": {
+    "accepted_tiers": [
+      "new Mendeley MADOran DOI lineage version",
+      "MADOran author or publisher supplementary artifact",
+      "official author-affiliated institutional repository after identity verification"
+    ],
+    "rejected_as_authority": [
+      "unverified third-party mirror",
+      "AI reconstruction",
+      "synthetic placeholder"
+    ],
+    "required_validation": [
+      "rows == 30919",
+      "official 16-field schema",
+      "Sentno coverage 1..1356",
+      "orphan rows == 0",
+      "missing and extra positions == 0",
+      "per-Sentno Wordno == 1..WordCount",
+      "diff against immutable V2 snapshot"
+    ]
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "schema_id": "madoran-sentence-enrichment",
+  "schema_version": "1.0.0",
+  "dataset": "MADOran",
+  "path": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+  "key_fields": [
+    "source_uid",
+    "sentno"
+  ],
+  "fields": {
+    "source_uid": {
+      "type": "string",
+      "required": true,
+      "requires": [
+        "source"
+      ]
+    },
+    "sentno": {
+      "type": "integer",
+      "required": true,
+      "range": [
+        1,
+        1356
+      ],
+      "requires": [
+        "source"
+      ]
+    },
+    "latin": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "english": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "korean": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "cefr_level": {
+      "type": "enum",
+      "values": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2"
+      ],
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "difficulty_score": {
+      "type": "number",
+      "range": [
+        0,
+        100
+      ],
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "domain": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "topic": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "genre": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "speech_act": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "register": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "context_dependency": {
+      "type": "string",
+      "required": false,
+      "requires": [
+        "source"
+      ],
+      "provenance_required": true
+    },
+    "enrichment_state": {
+      "type": "enum",
+      "values": [
+        "not_started",
+        "draft",
+        "qa_passed",
+        "reviewed",
+        "flagged"
+      ],
+      "required": true
+    }
+  },
+  "dependency_policy": {
+    "source_only_fields": [
+      "latin",
+      "english",
+      "korean",
+      "cefr_level",
+      "difficulty_score",
+      "domain",
+      "topic",
+      "genre",
+      "speech_act",
+      "register",
+      "context_dependency"
+    ],
+    "morphology_dependent_fields": [
+      "lemma_features",
+      "root_features",
+      "pattern_features",
+      "morphology_vocabulary",
+      "morphology_learning_units"
+    ],
+    "blocked_when_morphology_gate_not_pass": true,
+    "initial_linguistic_values": "empty",
+    "arabic_original_policy": "not copied; canonical source remains authoritative"
+  },
+  "provenance": {
+    "path": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl",
+    "required_fields": [
+      "source_uid",
+      "field",
+      "value_hash",
+      "method",
+      "model",
+      "prompt_version",
+      "schema_version",
+      "generated_at",
+      "review_state"
+    ],
+    "append_only": true
+  }
+}

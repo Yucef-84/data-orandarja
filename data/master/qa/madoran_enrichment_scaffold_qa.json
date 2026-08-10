@@ -1,0 +1,25 @@
+{
+  "result": "PASS",
+  "failures": [],
+  "source_gate": {
+    "result": "PASS",
+    "failures": [],
+    "source_rows": 1356,
+    "provenance_manifest_version": "1.1.0"
+  },
+  "source_rows": 1356,
+  "enrichment_rows": 1356,
+  "completed_rows": 0,
+  "morphology_dependency": {
+    "result": "PASS",
+    "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+    "populated_fields": [],
+    "violations": [],
+    "failures": []
+  },
+  "outputs": {
+    "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+    "status": "data/master/state/madoran_layer_status.json",
+    "issue": "data/master/issues/madoran_morphology_upstream_defect.json"
+  }
+}
