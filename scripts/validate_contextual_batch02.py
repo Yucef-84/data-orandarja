@@ -120,8 +120,10 @@ def validate() -> dict[str, object]:
             errors.append(f"{sid}: Batch02 must use source_direct")
         if row.get("license_id") != "CC-BY-NC-3.0-MADORAN":
             errors.append(f"{sid}: invalid license")
-        if row.get("review_status") != "source_verified" or row.get("learner_ready") != "false":
+        if row.get("review_status") not in {"source_verified", "hold"} or row.get("learner_ready") != "false":
             errors.append(f"{sid}: invalid pre-review state")
+        if row.get("review_status") == "hold" and not row.get("note", "").startswith("HOLD:"):
+            errors.append(f"{sid}: hold rows must carry an explicit HOLD note")
         if row.get("group_id") != f"batch02-{row.get('domain')}":
             errors.append(f"{sid}: group_id does not match domain")
         number = locator_number(row.get("source_locator", ""))
@@ -148,9 +150,13 @@ def validate() -> dict[str, object]:
     if len(source_numbers) != len(set(source_numbers)):
         errors.append("duplicate MADOran source locator")
 
+    hold_count = sum(row.get("review_status") == "hold" for row in rows)
+    active_count = sum(row.get("review_status") == "source_verified" for row in rows)
     return {
         "p0_errors": errors,
-        "p1_manual_review_pending": len(rows) if rows else 0,
+        "p1_manual_review_pending": active_count,
+        "active": active_count,
+        "hold": hold_count,
         "canonical_sha256": canonical_sha,
         "batch01_sha256": batch01_sha,
         "rows": len(rows),

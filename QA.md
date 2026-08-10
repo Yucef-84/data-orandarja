@@ -44,8 +44,11 @@ locator must replay the exact MADOran sentence and every row must carry the
 MADOran license identifier. Source-backed rows cannot silently become
 AI-composed or translated-from-MSA rows.
 
-Batch 01 begins as source_verified with learner_ready=false. The validator
-blocks duplicate IDs, duplicate normalized Arabic, canonical overlap, missing
-provenance, invalid enums, source replay failures, prohibited sources or
-derivations, and premature learner release. GPT must review all four chunks
-of 24 rows; native review remains a separate release gate.
+Batch 01 begins as source_verified with learner_ready=false. Batch 02 may also
+contain explicitly documented review_status=hold rows when no safe, standalone
+source is available; those rows must remain learner_ready=false and are
+excluded from active/learner-ready counts. The validator blocks duplicate IDs,
+duplicate normalized Arabic, canonical overlap, missing provenance, invalid
+enums, source replay failures, prohibited sources or derivations, and premature
+learner release. GPT must review all four chunks; native review remains a
+separate release gate.

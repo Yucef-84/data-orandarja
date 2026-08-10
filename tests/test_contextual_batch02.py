@@ -8,6 +8,11 @@ ROOT = Path(__file__).resolve().parents[1]
 BATCH01 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
 BATCH02 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch02.tsv"
 EXPECTED_BATCH01_SHA256 = "4268fda4ffaff5e13c0a1a5bc1d948d695288501e3a504d03c3d0060dae15437"
+EXPECTED_HOLD_IDS = {
+    "ODC-000149", "ODC-000150", "ODC-000153", "ODC-000154", "ODC-000155",
+    "ODC-000158", "ODC-000159", "ODC-000160", "ODC-000162", "ODC-000164",
+    "ODC-000165", "ODC-000166", "ODC-000167", "ODC-000173", "ODC-000174",
+}
 
 
 def rows(path):
@@ -27,8 +32,17 @@ class ContextualBatch02Tests(unittest.TestCase):
 
     def test_batch02_is_pre_review_only(self):
         current = rows(BATCH02)
-        self.assertTrue(all(row["review_status"] == "source_verified" for row in current))
+        self.assertTrue(all(row["review_status"] in {"source_verified", "hold"} for row in current))
         self.assertTrue(all(row["learner_ready"] == "false" for row in current))
+
+    def test_batch02_hold_policy(self):
+        current = rows(BATCH02)
+        hold = {row["sample_id"] for row in current if row["review_status"] == "hold"}
+        self.assertEqual(hold, EXPECTED_HOLD_IDS)
+        self.assertEqual(sum(row["review_status"] == "hold" for row in current), 15)
+        self.assertEqual(sum(row["review_status"] == "source_verified" for row in current), 89)
+        self.assertTrue(all(row["learner_ready"] == "false" for row in current if row["review_status"] == "hold"))
+        self.assertTrue(all(row["note"].startswith("HOLD:") for row in current if row["review_status"] == "hold"))
 
     def test_source_ids_and_arabic_are_unique_across_contextual_batches(self):
         first = rows(BATCH01)
