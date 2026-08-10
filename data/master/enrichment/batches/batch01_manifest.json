@@ -24,6 +24,6 @@
   "method": "llm_source_only_enrichment",
   "model": "codex-unspecified",
   "schema_version": "1.0.0",
-  "generated_at": "2026-08-10T00:00:00Z",
+  "generated_at": "2026-08-10T13:01:00Z",
   "review_state": "generated"
 }

@@ -69,7 +69,14 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertIn("non_empty_initial_linguistic_field", report["failures"])
 
     def test_initial_state_is_not_started(self):
-        self.assertTrue(all(row["enrichment_state"] == "draft" for row in self.enrichment_rows[:64]))
+        self.assertTrue(
+            all(
+                row["enrichment_state"] == "draft"
+                for row in self.enrichment_rows[:64]
+                if row["sentno"] != "63"
+            )
+        )
+        self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows[64:]))
 
     def test_source_gate_passes_without_morphology_access(self):
@@ -255,6 +262,34 @@ class MadoranEnrichmentTests(unittest.TestCase):
         )
         self.assertEqual(traced["result"], "PASS")
 
+    def test_latest_provenance_event_hash_is_authoritative(self):
+        populated = scaffold.scaffold_rows(self.source_rows)
+        populated[0]["latin"] = "latest value"
+        populated[0]["enrichment_state"] = "draft"
+        good_hash = "sha256:" + hashlib.sha256(
+            populated[0]["latin"].encode("utf-8")
+        ).hexdigest()
+        base_event = {
+            "source_uid": populated[0]["source_uid"],
+            "field": "latin",
+            "method": "test",
+            "model": "test-model",
+            "prompt_version": "test-v1",
+            "schema_version": "1.0.0",
+            "generated_at": "2026-08-10T13:01:00Z",
+            "review_state": "generated",
+        }
+        old_event = {**base_event, "value_hash": good_hash}
+        stale_latest_event = {**base_event, "value_hash": "sha256:" + "0" * 64}
+        traced = enrichment.check_enrichment_provenance(
+            populated,
+            json.dumps(old_event) + "\n" + json.dumps(stale_latest_event) + "\n",
+        )
+        self.assertEqual(traced["result"], "FAIL")
+        self.assertTrue(
+            any("provenance_value_hash_mismatch" in item for item in traced["failures"])
+        )
+
     def test_schema_declares_morphology_dependency_gate(self):
         schema = json.loads(
             (ROOT / "data" / "master" / "enrichment" / "enrichment_schema.json").read_text(
@@ -285,7 +320,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 704)
+        self.assertEqual(report["events"], 1408)
 
 
 if __name__ == "__main__":

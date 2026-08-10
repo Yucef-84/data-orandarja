@@ -137,7 +137,7 @@ def check_enrichment_provenance(
             ]
             if not matching:
                 failures.append(f"missing_provenance_event:{source_uid}:{field}")
-            elif not any(event.get("value_hash") == expected_hash for event in matching):
+            elif matching[-1].get("value_hash") != expected_hash:
                 failures.append(f"provenance_value_hash_mismatch:{source_uid}:{field}")
     return {
         "result": "PASS" if not failures else "FAIL",

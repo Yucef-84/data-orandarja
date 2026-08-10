@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 try:
@@ -43,7 +44,6 @@ PROMPT_VERSION = "madoran-source-enrichment-v1"
 METHOD = "llm_source_only_enrichment"
 MODEL = "codex-unspecified"
 SCHEMA_VERSION = "1.0.0"
-GENERATED_AT = "2026-08-10T00:00:00Z"
 TARGET_START = 1
 TARGET_END = 64
 TARGET_STATE = "draft"
@@ -212,7 +212,11 @@ def validate_applied_state(
     )
 
 
-def _event(source_uid: str, field: str, value: str) -> dict[str, str]:
+def current_utc_timestamp() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _event(source_uid: str, field: str, value: str, generated_at: str) -> dict[str, str]:
     return {
         "source_uid": source_uid,
         "field": field,
@@ -221,7 +225,7 @@ def _event(source_uid: str, field: str, value: str) -> dict[str, str]:
         "model": MODEL,
         "prompt_version": PROMPT_VERSION,
         "schema_version": SCHEMA_VERSION,
-        "generated_at": GENERATED_AT,
+        "generated_at": generated_at,
         "review_state": "generated",
     }
 
@@ -295,8 +299,9 @@ def apply() -> dict[str, object]:
     existing_event_check = check_provenance_events(existing_event_text, source_uids)
     if existing_event_check["result"] != "PASS":
         raise RuntimeError(json.dumps(existing_event_check, ensure_ascii=False))
+    generated_at = current_utc_timestamp()
     new_events = [
-        _event(row["source_uid"], field, row[field])
+        _event(row["source_uid"], field, row[field], generated_at)
         for row in batch_rows
         for field in EMPTY_FIELDS
     ]

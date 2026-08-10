@@ -16,8 +16,9 @@
     "canonical_word_count": 30919,
     "enrichment_rows": 1356,
     "enrichment_completed_rows": 0,
-    "enrichment_draft_rows": 64,
-    "enrichment_not_started_rows": 1292
+    "enrichment_draft_rows": 63,
+    "enrichment_not_started_rows": 1292,
+    "enrichment_flagged_rows": 1
   },
   "dependency_policy": {
     "source_only_pipeline_reads_morphology": false,
@@ -29,5 +30,6 @@
     "data/master/qa/madoran_format_reconciliation.json",
     "data/master/provenance_manifest.json"
   ],
-  "enrichment_batch_id": "MADORAN-ENRICH-001"
+  "enrichment_batch_id": "MADORAN-ENRICH-001",
+  "enrichment_correction_id": "MADORAN-ENRICH-001-CORRECTION-01"
 }
