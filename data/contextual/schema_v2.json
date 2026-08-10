@@ -37,6 +37,11 @@
     "source_direct_requires": "arabic equals source_form exactly",
     "hold_is_not_a_provenance_bypass": true
   },
+  "source_policy": {
+    "implemented_source_ids": ["S6"],
+    "disabled_source_ids": ["S1"],
+    "disabled_reason": "S1 CORVAM requires an exact transcript/locator replay adapter before use"
+  },
   "target_active_counts": {
     "A1": 600,
     "A2": 600,

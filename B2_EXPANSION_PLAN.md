@@ -31,6 +31,11 @@ HOLD rows are retained for auditability and excluded from active and
 5. Set `learner_ready=true` only after `native2_approved` and disagreement
    resolution.
 
+`scripts/validate_native_pilot.py` is the final native-certification gate: it
+reports the threshold metrics, but it also requires a complete two-reviewer
+summary with every active sample resolved to `native2_approved` before any
+learner-ready transition.
+
 ## Source reality check
 
 The local MADOran V2 source has 1,356 sentences. After excluding the 200

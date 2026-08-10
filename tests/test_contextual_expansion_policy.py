@@ -107,6 +107,24 @@ class ContextualExpansionPolicyTests(unittest.TestCase):
             report = validate_expansion([temp_path])
             self.assertTrue(any("canonical lexical core" in error for error in report["p0_errors"]))
 
+    def test_validator_rejects_fixed_value_and_learner_ready_enum_bypass(self):
+        source = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir) / source.name
+            with source.open(encoding="utf-8-sig", newline="") as handle:
+                rows = list(csv.DictReader(handle, delimiter="\t"))
+            rows[0]["language"] = "en"
+            rows[0]["variety"] = "ar-DZ"
+            rows[0]["learner_ready"] = "TRUE"
+            with temp_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0]), delimiter="\t", quoting=csv.QUOTE_ALL)
+                writer.writeheader()
+                writer.writerows(rows)
+            report = validate_expansion([temp_path])
+            self.assertTrue(any("language must be ar" in error for error in report["p0_errors"]))
+            self.assertTrue(any("variety must be ar-DZ-oran" in error for error in report["p0_errors"]))
+            self.assertTrue(any("learner_ready must be true or false" in error for error in report["p0_errors"]))
+
 
 if __name__ == "__main__":
     unittest.main()

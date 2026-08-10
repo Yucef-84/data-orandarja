@@ -89,11 +89,17 @@ def validate(paths: list[Path] | None = None) -> dict[str, object]:
             errors.append(f"{sid}: missing fields {missing}")
         if row.get("cefr") not in LEVELS or row.get("domain") not in DOMAINS:
             errors.append(f"{sid}: invalid level or domain")
+        if row.get("language") != "ar":
+            errors.append(f"{sid}: language must be ar")
+        if row.get("variety") != "ar-DZ-oran":
+            errors.append(f"{sid}: variety must be ar-DZ-oran")
         if row.get("sample_type") != "utterance":
             errors.append(f"{sid}: sample_type must be utterance")
         if row.get("review_status") not in STATUSES:
             errors.append(f"{sid}: invalid review_status")
-        if row.get("learner_ready") == "true" and row.get("review_status") != "native2_approved":
+        if row.get("learner_ready") not in {"true", "false"}:
+            errors.append(f"{sid}: learner_ready must be true or false")
+        elif row.get("learner_ready") == "true" and row.get("review_status") != "native2_approved":
             errors.append(f"{sid}: learner_ready requires native2_approved")
         if row.get("review_status") == "hold" and not row.get("note", "").startswith("HOLD:"):
             errors.append(f"{sid}: hold rows require a HOLD note")

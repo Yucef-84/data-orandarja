@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BATCH01 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
 BATCH02 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch02.tsv"
 EXPECTED_BATCH01_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
+EXPECTED_BATCH02_SHA256 = "9d3b25877405975fc2623d7664ac23b489784f8c3f0e431d4b8ae00a163531df"
 EXPECTED_HOLD_IDS = {
     "ODC-000149", "ODC-000150", "ODC-000153", "ODC-000154", "ODC-000155",
     "ODC-000158", "ODC-000159", "ODC-000160", "ODC-000162", "ODC-000164",
@@ -59,6 +60,10 @@ class ContextualBatch02Tests(unittest.TestCase):
     def test_batch01_is_frozen(self):
         digest = hashlib.sha256(BATCH01.read_bytes()).hexdigest()
         self.assertEqual(digest, EXPECTED_BATCH01_SHA256)
+
+    def test_batch02_is_frozen(self):
+        digest = hashlib.sha256(BATCH02.read_bytes()).hexdigest()
+        self.assertEqual(digest, EXPECTED_BATCH02_SHA256)
 
 
 if __name__ == "__main__":

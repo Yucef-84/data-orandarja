@@ -25,6 +25,7 @@ SOURCE = (
 
 CANONICAL_SHA256 = "96cc35a441c91ee70bd1edd70c6c0d48646f7b808b08f140a88b5d98d642eaf6"
 BATCH01_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
+BATCH02_SHA256 = "9d3b25877405975fc2623d7664ac23b489784f8c3f0e431d4b8ae00a163531df"
 FIELDS = [
     "sample_id", "language", "variety", "cefr", "domain", "topic",
     "sample_type", "arabic", "source_form", "latin", "ko", "en",
@@ -57,10 +58,13 @@ def validate() -> dict[str, object]:
     batch01_bytes = BATCH01.read_bytes()
     canonical_sha = hashlib.sha256(canonical_bytes).hexdigest()
     batch01_sha = hashlib.sha256(batch01_bytes).hexdigest()
+    batch02_sha = hashlib.sha256(BATCH02.read_bytes()).hexdigest()
     if canonical_sha != CANONICAL_SHA256:
         errors.append(f"canonical SHA changed: {canonical_sha}")
     if batch01_sha != BATCH01_SHA256:
         errors.append(f"Batch01 SHA changed: {batch01_sha}")
+    if batch02_sha != BATCH02_SHA256:
+        errors.append(f"Batch02 SHA changed: {batch02_sha}")
 
     canonical_rows = read_tsv(CANONICAL)
     batch01_rows = read_tsv(BATCH01)
@@ -164,6 +168,7 @@ def validate() -> dict[str, object]:
         "hold": hold_count,
         "canonical_sha256": canonical_sha,
         "batch01_sha256": batch01_sha,
+        "batch02_sha256": batch02_sha,
         "rows": len(rows),
         "cefr_counts": dict(cefr_counts),
         "domain_counts": dict(domain_counts),
