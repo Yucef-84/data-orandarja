@@ -45,6 +45,9 @@ MORPHOLOGY_DEPENDENT_FIELDS = frozenset(
         "morphology_learning_units",
     }
 )
+ENRICHMENT_STATES = frozenset(
+    {"not_started", "draft", "qa_passed", "reviewed", "flagged"}
+)
 
 
 def check_enrichment_rows(
@@ -71,11 +74,14 @@ def check_enrichment_rows(
     if enrichment_sentnos != expected_sentnos:
         failures.append("sentno_coverage")
     for row in enrichment_rows:
-        if any(row.get(field, "") != "" for field in EMPTY_FIELDS):
-            failures.append("non_empty_initial_linguistic_field")
+        state = row.get("enrichment_state", "")
+        if state not in ENRICHMENT_STATES:
+            failures.append("invalid_enrichment_state")
             break
-        if row.get("enrichment_state") != "not_started":
-            failures.append("initial_state")
+        if state == "not_started" and any(
+            row.get(field, "") != "" for field in EMPTY_FIELDS
+        ):
+            failures.append("non_empty_initial_linguistic_field")
             break
     return {
         "result": "PASS" if not failures else "FAIL",

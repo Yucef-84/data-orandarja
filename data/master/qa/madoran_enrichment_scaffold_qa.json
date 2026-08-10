@@ -1,5 +1,6 @@
 {
   "result": "PASS",
+  "failures": [],
   "source_gate": {
     "result": "PASS",
     "failures": [],
@@ -19,11 +20,24 @@
       "git_blob_sha1": "9298678ca802f1b86f810becde31b0fbe39e65e0"
     }
   },
-  "rows": 1356,
+  "source_rows": 1356,
+  "enrichment_rows": 1356,
   "completed_rows": 0,
-  "enrichment_state": "not_started",
-  "enrichment_output_action": "preserved",
-  "morphology_dependency": "not_read",
-  "output": "data/master/enrichment/madoran_sentence_enrichment.tsv",
-  "provenance_events": "tmpv9l14wzc/events.jsonl"
+  "morphology_dependency": {
+    "result": "PASS",
+    "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+    "populated_fields": [],
+    "violations": [],
+    "failures": []
+  },
+  "provenance_events": {
+    "result": "PASS",
+    "failures": [],
+    "events": 0
+  },
+  "outputs": {
+    "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+    "status": "data/master/state/madoran_layer_status.json",
+    "issue": "data/master/issues/madoran_morphology_upstream_defect.json"
+  }
 }

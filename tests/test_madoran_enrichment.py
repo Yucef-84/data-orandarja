@@ -187,8 +187,12 @@ class MadoranEnrichmentTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(dir=ROOT) as directory:
             directory_path = Path(directory)
             events_path = directory_path / "events.jsonl"
+            qa_path = directory_path / "qa.json"
             events_path.write_text(event_text, encoding="utf-8")
-            with patch.object(scaffold, "EVENTS_OUT", events_path):
+            with (
+                patch.object(scaffold, "EVENTS_OUT", events_path),
+                patch.object(scaffold, "QA_OUT", qa_path),
+            ):
                 report = scaffold.build()
             self.assertEqual(report["result"], "PASS")
             self.assertEqual(events_path.read_text(encoding="utf-8"), event_text)
@@ -214,6 +218,13 @@ class MadoranEnrichmentTests(unittest.TestCase):
             self.assertEqual(report["enrichment_output_action"], "preserved")
             self.assertEqual(report["completed_rows"], 1)
             self.assertEqual(enrichment_path.read_bytes(), before_bytes)
+
+    def test_populated_enrichment_row_is_valid_after_scaffold_phase(self):
+        populated = [dict(row) for row in self.enrichment_rows]
+        populated[0]["latin"] = "future enrichment"
+        populated[0]["enrichment_state"] = "draft"
+        report = enrichment.check_enrichment_rows(self.source_rows, populated)
+        self.assertEqual(report["result"], "PASS")
 
     def test_schema_declares_morphology_dependency_gate(self):
         schema = json.loads(
