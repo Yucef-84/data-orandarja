@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -16,6 +17,7 @@ try:
         ROOT,
         SOURCE_OUT,
         check_provenance_events,
+        parse_provenance_events,
         read_tsv,
         source_gate,
     )
@@ -29,6 +31,7 @@ except ModuleNotFoundError:
         ROOT,
         SOURCE_OUT,
         check_provenance_events,
+        parse_provenance_events,
         read_tsv,
         source_gate,
     )
@@ -110,6 +113,39 @@ def check_morphology_dependency(
     }
 
 
+def check_enrichment_provenance(
+    enrichment_rows: list[dict[str, str]], event_text: str
+) -> dict[str, object]:
+    """Require a matching UTF-8 SHA-256 event for every populated field."""
+
+    source_uids = {row.get("source_uid", "") for row in enrichment_rows}
+    events, parse_failures, _ = parse_provenance_events(event_text, source_uids)
+    failures = list(parse_failures)
+    populated_fields = 0
+    for row in enrichment_rows:
+        source_uid = row.get("source_uid", "")
+        for field in EMPTY_FIELDS:
+            value = row.get(field, "")
+            if value == "":
+                continue
+            populated_fields += 1
+            expected_hash = "sha256:" + hashlib.sha256(value.encode("utf-8")).hexdigest()
+            matching = [
+                event
+                for event in events
+                if event.get("source_uid") == source_uid and event.get("field") == field
+            ]
+            if not matching:
+                failures.append(f"missing_provenance_event:{source_uid}:{field}")
+            elif not any(event.get("value_hash") == expected_hash for event in matching):
+                failures.append(f"provenance_value_hash_mismatch:{source_uid}:{field}")
+    return {
+        "result": "PASS" if not failures else "FAIL",
+        "failures": failures,
+        "populated_fields": populated_fields,
+    }
+
+
 def validate() -> dict[str, object]:
     failures: list[str] = []
     gate = source_gate()
@@ -122,17 +158,21 @@ def validate() -> dict[str, object]:
     row_check = check_enrichment_rows(source_rows, enrichment_rows)
     failures.extend(row_check["failures"])
     if not EVENTS_OUT.exists():
+        event_text = ""
         event_check = {
             "result": "FAIL",
             "failures": ["provenance_event_log_missing"],
             "events": 0,
         }
     else:
+        event_text = EVENTS_OUT.read_text(encoding="utf-8")
         event_check = check_provenance_events(
-            EVENTS_OUT.read_text(encoding="utf-8"),
+            event_text,
             {row.get("source_uid", "") for row in source_rows},
         )
     failures.extend(event_check["failures"])
+    enrichment_provenance = check_enrichment_provenance(enrichment_rows, event_text)
+    failures.extend(enrichment_provenance["failures"])
     status: dict[str, object] = {}
     if not STATUS_OUT.exists():
         failures.append("layer_status_missing")
@@ -175,6 +215,7 @@ def validate() -> dict[str, object]:
         ),
         "morphology_dependency": dependency_check,
         "provenance_events": event_check,
+        "enrichment_provenance": enrichment_provenance,
         "outputs": {
             "enrichment": ENRICHMENT_OUT.relative_to(ROOT).as_posix(),
             "status": STATUS_OUT.relative_to(ROOT).as_posix(),

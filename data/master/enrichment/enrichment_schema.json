@@ -176,6 +176,7 @@
       "generated_at",
       "review_state"
     ],
+    "value_hash_format": "sha256:<lowercase hex SHA-256 of the UTF-8 field value>",
     "append_only": true
   }
 }

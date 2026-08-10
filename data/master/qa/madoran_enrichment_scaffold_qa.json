@@ -35,6 +35,11 @@
     "failures": [],
     "events": 0
   },
+  "enrichment_provenance": {
+    "result": "PASS",
+    "failures": [],
+    "populated_fields": 0
+  },
   "outputs": {
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "status": "data/master/state/madoran_layer_status.json",

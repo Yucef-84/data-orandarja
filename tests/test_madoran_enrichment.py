@@ -1,4 +1,5 @@
 import csv
+import hashlib
 import json
 import tempfile
 import unittest
@@ -225,6 +226,35 @@ class MadoranEnrichmentTests(unittest.TestCase):
         populated[0]["enrichment_state"] = "draft"
         report = enrichment.check_enrichment_rows(self.source_rows, populated)
         self.assertEqual(report["result"], "PASS")
+
+    def test_populated_field_requires_matching_provenance_hash(self):
+        populated = [dict(row) for row in self.enrichment_rows]
+        populated[0]["latin"] = "future enrichment"
+        populated[0]["enrichment_state"] = "draft"
+        missing = enrichment.check_enrichment_provenance(populated, "")
+        value_hash = "sha256:" + hashlib.sha256(
+            populated[0]["latin"].encode("utf-8")
+        ).hexdigest()
+        event = {
+            "source_uid": populated[0]["source_uid"],
+            "field": "latin",
+            "value_hash": value_hash,
+            "method": "test",
+            "model": "test-model",
+            "prompt_version": "test-v1",
+            "schema_version": "1.0.0",
+            "generated_at": "2026-08-10T00:00:00Z",
+            "review_state": "generated",
+        }
+        traced = enrichment.check_enrichment_provenance(
+            populated, json.dumps(event) + "\n"
+        )
+        self.assertEqual(missing["result"], "FAIL")
+        self.assertIn(
+            f"missing_provenance_event:{populated[0]['source_uid']}:latin",
+            missing["failures"],
+        )
+        self.assertEqual(traced["result"], "PASS")
 
     def test_schema_declares_morphology_dependency_gate(self):
         schema = json.loads(

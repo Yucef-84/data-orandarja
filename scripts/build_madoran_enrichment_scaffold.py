@@ -177,7 +177,21 @@ def check_provenance_events(
 ) -> dict[str, object]:
     """Validate append-only provenance events and their required fields."""
 
+    _, failures, event_count = parse_provenance_events(event_text, source_uids)
+    return {
+        "result": "PASS" if not failures else "FAIL",
+        "failures": failures,
+        "events": event_count,
+    }
+
+
+def parse_provenance_events(
+    event_text: str, source_uids: set[str]
+) -> tuple[list[dict[str, object]], list[str], int]:
+    """Parse events and return objects for field-level provenance tracing."""
+
     failures: list[str] = []
+    events: list[dict[str, object]] = []
     event_count = 0
     for line_number, line in enumerate(event_text.splitlines(), 1):
         if not line.strip():
@@ -191,6 +205,7 @@ def check_provenance_events(
         if not isinstance(event, dict):
             failures.append(f"provenance_event_not_object:{line_number}")
             continue
+        events.append(event)
         missing = [
             field
             for field in PROVENANCE_REQUIRED_FIELDS
@@ -202,11 +217,7 @@ def check_provenance_events(
             failures.append(f"provenance_unknown_source_uid:{line_number}")
         if event.get("field") not in ENRICHMENT_FIELDS:
             failures.append(f"provenance_unknown_field:{line_number}")
-    return {
-        "result": "PASS" if not failures else "FAIL",
-        "failures": failures,
-        "events": event_count,
-    }
+    return events, failures, event_count
 
 
 def source_gate() -> dict[str, object]:
