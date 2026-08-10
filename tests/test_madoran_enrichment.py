@@ -63,15 +63,14 @@ class MadoranEnrichmentTests(unittest.TestCase):
 
     def test_non_empty_initial_field_is_rejected(self):
         mutated = [dict(row) for row in self.enrichment_rows]
-        mutated[0]["latin"] = "should not be populated in scaffold"
+        mutated[64]["latin"] = "should not be populated in scaffold"
         report = enrichment.check_enrichment_rows(self.source_rows, mutated)
         self.assertEqual(report["result"], "FAIL")
         self.assertIn("non_empty_initial_linguistic_field", report["failures"])
 
     def test_initial_state_is_not_started(self):
-        self.assertTrue(
-            all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows)
-        )
+        self.assertTrue(all(row["enrichment_state"] == "draft" for row in self.enrichment_rows[:64]))
+        self.assertTrue(all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows[64:]))
 
     def test_source_gate_passes_without_morphology_access(self):
         report = scaffold.source_gate()
@@ -199,7 +198,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             self.assertEqual(events_path.read_text(encoding="utf-8"), event_text)
 
     def test_scaffold_rebuild_preserves_existing_enrichment_values(self):
-        existing_rows = [dict(row) for row in self.enrichment_rows]
+        existing_rows = scaffold.scaffold_rows(self.source_rows)
         existing_rows[0]["latin"] = "existing enrichment"
         existing_rows[0]["enrichment_state"] = "draft"
         with tempfile.TemporaryDirectory(dir=ROOT) as directory:
@@ -228,7 +227,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertEqual(report["result"], "PASS")
 
     def test_populated_field_requires_matching_provenance_hash(self):
-        populated = [dict(row) for row in self.enrichment_rows]
+        populated = scaffold.scaffold_rows(self.source_rows)
         populated[0]["latin"] = "future enrichment"
         populated[0]["enrichment_state"] = "draft"
         missing = enrichment.check_enrichment_provenance(populated, "")
@@ -280,8 +279,13 @@ class MadoranEnrichmentTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, builder_text)
 
-    def test_provenance_event_log_starts_empty(self):
-        self.assertEqual(scaffold.EVENTS_OUT.read_text(encoding="utf-8"), "")
+    def test_provenance_event_log_contains_batch_events(self):
+        event_text = scaffold.EVENTS_OUT.read_text(encoding="utf-8")
+        report = enrichment.check_provenance_events(
+            event_text, {row["source_uid"] for row in self.source_rows}
+        )
+        self.assertEqual(report["result"], "PASS")
+        self.assertEqual(report["events"], 704)
 
 
 if __name__ == "__main__":

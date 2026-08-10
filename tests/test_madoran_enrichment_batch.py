@@ -1,0 +1,127 @@
+import copy
+import json
+import subprocess
+import sys
+import unittest
+from pathlib import Path
+
+from scripts.apply_madoran_enrichment_batch import (
+    BATCH_FIELDS,
+    BATCH_OUT,
+    BATCH_QA_OUT,
+    CONTROLLED_VALUES,
+    EMPTY_FIELDS,
+    ENRICHMENT_OUT,
+    EVENTS_OUT,
+    MANIFEST_OUT,
+    ROOT,
+    TARGET_END,
+    TARGET_START,
+    validate_applied_state,
+    validate_batch_rows,
+)
+from scripts.build_madoran_enrichment_scaffold import (
+    ENRICHMENT_FIELDS,
+    check_provenance_events,
+    read_tsv,
+)
+from scripts.validate_madoran_enrichment import check_enrichment_provenance
+
+
+class MadoranEnrichmentBatchTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.source_rows = read_tsv(ROOT / "data" / "master" / "source" / "madoran_sentences.tsv")
+        cls.batch_rows = read_tsv(BATCH_OUT)
+        cls.enrichment_rows = read_tsv(ENRICHMENT_OUT)
+        cls.event_text = EVENTS_OUT.read_text(encoding="utf-8")
+
+    def test_batch_header_and_range(self):
+        self.assertEqual(list(self.batch_rows[0]), BATCH_FIELDS)
+        self.assertEqual([row["sentno"] for row in self.batch_rows], [str(i) for i in range(1, 65)])
+
+    def test_batch_validation_passes(self):
+        report = validate_batch_rows(self.source_rows, self.batch_rows)
+        self.assertEqual(report["result"], "PASS", report)
+        self.assertEqual(report["populated_fields"], 64 * len(EMPTY_FIELDS))
+
+    def test_batch_values_are_populated_and_controlled(self):
+        for row in self.batch_rows:
+            for field in EMPTY_FIELDS:
+                self.assertTrue(row[field])
+            self.assertTrue(row["latin"].isascii())
+            self.assertIn(row["cefr_level"], {"A1", "A2", "B1", "B2", "C1", "C2"})
+            self.assertIn(row["domain"], CONTROLLED_VALUES["domain"])
+            self.assertIn(row["genre"], CONTROLLED_VALUES["genre"])
+            self.assertIn(row["speech_act"], CONTROLLED_VALUES["speech_act"])
+            self.assertIn(row["register"], CONTROLLED_VALUES["register"])
+            self.assertIn(row["context_dependency"], CONTROLLED_VALUES["context_dependency"])
+            self.assertGreaterEqual(int(row["difficulty_score"]), 0)
+            self.assertLessEqual(int(row["difficulty_score"]), 100)
+
+    def test_manifest_matches_batch_contract(self):
+        manifest = json.loads(MANIFEST_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(manifest["batch_id"], "MADORAN-ENRICH-001")
+        self.assertEqual(manifest["base_commit"], "c8d85c7")
+        self.assertEqual(manifest["sentno_start"], TARGET_START)
+        self.assertEqual(manifest["sentno_end"], TARGET_END)
+        self.assertEqual(manifest["row_count"], 64)
+        self.assertEqual(manifest["fields"], list(EMPTY_FIELDS))
+        self.assertEqual(manifest["source_dependency"], "canonical_source_only")
+        self.assertFalse(manifest["morphology_dependency"])
+        self.assertFalse(manifest["darija_modified"])
+
+    def test_applied_state_is_exactly_targeted(self):
+        target = [row for row in self.enrichment_rows if 1 <= int(row["sentno"]) <= 64]
+        outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 64]
+        self.assertEqual(len(target), 64)
+        self.assertTrue(all(row["enrichment_state"] == "draft" for row in target))
+        self.assertTrue(all(row["enrichment_state"] == "not_started" for row in outside))
+        self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
+        self.assertEqual(sum(bool(row[field]) for row in outside for field in EMPTY_FIELDS), 0)
+
+    def test_provenance_is_field_level_and_hashed(self):
+        source_uids = {row["source_uid"] for row in self.source_rows}
+        event_check = check_provenance_events(self.event_text, source_uids)
+        self.assertEqual(event_check["result"], "PASS", event_check)
+        self.assertEqual(event_check["events"], 64 * len(EMPTY_FIELDS))
+        trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
+        self.assertEqual(trace["result"], "PASS", trace)
+        self.assertEqual(trace["populated_fields"], 64 * len(EMPTY_FIELDS))
+
+    def test_batch_qa_is_pass(self):
+        qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["result"], "PASS")
+        self.assertEqual(qa["new_provenance_events"], 64 * len(EMPTY_FIELDS))
+        self.assertEqual(qa["outside_target_mutations"], 0)
+        self.assertEqual(qa["morphology"], "BLOCKED_UPSTREAM_DEFECT")
+        self.assertEqual(qa["validator"], "PASS")
+
+    def test_invalid_batch_value_is_rejected(self):
+        invalid = copy.deepcopy(self.batch_rows)
+        invalid[0]["cefr_level"] = "C3"
+        report = validate_batch_rows(self.source_rows, invalid)
+        self.assertEqual(report["result"], "FAIL")
+        self.assertIn("invalid_cefr:1", report["failures"])
+
+    def test_outside_target_mutation_is_rejected(self):
+        before = copy.deepcopy(self.enrichment_rows)
+        after = copy.deepcopy(self.enrichment_rows)
+        after[-1]["topic"] = "mutated"
+        report = validate_applied_state(before, after)
+        self.assertEqual(report["result"], "FAIL")
+        self.assertEqual(report["outside_target_mutations"], 1)
+
+    def test_full_validator_passes(self):
+        result = subprocess.run(
+            [sys.executable, "scripts/validate_madoran_enrichment.py"],
+            cwd=ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+
+if __name__ == "__main__":
+    unittest.main()
