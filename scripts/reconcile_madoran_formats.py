@@ -11,7 +11,6 @@ import csv
 import json
 import sqlite3
 import sys
-from collections import Counter
 from pathlib import Path
 
 try:
@@ -21,7 +20,6 @@ try:
         MORPHOLOGY_DB,
         MORPHOLOGY_FIELDS,
         MORPHOLOGY_JSON,
-        QA_OUT,
         SENTENCES,
         read_rows,
     )
@@ -32,7 +30,6 @@ except ModuleNotFoundError:
         MORPHOLOGY_DB,
         MORPHOLOGY_FIELDS,
         MORPHOLOGY_JSON,
-        QA_OUT,
         SENTENCES,
         read_rows,
     )

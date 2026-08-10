@@ -5,15 +5,15 @@
   "license_id": "CC-BY-NC-3.0-MADORAN",
   "snapshot_policy": {
     "path_format": "posix",
-    "byte_preservation": "upstream bytes are preserved; no EOL normalization",
+    "byte_preservation": "Git canonical bytes are pinned; tracked text uses LF and semantic source values are preserved exactly",
     "builder_rebaselining": "disabled after the manifest is pinned"
   },
   "upstream_snapshot": {
     "sentences": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/Raw Data - Sentences/MADOran_Sentences.tsv",
-      "size_bytes": 267661,
-      "sha256": "924f847ecf40ba9921dca94e01c4c16b20c0cb47e1935e4156ae393038e1076b",
-      "git_blob_sha1": "3a94a8ef6517fdb2a7349bd5d7137c141367336f"
+      "size_bytes": 266304,
+      "sha256": "86cf1f6512474d8445537eb46364d3aebf3c17934d9a5122c7c5e6a53adaafa4",
+      "git_blob_sha1": "9298678ca802f1b86f810becde31b0fbe39e65e0"
     },
     "sentences_text": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/Raw Data - Sentences/MADOran_Sentences.txt",
@@ -23,15 +23,15 @@
     },
     "morphology_tsv": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.tsv",
-      "size_bytes": 3546078,
-      "sha256": "579faa2bfc2f0ad889aa6115fa382f1799d02568ba76884238d0c05facc1ad68",
-      "git_blob_sha1": "337cfcb83ff1acd9015f3c11e246e5c94270ad89"
+      "size_bytes": 3515162,
+      "sha256": "abd31e9c6edb4e231fd9f9652b3b91a88d800560415a0148d41448b3e47167dc",
+      "git_blob_sha1": "e97bfcf034e6ddbd21975d4c16882d5e7048f60e"
     },
     "morphology_csv": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.csv",
-      "size_bytes": 3562568,
-      "sha256": "e1cb1c25f704a88603fbb3132e84ce4bedeff8f56e34d0a2fd3a13f209bc3301",
-      "git_blob_sha1": "7c7d12f69067761a0c3f6d82e3f562fcab2dcf85"
+      "size_bytes": 3531652,
+      "sha256": "f7b08202d6dea356ce542a0711270d4e92148a34e1c1e06113ceff85b7508149",
+      "git_blob_sha1": "7e9b7a9407844463609ea30778b761a3f981f6ef"
     },
     "morphology_json": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/MADOran Morphologically Annotated Dataset/MADOran.json",
@@ -47,9 +47,9 @@
     },
     "readme": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/ReadMe.txt",
-      "size_bytes": 5682,
-      "sha256": "f58cc7ffa050e8478c92d07254386e9cc58cf1ee2d59c4b4fc59eebae3e35cdc",
-      "git_blob_sha1": "21f9bb8b68d7ae2518dc270e0b995e9c8719740d"
+      "size_bytes": 5595,
+      "sha256": "1e5273d8bcd60e638e779c110f80f71eb45a81be38afff8f7a9d5201a225304c",
+      "git_blob_sha1": "14e13b7b5edc577c5130624fa14d9d4f3789957a"
     },
     "annotation_guidelines": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/Morphology Annotation Guidelines.pdf",
@@ -59,9 +59,9 @@
     },
     "frequency": {
       "path": "sources/madoran_v2/Morphologically Annotated Orani-Arbaic Dialect Dat/Frequency distribution data/MADORanFreqDist.csv",
-      "size_bytes": 122330,
-      "sha256": "411c7c68ad0130647888bf77bdb88a1084ad24b385a08c2974075cf88add3d9d",
-      "git_blob_sha1": "3624fd10b6b36525227cdb887322a98363aa8239"
+      "size_bytes": 113697,
+      "sha256": "830416fde8ed24494e12a6d5ff8cac5d4ae72bb7edfbc3eb876bb48d1738002c",
+      "git_blob_sha1": "586debc458d6fd14bf7fa43edfb2dd6b6ad60e07"
     }
   },
   "outputs": {

@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
@@ -38,6 +39,15 @@ UPSTREAM_FILES = {
     "annotation_guidelines": ANNOTATION_GUIDELINES,
     "frequency": FREQUENCY,
 }
+TEXT_UPSTREAM_KEYS = {
+    "sentences",
+    "sentences_text",
+    "morphology_tsv",
+    "morphology_csv",
+    "morphology_json",
+    "readme",
+    "frequency",
+}
 
 SOURCE_FIELDS = ["Sentno", "Sentence", "WordCount"]
 MORPHOLOGY_FIELDS = [
@@ -52,29 +62,38 @@ MASTER_SOURCE_FIELDS = [
 ]
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
 def git_blob_sha1(path: Path) -> str:
-    payload = path.read_bytes()
-    header = f"blob {len(payload)}\0".encode("ascii")
-    return hashlib.sha1(header + payload).hexdigest()
+    result = subprocess.run(
+        ["git", "rev-parse", f"HEAD:{relative_posix(path)}"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
 
 
 def relative_posix(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
 
 
+def canonical_snapshot_bytes(key: str, path: Path) -> bytes:
+    payload = path.read_bytes()
+    if key in TEXT_UPSTREAM_KEYS:
+        return payload.replace(b"\r\n", b"\n")
+    return payload
+
+
 def current_upstream_snapshot() -> dict[str, dict[str, object]]:
     return {
         key: {
             "path": relative_posix(path),
-            "size_bytes": path.stat().st_size,
-            "sha256": sha256(path),
+            "size_bytes": len(payload),
+            "sha256": hashlib.sha256(payload).hexdigest(),
             "git_blob_sha1": git_blob_sha1(path),
         }
         for key, path in UPSTREAM_FILES.items()
+        for payload in [canonical_snapshot_bytes(key, path)]
     }
 
 
@@ -142,7 +161,7 @@ def make_provenance(qa_result: str) -> dict[str, object]:
         "license_id": "CC-BY-NC-3.0-MADORAN",
         "snapshot_policy": {
             "path_format": "posix",
-            "byte_preservation": "upstream bytes are preserved; no EOL normalization",
+            "byte_preservation": "Git canonical bytes are pinned; tracked text uses LF and semantic source values are preserved exactly",
             "builder_rebaselining": "disabled after the manifest is pinned",
         },
         "upstream_snapshot": current_upstream_snapshot(),

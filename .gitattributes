@@ -1,4 +1,4 @@
-# Keep dataset text and generated artifacts byte-stable across platforms.
+# Keep Git-canonical text artifacts LF-stable across platforms.
 * text=auto eol=lf
 *.tsv text eol=lf
 *.csv text eol=lf

@@ -37,6 +37,10 @@ classification axis (`A1` through `C2`), not a quota or a source filter.
 - The old contextual batches and native review files remain historical and
   calibration assets; they do not decide whether a MADOran source sentence is
   canonical.
+- The provenance manifest uses POSIX paths and Git-canonical bytes (LF for
+  tracked text); it records SHA-256, Git blob SHA-1, and byte size for the
+  upstream snapshot. The builder and validator refuse to silently re-baseline
+  a pinned snapshot.
 
 ## Execution gates
 
@@ -52,13 +56,19 @@ unit generation begins until both source and morphology QA pass:
 - no source or morphology mutation.
 
 The current local snapshot is expected to expose any upstream inconsistency;
-the builder must report it rather than fabricate annotations.
+the builder must report it rather than fabricate annotations. The four
+official morphology representations are reconciled by
+`scripts/reconcile_madoran_formats.py` before any integrity-gate decision.
+For the current snapshot, TSV, CSV, JSON, and SQLite are identical at 30,915
+rows and share the same missing/extra positions, so the result is
+`UPSTREAM_DEFECT_CONFIRMED` and the morphology gate remains blocked.
 
 ## Source provenance
 
 MADOran is retained under its upstream CC BY-NC 3.0 terms. The local snapshot
-is associated with Mendeley Data DOI `10.17632/pgr766jbhp.2`; exact file hashes
-are recorded in `data/master/provenance_manifest.json`.
+is associated with Mendeley Data DOI `10.17632/pgr766jbhp.2`; exact Git-canonical
+file hashes and blob IDs are recorded in
+`data/master/provenance_manifest.json`.
 
 ## Next phases after the first gate
 

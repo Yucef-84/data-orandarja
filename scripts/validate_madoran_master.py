@@ -10,7 +10,6 @@ try:
     from scripts.build_madoran_master import (
         MORPHOLOGY,
         MORPHOLOGY_OUT,
-        PROVENANCE_OUT,
         SENTENCES,
         SOURCE_OUT,
         build_source,
@@ -23,7 +22,6 @@ except ModuleNotFoundError:
     from build_madoran_master import (  # type: ignore
         MORPHOLOGY,
         MORPHOLOGY_OUT,
-        PROVENANCE_OUT,
         SENTENCES,
         SOURCE_OUT,
         build_source,

@@ -1,5 +1,6 @@
 import csv
 import json
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -56,6 +57,15 @@ class MadoranMasterTests(unittest.TestCase):
         self.assertTrue(
             all("\\" not in entry["path"] for entry in manifest["upstream_snapshot"].values())
         )
+        for entry in manifest["upstream_snapshot"].values():
+            actual = subprocess.run(
+                ["git", "rev-parse", f"HEAD:{entry['path']}"],
+                cwd=ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            self.assertEqual(entry["git_blob_sha1"], actual)
 
     def test_morphology_preserves_upstream_schema(self):
         current = rows(MORPHOLOGY_OUT)
