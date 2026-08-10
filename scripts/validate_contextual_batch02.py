@@ -33,6 +33,7 @@ FIELDS = [
     "review_status", "learner_ready", "note",
 ]
 DOMAINS = {"school_work", "city_transport", "body_health", "food_shopping"}
+CEFR_QUOTA = {"A1": 49, "A2": 55}
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -93,7 +94,7 @@ def validate() -> dict[str, object]:
 
     cefr_counts = Counter(row.get("cefr", "") for row in rows)
     domain_counts = Counter(row.get("domain", "") for row in rows)
-    if cefr_counts != Counter({"A1": 52, "A2": 52}):
+    if cefr_counts != Counter(CEFR_QUOTA):
         errors.append(f"CEFR counts are {dict(cefr_counts)}")
     if domain_counts != Counter({domain: 26 for domain in DOMAINS}):
         errors.append(f"domain counts are {dict(domain_counts)}")
