@@ -1,25 +1,28 @@
 {
   "result": "PASS",
-  "failures": [],
   "source_gate": {
     "result": "PASS",
     "failures": [],
     "source_rows": 1356,
-    "provenance_manifest_version": "1.1.0"
+    "provenance_manifest_version": "1.1.0",
+    "live_source": {
+      "result": "PASS",
+      "failures": [],
+      "upstream_rows": 1356,
+      "actual_rows": 1356
+    },
+    "pinned_source": {
+      "result": "PASS",
+      "failures": [],
+      "size_bytes": 266304,
+      "sha256": "86cf1f6512474d8445537eb46364d3aebf3c17934d9a5122c7c5e6a53adaafa4",
+      "git_blob_sha1": "9298678ca802f1b86f810becde31b0fbe39e65e0"
+    }
   },
-  "source_rows": 1356,
-  "enrichment_rows": 1356,
+  "rows": 1356,
   "completed_rows": 0,
-  "morphology_dependency": {
-    "result": "PASS",
-    "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
-    "populated_fields": [],
-    "violations": [],
-    "failures": []
-  },
-  "outputs": {
-    "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
-    "status": "data/master/state/madoran_layer_status.json",
-    "issue": "data/master/issues/madoran_morphology_upstream_defect.json"
-  }
+  "enrichment_state": "not_started",
+  "morphology_dependency": "not_read",
+  "output": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+  "provenance_events": "tmplsr5o3z3/events.jsonl"
 }

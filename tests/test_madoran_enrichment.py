@@ -1,3 +1,4 @@
+import csv
 import json
 import tempfile
 import unittest
@@ -74,9 +75,38 @@ class MadoranEnrichmentTests(unittest.TestCase):
     def test_source_gate_passes_without_morphology_access(self):
         report = scaffold.source_gate()
         self.assertEqual(report["result"], "PASS")
+        self.assertEqual(report["live_source"]["result"], "PASS")
+        self.assertEqual(report["pinned_source"]["result"], "PASS")
+
+    def test_live_source_projection_rejects_arabic_mutation(self):
+        upstream_rows = scaffold.read_tsv(scaffold.UPSTREAM_SENTENCES)
+        actual_rows = scaffold.read_tsv(scaffold.SOURCE_OUT)
+        actual_rows[0]["arabic_original"] += " MUTATED"
+        report = scaffold.check_source_projection(upstream_rows, actual_rows)
+        self.assertEqual(report["result"], "FAIL")
+        self.assertIn("source_projection_mismatch", report["failures"])
+
+    def test_source_gate_rejects_mutated_tracked_source(self):
+        source_rows = scaffold.read_tsv(scaffold.SOURCE_OUT)
+        source_rows[0]["arabic_original"] += " MUTATED"
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            mutated_path = Path(directory) / "madoran_sentences.tsv"
+            with mutated_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(
+                    handle,
+                    fieldnames=scaffold.SOURCE_FIELDS,
+                    delimiter="\t",
+                    lineterminator="\n",
+                )
+                writer.writeheader()
+                writer.writerows(source_rows)
+            with patch.object(scaffold, "SOURCE_OUT", mutated_path):
+                report = scaffold.source_gate()
+        self.assertEqual(report["result"], "FAIL")
+        self.assertIn("live_source_integrity", report["failures"])
 
     def test_source_gate_rejects_failed_source_qa(self):
-        with tempfile.TemporaryDirectory() as directory:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
             source_qa = Path(directory) / "source_qa.json"
             source_qa.write_text(
                 json.dumps({"source": {"result": "FAIL"}, "source_mutations": 0}),
@@ -118,6 +148,50 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertEqual(issue["status"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertFalse(issue["repaired"])
         self.assertEqual(issue["synthetic_rows_added"], 0)
+
+    def test_provenance_event_required_fields_are_validated(self):
+        source_uid = self.source_rows[0]["source_uid"]
+        valid_event = {
+            "source_uid": source_uid,
+            "field": "latin",
+            "value_hash": "sha256:example",
+            "method": "test",
+            "model": "test-model",
+            "prompt_version": "test-v1",
+            "schema_version": "1.0.0",
+            "generated_at": "2026-08-10T00:00:00Z",
+            "review_state": "generated",
+        }
+        valid = enrichment.check_provenance_events(
+            json.dumps(valid_event), {source_uid}
+        )
+        invalid = enrichment.check_provenance_events("{}", {source_uid})
+        self.assertEqual(valid["result"], "PASS")
+        self.assertEqual(invalid["result"], "FAIL")
+        self.assertTrue(any("provenance_required_fields" in item for item in invalid["failures"]))
+
+    def test_scaffold_rebuild_preserves_existing_provenance_events(self):
+        source_uid = self.source_rows[0]["source_uid"]
+        event = {
+            "source_uid": source_uid,
+            "field": "latin",
+            "value_hash": "sha256:existing",
+            "method": "test",
+            "model": "test-model",
+            "prompt_version": "test-v1",
+            "schema_version": "1.0.0",
+            "generated_at": "2026-08-10T00:00:00Z",
+            "review_state": "generated",
+        }
+        event_text = json.dumps(event, ensure_ascii=False) + "\n"
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            directory_path = Path(directory)
+            events_path = directory_path / "events.jsonl"
+            events_path.write_text(event_text, encoding="utf-8")
+            with patch.object(scaffold, "EVENTS_OUT", events_path):
+                report = scaffold.build()
+            self.assertEqual(report["result"], "PASS")
+            self.assertEqual(events_path.read_text(encoding="utf-8"), event_text)
 
     def test_schema_declares_morphology_dependency_gate(self):
         schema = json.loads(

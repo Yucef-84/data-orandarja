@@ -15,6 +15,7 @@ try:
         QA_OUT,
         ROOT,
         SOURCE_OUT,
+        check_provenance_events,
         read_tsv,
         source_gate,
     )
@@ -27,6 +28,7 @@ except ModuleNotFoundError:
         QA_OUT,
         ROOT,
         SOURCE_OUT,
+        check_provenance_events,
         read_tsv,
         source_gate,
     )
@@ -113,12 +115,18 @@ def validate() -> dict[str, object]:
         failures.append("header")
     row_check = check_enrichment_rows(source_rows, enrichment_rows)
     failures.extend(row_check["failures"])
-    if EVENTS_OUT.exists() and EVENTS_OUT.read_text(encoding="utf-8") != "":
-        for line_number, line in enumerate(EVENTS_OUT.read_text(encoding="utf-8").splitlines(), 1):
-            try:
-                json.loads(line)
-            except json.JSONDecodeError:
-                failures.append(f"invalid_provenance_event:{line_number}")
+    if not EVENTS_OUT.exists():
+        event_check = {
+            "result": "FAIL",
+            "failures": ["provenance_event_log_missing"],
+            "events": 0,
+        }
+    else:
+        event_check = check_provenance_events(
+            EVENTS_OUT.read_text(encoding="utf-8"),
+            {row.get("source_uid", "") for row in source_rows},
+        )
+    failures.extend(event_check["failures"])
     status: dict[str, object] = {}
     if not STATUS_OUT.exists():
         failures.append("layer_status_missing")
@@ -160,6 +168,7 @@ def validate() -> dict[str, object]:
             1 for row in enrichment_rows if row.get("enrichment_state") != "not_started"
         ),
         "morphology_dependency": dependency_check,
+        "provenance_events": event_check,
         "outputs": {
             "enrichment": ENRICHMENT_OUT.relative_to(ROOT).as_posix(),
             "status": STATUS_OUT.relative_to(ROOT).as_posix(),
