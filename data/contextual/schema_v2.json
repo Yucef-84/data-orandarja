@@ -1,0 +1,66 @@
+{
+  "dataset": "oran_darija_contextual_expansion",
+  "version": "0.2.0",
+  "encoding": "UTF-8",
+  "delimiter": "tab",
+  "primary_key": "sample_id",
+  "levels": ["A1", "A2", "B1", "B2"],
+  "fields": {
+    "sample_id": "unique ODC-###### identifier",
+    "language": "ar",
+    "variety": "ar-DZ-oran",
+    "cefr": "A1 | A2 | B1 | B2",
+    "domain": "school_work | city_transport | body_health | food_shopping",
+    "topic": "string",
+    "sample_type": "utterance",
+    "arabic": "learner-facing Arabic; exact source when source_direct",
+    "source_form": "exact source Arabic; required for source-backed rows",
+    "latin": "ASCII-oriented learner transcription",
+    "ko": "Korean translation",
+    "en": "English translation",
+    "lexical_refs": "pipe-separated OD IDs; may be empty for a source inventory",
+    "source_id": "S1 CORVAM or S6 MADOran",
+    "source_locator": "replayable source locator",
+    "evidence": "CORVAM_DIRECT | MADORAN_DIRECT",
+    "derivation_type": "source_direct | source_normalized",
+    "license_id": "source-specific license identifier",
+    "group_id": "quota or stage grouping",
+    "family_id": "source-family identifier",
+    "review_status": "source_verified | gpt_reviewed | native1_reviewed | native2_approved | hold",
+    "learner_ready": "true only after native2_approved",
+    "note": "provenance, uncertainty, and review notes"
+  },
+  "state_policy": {
+    "active_statuses": ["source_verified", "gpt_reviewed", "native1_reviewed", "native2_approved"],
+    "hold_statuses": ["hold"],
+    "learner_ready_requires": "native2_approved",
+    "source_direct_requires": "arabic equals source_form exactly",
+    "hold_is_not_a_provenance_bypass": true
+  },
+  "target_active_counts": {
+    "A1": 600,
+    "A2": 600,
+    "B1": 1500,
+    "B2": 1500,
+    "total": 4200
+  },
+  "domain_target_active_counts": {
+    "A1": {"school_work": 150, "city_transport": 150, "body_health": 150, "food_shopping": 150},
+    "A2": {"school_work": 150, "city_transport": 150, "body_health": 150, "food_shopping": 150},
+    "B1": {"school_work": 375, "city_transport": 375, "body_health": 375, "food_shopping": 375},
+    "B2": {"school_work": 375, "city_transport": 375, "body_health": 375, "food_shopping": 375}
+  },
+  "prohibited_derivation_types": [
+    "ai_composed",
+    "pedagogical_composed",
+    "translated_from_msa",
+    "synthetic_dialogue"
+  ],
+  "release_requires": [
+    "validator P0 pass",
+    "GPT P0/P1 review",
+    "two independent Oran-native reviews",
+    "native disagreement resolution",
+    "native2_approved before learner_ready=true"
+  ]
+}

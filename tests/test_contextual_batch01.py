@@ -40,7 +40,7 @@ class ContextualBatch01Tests(unittest.TestCase):
 
     def test_batch_is_not_learner_ready_before_review(self):
         report = validate()
-        self.assertEqual(report["p1_manual_review_pending"], 96)
+        self.assertEqual(report["p1_manual_review_pending"], 0)
 
 
 if __name__ == "__main__":

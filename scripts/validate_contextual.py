@@ -1,8 +1,9 @@
 """Validate the source-backed contextual expansion pilot.
 
 The validator blocks structural/provenance P0 failures. Translation quality
-and native acceptability remain human/GPT review gates until the batch is
-promoted from source_verified to gpt_reviewed/native_reviewed.
+and native acceptability remain separate review gates. A batch may move from
+source_verified to gpt_reviewed after the GPT chunk review, but it is not native
+certified until the independent native review gate passes.
 """
 
 from __future__ import annotations
@@ -158,8 +159,8 @@ def validate() -> Dict[str, object]:
             p0.append(f"{sid}: prohibited derivation_type")
         if row.get("license_id") != "CC-BY-NC-3.0-MADORAN":
             p0.append(f"{sid}: missing or invalid license")
-        if row.get("review_status") != "source_verified":
-            p0.append(f"{sid}: Batch 01 must start source_verified")
+        if row.get("review_status") not in {"source_verified", "gpt_reviewed"}:
+            p0.append(f"{sid}: invalid GPT review status")
         if row.get("learner_ready", "").lower() != "false":
             p0.append(f"{sid}: learner_ready must be false before review")
         refs = [ref for ref in row.get("lexical_refs", "").split("|") if ref]
@@ -198,9 +199,7 @@ def validate() -> Dict[str, object]:
         if not re.search(r"[\u0600-\u06ff]", row.get("arabic", "")):
             p0.append(f"{sid}: Arabic field has no Arabic characters")
 
-    p1_pending = len(rows) if any(
-        row.get("review_status") != "gpt_reviewed" for row in rows
-    ) else 0
+    p1_pending = sum(row.get("review_status") != "gpt_reviewed" for row in rows)
     return {
         "p0_errors": p0,
         "p1_manual_review_pending": p1_pending,

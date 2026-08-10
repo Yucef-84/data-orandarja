@@ -7,9 +7,10 @@ This directory adds learner-oriented contextual samples without changing the
 - A1 48 and A2 48
 - four domains, 24 rows each: school/work, city/transport, body/health,
   food/shopping
-- rows start with review_status=source_verified and learner_ready=false; a row
-  may be explicitly marked review_status=hold when the source pool has no safe,
-  standalone replacement
+- rows start with review_status=source_verified, move to gpt_reviewed after the
+  GPT chunk review, and remain learner_ready=false; a row may be explicitly
+  marked review_status=hold when the source pool has no safe, standalone
+  replacement
 
 The canonical lexical dataset remains data/oran_darija_verified.tsv.
 Contextual rows live under data/contextual/ and use the ODC identifier

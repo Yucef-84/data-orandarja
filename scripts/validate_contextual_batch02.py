@@ -24,7 +24,7 @@ SOURCE = (
 )
 
 CANONICAL_SHA256 = "96cc35a441c91ee70bd1edd70c6c0d48646f7b808b08f140a88b5d98d642eaf6"
-BATCH01_SHA256 = "4268fda4ffaff5e13c0a1a5bc1d948d695288501e3a504d03c3d0060dae15437"
+BATCH01_SHA256 = "34cb2dd42810737f80f9a9d552d42c806968e5fe73b618dca2cb7d53eb1a984f"
 FIELDS = [
     "sample_id", "language", "variety", "cefr", "domain", "topic",
     "sample_type", "arabic", "source_form", "latin", "ko", "en",
@@ -120,7 +120,7 @@ def validate() -> dict[str, object]:
             errors.append(f"{sid}: Batch02 must use source_direct")
         if row.get("license_id") != "CC-BY-NC-3.0-MADORAN":
             errors.append(f"{sid}: invalid license")
-        if row.get("review_status") not in {"source_verified", "hold"} or row.get("learner_ready") != "false":
+        if row.get("review_status") not in {"source_verified", "gpt_reviewed", "hold"} or row.get("learner_ready") != "false":
             errors.append(f"{sid}: invalid pre-review state")
         if row.get("review_status") == "hold" and not row.get("note", "").startswith("HOLD:"):
             errors.append(f"{sid}: hold rows must carry an explicit HOLD note")
@@ -151,11 +151,16 @@ def validate() -> dict[str, object]:
         errors.append("duplicate MADOran source locator")
 
     hold_count = sum(row.get("review_status") == "hold" for row in rows)
-    active_count = sum(row.get("review_status") == "source_verified" for row in rows)
+    active_count = sum(row.get("review_status") in {"source_verified", "gpt_reviewed"} for row in rows)
+    gpt_reviewed_count = sum(row.get("review_status") == "gpt_reviewed" for row in rows)
+    pending_count = sum(row.get("review_status") == "source_verified" for row in rows)
     return {
         "p0_errors": errors,
-        "p1_manual_review_pending": active_count,
+        "p1_manual_review_pending": pending_count,
         "active": active_count,
+        "gpt_reviewed": gpt_reviewed_count,
+        "active": active_count,
+        "source_verified_pending": pending_count,
         "hold": hold_count,
         "canonical_sha256": canonical_sha,
         "batch01_sha256": batch01_sha,
