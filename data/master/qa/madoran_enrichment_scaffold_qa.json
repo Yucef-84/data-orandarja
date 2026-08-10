@@ -33,12 +33,12 @@
   "provenance_events": {
     "result": "PASS",
     "failures": [],
-    "events": 2189
+    "events": 2256
   },
   "enrichment_provenance": {
     "result": "PASS",
     "failures": [],
-    "populated_fields": 1446
+    "populated_fields": 1449
   },
   "layer_contract": {
     "result": "PASS",
