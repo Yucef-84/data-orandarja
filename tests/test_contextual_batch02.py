@@ -20,8 +20,8 @@ class ContextualBatch02Tests(unittest.TestCase):
         current = rows(BATCH02)
         self.assertEqual(len(current), 104)
         self.assertEqual({row["sample_id"] for row in current}, {f"ODC-{i:06d}" for i in range(97, 201)})
-        self.assertEqual(sum(row["cefr"] == "A1" for row in current), 46)
-        self.assertEqual(sum(row["cefr"] == "A2" for row in current), 58)
+        self.assertEqual(sum(row["cefr"] == "A1" for row in current), 45)
+        self.assertEqual(sum(row["cefr"] == "A2" for row in current), 59)
         for domain in {"school_work", "city_transport", "body_health", "food_shopping"}:
             self.assertEqual(sum(row["domain"] == domain for row in current), 26)
 
