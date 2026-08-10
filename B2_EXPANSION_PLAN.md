@@ -57,6 +57,14 @@ corpus is required for the remaining B1/B2 volume.
   inventory without turning it into learner rows.
 - `scripts/validate_contextual_expansion.py` reports raw, active, HOLD, and
   learner-ready counts and enforces replay/native gates.
+- `scripts/build_native_contextual_review_templates.py` creates separate
+  reviewer-facing R1/R2 files from the 183-row packet.
+- `scripts/merge_native_contextual_reviews.py` refuses incomplete or
+  mismatched reviewer inputs before writing the official manifest.
+- `scripts/build_native_contextual_review_summary_skeleton.py` computes
+  agreement without auto-resolving disagreements.
+- `scripts/promote_native_contextual_rows.py` performs the status transition
+  only after the native certification gate returns PASS.
 - `reviews/native_contextual_reviews.tsv` and
   `reviews/native_contextual_review_summary.tsv` are the separate native-review
   records.

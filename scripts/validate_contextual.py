@@ -67,6 +67,7 @@ PROHIBITED_DERIVATIONS = {
     "translated_from_msa",
     "synthetic_dialogue",
 }
+REVIEW_STATUSES = {"source_verified", "gpt_reviewed", "native1_reviewed", "native2_approved"}
 
 
 def read_tsv(path: Path) -> List[Dict[str, str]]:
@@ -159,10 +160,14 @@ def validate() -> Dict[str, object]:
             p0.append(f"{sid}: prohibited derivation_type")
         if row.get("license_id") != "CC-BY-NC-3.0-MADORAN":
             p0.append(f"{sid}: missing or invalid license")
-        if row.get("review_status") not in {"source_verified", "gpt_reviewed"}:
-            p0.append(f"{sid}: invalid GPT review status")
-        if row.get("learner_ready", "").lower() != "false":
-            p0.append(f"{sid}: learner_ready must be false before review")
+        if row.get("review_status") not in REVIEW_STATUSES:
+            p0.append(f"{sid}: invalid contextual review status")
+        if row.get("learner_ready") not in {"true", "false"}:
+            p0.append(f"{sid}: learner_ready must be true or false")
+        elif row.get("learner_ready") == "true" and row.get("review_status") != "native2_approved":
+            p0.append(f"{sid}: learner_ready requires native2_approved")
+        elif row.get("learner_ready") == "false" and row.get("review_status") == "native2_approved":
+            p0.append(f"{sid}: native2_approved requires learner_ready=true")
         refs = [ref for ref in row.get("lexical_refs", "").split("|") if ref]
         unknown_refs = [ref for ref in refs if ref not in canonical_ids]
         if unknown_refs:
@@ -199,7 +204,7 @@ def validate() -> Dict[str, object]:
         if not re.search(r"[\u0600-\u06ff]", row.get("arabic", "")):
             p0.append(f"{sid}: Arabic field has no Arabic characters")
 
-    p1_pending = sum(row.get("review_status") != "gpt_reviewed" for row in rows)
+    p1_pending = sum(row.get("review_status") == "source_verified" for row in rows)
     return {
         "p0_errors": p0,
         "p1_manual_review_pending": p1_pending,

@@ -35,6 +35,7 @@ FIELDS = [
 ]
 DOMAINS = {"school_work", "city_transport", "body_health", "food_shopping"}
 CEFR_QUOTA = {"A1": 45, "A2": 59}
+REVIEW_STATUSES = {"source_verified", "gpt_reviewed", "native1_reviewed", "native2_approved", "hold"}
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -124,8 +125,14 @@ def validate() -> dict[str, object]:
             errors.append(f"{sid}: Batch02 must use source_direct")
         if row.get("license_id") != "CC-BY-NC-3.0-MADORAN":
             errors.append(f"{sid}: invalid license")
-        if row.get("review_status") not in {"source_verified", "gpt_reviewed", "hold"} or row.get("learner_ready") != "false":
+        if row.get("review_status") not in REVIEW_STATUSES:
             errors.append(f"{sid}: invalid pre-review state")
+        if row.get("learner_ready") not in {"true", "false"}:
+            errors.append(f"{sid}: learner_ready must be true or false")
+        elif row.get("review_status") == "native2_approved" and row.get("learner_ready") != "true":
+            errors.append(f"{sid}: native2_approved requires learner_ready=true")
+        elif row.get("review_status") != "native2_approved" and row.get("learner_ready") != "false":
+            errors.append(f"{sid}: learner_ready must be false before native2_approved")
         if row.get("review_status") == "hold" and not row.get("note", "").startswith("HOLD:"):
             errors.append(f"{sid}: hold rows must carry an explicit HOLD note")
         if row.get("group_id") != f"batch02-{row.get('domain')}":
@@ -155,14 +162,18 @@ def validate() -> dict[str, object]:
         errors.append("duplicate MADOran source locator")
 
     hold_count = sum(row.get("review_status") == "hold" for row in rows)
-    active_count = sum(row.get("review_status") in {"source_verified", "gpt_reviewed"} for row in rows)
+    active_count = sum(row.get("review_status") in REVIEW_STATUSES - {"hold"} for row in rows)
     gpt_reviewed_count = sum(row.get("review_status") == "gpt_reviewed" for row in rows)
+    native1_reviewed_count = sum(row.get("review_status") == "native1_reviewed" for row in rows)
+    native2_approved_count = sum(row.get("review_status") == "native2_approved" for row in rows)
     pending_count = sum(row.get("review_status") == "source_verified" for row in rows)
     return {
         "p0_errors": errors,
         "p1_manual_review_pending": pending_count,
         "active": active_count,
         "gpt_reviewed": gpt_reviewed_count,
+        "native1_reviewed": native1_reviewed_count,
+        "native2_approved": native2_approved_count,
         "active": active_count,
         "source_verified_pending": pending_count,
         "hold": hold_count,

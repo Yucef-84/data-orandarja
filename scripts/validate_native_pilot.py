@@ -72,6 +72,13 @@ def validate(
         summary_by_sample[sid] = row
     for sid in sorted(set(summary_by_sample) - set(target)):
         errors.append(f"summary row references non-active sample {sid}")
+    global_reviewer_ids = {
+        row.get("reviewer_id", "").strip()
+        for row in reviews
+        if row.get("reviewer_id", "").strip()
+    }
+    if reviews and len(global_reviewer_ids) != 2:
+        errors.append("native pilot requires exactly two reviewer IDs across the full manifest")
     for sid in sorted(target):
         row = summary_by_sample.get(sid)
         if row is None:
@@ -84,6 +91,8 @@ def validate(
         sample_reviews = by_sample.get(sid, [])
         reviewer_ids = {review.get("reviewer_id", "") for review in sample_reviews}
         if len(sample_reviews) == 2 and len(reviewer_ids) == 2:
+            if global_reviewer_ids and reviewer_ids != global_reviewer_ids:
+                errors.append(f"{sid}: reviewer pair does not match the two pilot reviewers")
             ratings = sorted(review.get("rating", "") for review in sample_reviews)
             summary_ratings = sorted(
                 [row.get("reviewer1_rating", ""), row.get("reviewer2_rating", "")]
