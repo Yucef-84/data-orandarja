@@ -1,0 +1,81 @@
+{
+  "schema_id": "madoran-master",
+  "schema_version": "1.0.0",
+  "dataset": "MADOran",
+  "levels": ["A1", "A2", "B1", "B2", "C1", "C2"],
+  "source_layer": {
+    "path": "data/master/source/madoran_sentences.tsv",
+    "fields": [
+      "source_uid",
+      "source_id",
+      "source_locator",
+      "sentno",
+      "arabic_original",
+      "word_count",
+      "source_file",
+      "license_id",
+      "source_status",
+      "darija_provenance",
+      "enrichment_state"
+    ],
+    "immutable_fields": [
+      "source_uid",
+      "source_id",
+      "source_locator",
+      "sentno",
+      "arabic_original",
+      "word_count",
+      "source_file",
+      "license_id"
+    ]
+  },
+  "morphology_layer": {
+    "path": "data/master/morphology/madoran_tokens.tsv",
+    "link_keys": ["Sentno", "Wordno"],
+    "upstream_fields": [
+      "ID",
+      "Sentno",
+      "Wordno",
+      "Word",
+      "diac",
+      "msa",
+      "Proclitic",
+      "Stem",
+      "Enclitic",
+      "Root",
+      "Pattern",
+      "num",
+      "gen",
+      "Sentiment",
+      "en_gloss",
+      "fr_gloss"
+    ],
+    "mutation_policy": "preserve_upstream_values"
+  },
+  "enrichment_state_enum": [
+    "not_started",
+    "draft",
+    "qa_passed",
+    "reviewed",
+    "flagged"
+  ],
+  "darija_provenance_enum": [
+    "source_exact",
+    "source_span_exact",
+    "source_modified",
+    "generated"
+  ],
+  "enrichment_fields": {
+    "arabic_normalized": "optional string; never overwrites arabic_original",
+    "latin": "optional string",
+    "english": "optional string",
+    "korean": "optional string",
+    "cefr_level": "optional enum A1..C2",
+    "difficulty_score": "optional number 0..100",
+    "domain": "optional open vocabulary",
+    "topic": "optional open vocabulary",
+    "speech_act": "optional open vocabulary",
+    "register": "optional open vocabulary",
+    "genre": "optional open vocabulary"
+  }
+}

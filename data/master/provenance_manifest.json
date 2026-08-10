@@ -1,0 +1,23 @@
+{
+  "manifest_version": "1.0.0",
+  "dataset": "MADOran",
+  "doi": "10.17632/pgr766jbhp.2",
+  "license_id": "CC-BY-NC-3.0-MADORAN",
+  "upstream_snapshot": {
+    "sentences": {
+      "path": "sources\\madoran_v2\\Morphologically Annotated Orani-Arbaic Dialect Dat\\Raw Data - Sentences\\MADOran_Sentences.tsv",
+      "sha256": "924f847ecf40ba9921dca94e01c4c16b20c0cb47e1935e4156ae393038e1076b"
+    },
+    "morphology": {
+      "path": "sources\\madoran_v2\\Morphologically Annotated Orani-Arbaic Dialect Dat\\MADOran Morphologically Annotated Dataset\\MADOran.tsv",
+      "sha256": "579faa2bfc2f0ad889aa6115fa382f1799d02568ba76884238d0c05facc1ad68"
+    }
+  },
+  "outputs": {
+    "source": "data\\master\\source\\madoran_sentences.tsv",
+    "morphology": "data\\master\\morphology\\madoran_tokens.tsv",
+    "qa": "data\\master\\qa\\madoran_master_qa.json"
+  },
+  "builder": "scripts/build_madoran_master.py",
+  "qa_result": "FAIL"
+}

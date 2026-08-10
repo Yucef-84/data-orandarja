@@ -1,4 +1,9 @@
-# CEFR B2 expansion decision
+# SUPERSEDED — historical CEFR B2 expansion decision
+
+> This plan is retained for historical reproducibility only. The authoritative
+> execution plan is `MASTER_DATASET_PLAN.md`. The 4,200-row quota and the
+> `native2` gate are no longer active project policy for MADOran source
+> canonicalization.
 
 The project head reviewed the current state and fixed “B2” as **CEFR B2**,
 not contextual Batch02. Batch02 is complete at the GPT-review stage (104 raw,
