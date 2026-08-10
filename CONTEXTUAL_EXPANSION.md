@@ -29,4 +29,4 @@ Batch 02 reports active and held rows separately. A held row keeps its exact
 source provenance and remains learner_ready=false, but is excluded from active
 and learner-ready counts until a safe source is approved or native review
 clears it. The current pilot target is 104 total rows, with any held subset
-reported separately (for example, active=89 and hold=15).
+reported separately (currently active=87 and hold=17).

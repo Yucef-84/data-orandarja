@@ -12,6 +12,7 @@ EXPECTED_HOLD_IDS = {
     "ODC-000149", "ODC-000150", "ODC-000153", "ODC-000154", "ODC-000155",
     "ODC-000158", "ODC-000159", "ODC-000160", "ODC-000162", "ODC-000164",
     "ODC-000165", "ODC-000166", "ODC-000167", "ODC-000173", "ODC-000174",
+    "ODC-000177", "ODC-000197",
 }
 
 
@@ -39,8 +40,8 @@ class ContextualBatch02Tests(unittest.TestCase):
         current = rows(BATCH02)
         hold = {row["sample_id"] for row in current if row["review_status"] == "hold"}
         self.assertEqual(hold, EXPECTED_HOLD_IDS)
-        self.assertEqual(sum(row["review_status"] == "hold" for row in current), 15)
-        self.assertEqual(sum(row["review_status"] == "source_verified" for row in current), 89)
+        self.assertEqual(sum(row["review_status"] == "hold" for row in current), 17)
+        self.assertEqual(sum(row["review_status"] == "source_verified" for row in current), 87)
         self.assertTrue(all(row["learner_ready"] == "false" for row in current if row["review_status"] == "hold"))
         self.assertTrue(all(row["note"].startswith("HOLD:") for row in current if row["review_status"] == "hold"))
 
