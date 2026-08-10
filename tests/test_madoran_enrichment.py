@@ -73,9 +73,10 @@ class MadoranEnrichmentTests(unittest.TestCase):
             all(
                 row["enrichment_state"] == "draft"
                 for row in self.enrichment_rows[:64]
-                if row["sentno"] != "63"
+                if row["sentno"] not in {"17", "63"}
             )
         )
+        self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
         self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows[64:]))
 
@@ -320,7 +321,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 1429)
+        self.assertEqual(report["events"], 1432)
 
 
 if __name__ == "__main__":

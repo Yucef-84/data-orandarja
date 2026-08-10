@@ -75,7 +75,8 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         target = [row for row in self.enrichment_rows if 1 <= int(row["sentno"]) <= 64]
         outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 64]
         self.assertEqual(len(target), 64)
-        self.assertTrue(all(row["enrichment_state"] == "draft" for row in target if row["sentno"] != "63"))
+        self.assertTrue(all(row["enrichment_state"] == "draft" for row in target if row["sentno"] not in {"17", "63"}))
+        self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
         self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in outside))
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
@@ -85,7 +86,7 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 1429)
+        self.assertEqual(event_check["events"], 1432)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 64 * len(EMPTY_FIELDS))
@@ -93,8 +94,8 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
     def test_batch_qa_is_pass(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
-        self.assertEqual(qa["new_provenance_events"], 21)
-        self.assertEqual(qa["total_provenance_events"], 1429)
+        self.assertEqual(qa["new_provenance_events"], 3)
+        self.assertEqual(qa["total_provenance_events"], 1432)
         self.assertEqual(qa["outside_target_mutations"], 0)
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["validator"], "PASS")
