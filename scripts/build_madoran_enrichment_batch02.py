@@ -1,0 +1,230 @@
+"""Build the source-only MADOran enrichment batch for Sentno 65..128."""
+
+from __future__ import annotations
+
+import csv
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+from scripts.build_madoran_enrichment_scaffold import (
+    EMPTY_FIELDS,
+    PROCESSING_FLAG_VALUES,
+    ROOT,
+    SOURCE_OUT,
+    read_tsv,
+)
+
+
+BATCH_ID = "MADORAN-ENRICH-002"
+BASE_COMMIT = "9452f8a"
+TARGET_START = 65
+TARGET_END = 128
+BATCH_DIR = ROOT / "data" / "master" / "enrichment" / "batches"
+BATCH_OUT = BATCH_DIR / "batch02_sentno_0065_0128.tsv"
+MANIFEST_OUT = BATCH_DIR / "batch02_manifest.json"
+QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch02_generation_qa.json"
+BATCH_FIELDS = ["source_uid", "sentno", *EMPTY_FIELDS, "processing_flags"]
+
+
+def current_utc_timestamp() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def item(
+    latin: str,
+    english: str,
+    korean: str,
+    cefr_level: str,
+    difficulty_score: int,
+    domain: str,
+    topic: str,
+    genre: str,
+    speech_act: str,
+    register: str,
+    context_dependency: str,
+    processing_flags: str = "",
+) -> dict[str, str]:
+    return {
+        "latin": latin,
+        "english": english,
+        "korean": korean,
+        "cefr_level": cefr_level,
+        "difficulty_score": str(difficulty_score),
+        "domain": domain,
+        "topic": topic,
+        "genre": genre,
+        "speech_act": speech_act,
+        "register": register,
+        "context_dependency": context_dependency,
+        "processing_flags": processing_flags,
+    }
+
+
+ITEMS = {
+    65: item("tfahmou bach ywslou bkri w ma yhbsouhomch f lbarajat. ama tfahmou bach ki yti7ou f baraj ybdaw yba3rou ki lkbach bach ma yhbsouhomch.", "They agreed to arrive early and avoid the checkpoints, but whenever they fell into one, they started bleating like rams so the guards would not stop them.", "그들은 일찍 도착해서 검문소를 피하기로 했지만, 검문소에 걸릴 때마다 경비원들이 세우지 못하게 숫양처럼 울기 시작했어.", "B2", 55, "travel", "checkpoint_evasion", "narrative", "narration", "colloquial", "high", "long_source"),
+    66: item("lbaraj lwewel tahou f ljandar m bdaou yba3rou ba3 ba3. khalawhom yfoutou.", "At the first checkpoint they ran into the gendarmes and started bleating, baa baa; the gendarmes let them pass.", "첫 번째 검문소에서 헌병들을 만나자 그들은 음메 음메 울기 시작했고, 헌병들은 그들을 지나가게 했어.", "A2", 28, "travel", "checkpoint_evasion", "joke", "narration", "colloquial", "medium"),
+    67: item("lbaraj tani ta3 lmili tar tahou fih. bdaou yba3rou ba3 ba3 w khalawhom yfoutou.", "At the second checkpoint, the military checkpoint, they did the same thing: they bleated and were allowed through.", "두 번째 군 검문소에서도 똑같이 했어. 그들은 음메 음메 울었고, 지나가게 되었어.", "A2", 28, "travel", "checkpoint_evasion", "joke", "narration", "colloquial", "medium"),
+    68: item("lbaraj talt ta3 l irhab sktou ga3. ghi l3ma ma chafch, bqa yba3er ba3 ba3 hatta darbou sahbou w galou skot rana wsln a lbatwar.", "At the third checkpoint, a terrorism checkpoint, they all fell silent. Only the blind man did not notice; he kept bleating until his friend hit him and said, 'Be quiet, we have reached the slaughterhouse.'", "세 번째 검문소인 테러 검문소에서는 모두 조용해졌어. 그런데 눈먼 사람만 알아차리지 못하고 계속 음메 울었고, 친구가 그를 치며 말했어. '조용히 해, 우리 도살장에 도착했어.'", "B2", 58, "crime_safety", "checkpoint_evasion", "joke", "narration", "colloquial", "high", "context_heavy"),
+    69: item("galek merra houari doufane kan 3andou hafla f ma3askar. aya lma3askriyat 93dou yqara3oulou f lbor.", "They say that once Houari Doufane had a concert in Mascara, and the women of Mascara kept applauding him in the hall.", "한번은 우아리 두판이 마스카라에서 공연을 했는데, 마스카라의 여성들이 홀에서 계속 그에게 박수를 쳤대.", "B1", 42, "entertainment_music", "concert", "joke", "information", "colloquial", "medium"),
+    70: item("wahed nhar wahed 3roubi 3andou drahem b chkara bsah machi 3ayech. ja 3andou wahed men wahran fahm w qari galou khouya nta 3andek drahem bsah machi 3ayech jib chwiya drahem w roh m3aya lwahran tchouf ddonya kifach dayra.", "One day a country man had a sackful of money but did not know how to live. An educated man from Oran told him, 'Bring some money and come with me to Oran to see what the world is like.'", "어느 날 한 시골 사람이 돈은 자루째 가지고 있었지만 어떻게 살아야 하는지는 몰랐어. 오란에서 온 배운 사람이 말했어. '돈을 좀 가지고 나와 함께 오란에 가서 세상이 어떻게 돌아가는지 봐.'", "B2", 60, "travel", "city_visit", "narrative", "information", "colloquial", "high", "long_source"),
+    71: item("jab chkara w ja 3adlou s9edou b kostima. redd mestiki ma yamench. aya 9a3 karalou f otel chbab w 9a3 yedih y7awes bih ldisco w l b7ar. 9elchah aya bta 3la bouh.", "He brought the sack, and the other man dressed him in a suit. He could not believe it, so he booked him a nice hotel and took him around to discos and the beach; then his father got upset with him.", "그는 돈자루를 가져왔고, 다른 남자는 그에게 양복을 입혔어. 그는 믿기지 않았고, 좋은 호텔을 잡아 주며 디스코장과 해변을 데려다녔는데, 그러자 아버지가 그를 나무랐어.", "B2", 62, "travel", "city_visit", "narrative", "narration", "colloquial", "high", "long_source"),
+    72: item("zeyyetlou bouh wahed w galou 9oul lweldi yji lard li rahya 9a3da ghir hak. arwah tkhdem lard ta3 lfla7a w lba9ri w l7ayawan. ja galou 9oul l bouya ghir dzayer li ma nw lileha 7sab, rou7ou rah f kharj.", "His father sent someone to tell his son to return to the neglected land and work it for farming and livestock. The son replied, 'Tell my father that I no longer count on Algeria; I am abroad.'", "그의 아버지는 방치된 땅으로 돌아와 농사와 가축 일을 하라고 아들에게 전해 달라며 사람을 보냈어. 아들은 '아버지에게 알제리는 이제 내 계산에 없고 나는 외국에 있다고 전해 줘'라고 답했어.", "B2", 58, "travel", "emigration", "narrative", "information", "colloquial", "high", "long_source"),
+    73: item("salam w 3likoum kirak labes. ftert ghaya lyoum? wah ghaya. ch klit? klit bourak b batata. aya bsa7tek weldi.", "Hello, how are you? Did you have a good breakfast today? Yes. What did you eat? Potato bourek. Good health to you, my son.", "안녕하세요, 잘 지내? 오늘 아침은 잘 먹었어? 응, 잘 먹었어. 뭘 먹었어? 감자 부레크를 먹었어. 맛있게 먹었구나, 얘야.", "A1", 18, "food", "breakfast", "conversation", "greeting", "colloquial", "low"),
+    74: item("salam w 3likoum ya khouya. da7akni galek wahed chibani s9sawh kirak m3a ramdan galhom koun machi dik j oghma ta3 l w dou koun rani met.", "An old man was asked how he was doing during Ramadan. He said, 'If it were not for that sip of water used for ablution, I would be dead.'", "한 노인에게 라마단 동안 어떻게 지내냐고 물었더니, 그가 말했어. '그 세정용 물 한 모금이 아니었으면 나는 죽었을 거야.'", "B1", 42, "religion", "ramadan", "joke", "information", "colloquial", "medium", "idiom_culture"),
+    75: item("galek merra wahed 3roubi f triq doublino. kan f lagona 22 nhar li khrej. galek dar aksidon, khrej wahed galhom audi loto m3lich, moul l3baya bayda chkoun houwa.", "They say a country man was once on the road to Dublin. After being out for twenty-two days, he had an accident. Someone came out and asked, 'Is the car all right? Who is the man in the white cloak?'", "어느 시골 사람이 더블린으로 가는 길에 있었대. 출발한 지 22일째 사고가 났고, 한 사람이 나와 물었어. '차는 괜찮아요? 흰 망토를 입은 사람은 누구예요?'", "B2", 60, "travel", "road_accident", "joke", "question", "colloquial", "high", "context_heavy"),
+    76: item("galek wahed nhar wahed martou matet. aya yrou7 daymen l9ber. nas 7asbouh y7ebha wla rah machi 9ader 3la f ra9ha. ki l7a9ouh l9awh y9oulha ya doud ma tertich w koliha miskina, che f allah yer7amha.", "A man's wife died, and he kept going to the grave. People thought he loved her or could not bear the separation. When they followed him, they found him saying, 'Worm, do not squirm; eat her, poor thing. May God have mercy on her.'", "어떤 남자의 아내가 죽자 그는 계속 무덤에 갔어. 사람들은 그가 아내를 사랑하거나 이별을 견디지 못한다고 생각했지. 따라가 보니 그는 '벌레야, 꿈틀거리지 말고 이 불쌍한 사람을 먹어라. 신의 자비가 있기를'이라고 말하고 있었어.", "B2", 64, "family_relationships", "grave_visit", "joke", "narration", "colloquial", "high", "idiom_culture"),
+    77: item("sa7a ftourkom. galek merra wahed chra adidas kbira 3lih bach tji 9adha. ki dar toul d f arafo.", "Happy iftar. They say a man once bought Adidas shoes that were too big for him so they would fit properly. When he let his toenails grow long, they fit him.", "맛있게 드세요. 어떤 남자가 자기에게 너무 큰 아디다스 신발을 사서 맞게 만들었대. 발톱을 길게 기르자 신발이 맞았어.", "A2", 30, "shopping", "shoes", "joke", "narration", "colloquial", "medium"),
+    78: item("galek wahed nhar wahed ma3askri charka 9ader l wahren. dkhel l7anout ta3 l elektro menaji w galou ch7al had lmachina l avi. moul l7anout galou ma nbi3ch lma3askriyin.", "They say that one day a man from Mascara drove to Oran, entered an appliance shop, and asked how much the washing machine cost. The shopkeeper said, 'I do not sell to people from Mascara.'", "어느 날 마스카라 사람이 오란으로 차를 몰고 가전제품 가게에 들어가 세탁기 가격을 물었대. 가게 주인은 '나는 마스카라 사람에게는 팔지 않아요'라고 했어.", "B1", 50, "shopping", "appliance_shopping", "joke", "information", "colloquial", "high", "source_corruption"),
+    79: item("aya 3awed 3la ghodwa ja lbestil w khda khor w galou ch7al had lmachina l avi. moul l7anout galou ma nbi3ch lma3askriyin.", "The next day he came back in different clothes and asked again how much the washing machine cost. The shopkeeper again said, 'I do not sell to people from Mascara.'", "다음 날 그는 다른 옷을 입고 다시 와서 세탁기 가격을 물었어. 가게 주인은 또 '나는 마스카라 사람에게는 팔지 않아요'라고 했어.", "A2", 32, "shopping", "appliance_shopping", "joke", "information", "colloquial", "medium"),
+    80: item("aya 3awed ghodwa ja b brik bach ma y3a9elch 3lih w galou ch7al hadhi lmachina l avi. galou ma nbi3ch lma3askriyin.", "The next day he came back with a bourek so the shopkeeper would not recognize him, and asked the price of the washing machine. The answer was still, 'I do not sell to people from Mascara.'", "다음 날 그는 가게 주인이 알아보지 못하게 부레크를 들고 다시 와서 세탁기 가격을 물었어. 대답은 여전히 '나는 마스카라 사람에게는 팔지 않아요'였어.", "A2", 30, "shopping", "appliance_shopping", "joke", "information", "colloquial", "medium"),
+    81: item("aya galou kifach 3reftni belli ma3askri. moul l7anout galou hadi frijidair, machi machina l avi.", "He asked, 'How did you know I was from Mascara?' The shopkeeper replied, 'That is a refrigerator, not a washing machine.'", "그가 '내가 마스카라 사람인 줄 어떻게 알았어요?'라고 묻자, 가게 주인이 '그건 냉장고지 세탁기가 아니에요'라고 대답했어.", "B1", 45, "shopping", "appliance_shopping", "joke", "answer", "colloquial", "high"),
+    82: item("galek wahed livreur ta3 patisserie ydir pain chocolat w croissant ydiha lwahed douar. dar aksidon kolchi dfaq f lard. jaw s7ab douar b matar 9alou 3a9areb 3a9areb, 3lach? 7it ban lhom croissant ki 3a9reb.", "They say a pastry delivery man made pain au chocolat and croissants for a village. He had an accident and everything spilled onto the ground. The villagers arrived with hammers shouting, 'Scorpions, scorpions!' because the croissants looked like scorpions.", "한 제과점 배달원이 마을에 초콜릿 빵과 크루아상을 가져가다가 사고가 나서 음식이 모두 땅에 쏟아졌어. 마을 사람들이 망치를 들고 와서 '전갈이다, 전갈이다!'라고 외쳤는데, 크루아상이 전갈처럼 보였기 때문이야.", "B2", 58, "food", "pastry_delivery", "joke", "narration", "colloquial", "high", "idiom_culture"),
+    82: item("galek wahed liv raison ta3 pat isri ydir pan chocolat w crois sant ydiha lwahed douar. dar aksidon kolchi dfaq f lard. jaw s7ab douar b mat ar 9alou 3a9areb 3a9areb 3lach? 7it ban lhom croissant ki 3a9reb.", "They say a pastry delivery man made pain au chocolat and croissants for a village. He had an accident and everything spilled onto the ground. The villagers arrived with hammers shouting, 'Scorpions, scorpions!' because the croissants looked like scorpions.", "한 제과점 배달원이 마을에 초콜릿 빵과 크루아상을 가져가다가 사고가 나서 음식이 모두 땅에 쏟아졌어. 마을 사람들이 망치를 들고 와서 '전갈이다, 전갈이다!'라고 외쳤는데, 크루아상이 전갈처럼 보였기 때문이야.", "B2", 58, "food", "pastry_delivery", "joke", "narration", "colloquial", "high", "idiom_culture"),
+    83: item("wahed na9ra sme3 belli kayen wahed na9ra w khadakhor yskon f douar. gal wallah ghir nrou7ou 3andou nchouf had na9ra ghadi nkemel 3lih.", "A man heard that someone with a similar name lived in a village and said, 'By God, we will go see him; I am going to finish him.'", "한 남자가 자기와 비슷한 이름을 가진 사람이 마을에 산다는 말을 듣고 '맹세코 그 사람을 보러 가서 끝장을 내겠다'고 말했어.", "B2", 62, "humor", "name_wordplay", "joke", "narration", "colloquial", "high", "source_ambiguity"),
+    84: item("ki ra7 3andou y temcha y temcha howa yskon f douar f jbel l9a wahed chibani galou 7am bouk hada na9ra win yskon.", "When he went looking for him in the mountain village, he found an old man and asked, 'Uncle, where does this man live?'", "그를 찾으러 산속 마을에 가서 한 노인을 만나자 '아저씨, 이 사람이 어디에 살아요?'라고 물었어.", "B2", 55, "humor", "name_wordplay", "joke", "question", "colloquial", "high", "source_ambiguity"),
+    85: item("dak chibani kan rafed 9ar3a ta3 gaz. refdha w galou yskon lhi h. gal hada chibani yerfed 9ar3a ta3 gaz la5or ki ykoun wla l douarhom.", "The old man was carrying a gas cylinder. He pointed and said, 'He lives over there.' The visitor wondered whether the old man carried another gas cylinder whenever he went to his village.", "그 노인은 가스통을 들고 있었어. 그는 저쪽에 산다고 가리켰고, 방문객은 그 노인이 자기 마을에 갈 때도 가스통을 하나 더 들고 다니는지 궁금해했어.", "B2", 60, "humor", "name_wordplay", "joke", "opinion", "colloquial", "high", "source_ambiguity"),
+    86: item("wahed sayed 3and lkonton ar f lbor ghabnou diwana. ra7 l jame3 ya rabbi selkni menhom. l9a wahed ya rabbi 3tini khobza ma 3andouch bach y3acha. galou hay karon temil khali rabi tronkil.", "A man who had been cheated at customs went to the mosque saying, 'Lord, save me from them.' He met someone praying, 'Lord, give me bread; I have nothing for dinner.' He gave him forty thousand and said, 'Just let God be at peace.'", "세관에서 속은 한 남자가 모스크에 가서 '신이시여, 저들을 피하게 해 주세요'라고 기도했어. 그곳에서 '신이시여, 저녁으로 먹을 빵을 주세요'라고 기도하는 사람을 만나자 4만을 주며 '그저 신을 편안하게 해 두자'고 말했어.", "B2", 65, "finance", "charity", "joke", "narration", "colloquial", "high", "source_ambiguity"),
+    87: item("galek wa7da chibaniya ma 3andhach snin ra7et 3and dontist. s9satou ch7al ni ban. galha samil 50 dinar. ch7al derous? galha famil 200 dinar. 9atlet derhomli ga3 ni ban.", "An old woman with no teeth went to a dentist. She asked the price of one tooth; he said fifty dinars. She asked about dentures; he said two hundred dinars. She told him to do all her teeth.", "이가 하나도 없는 노인이 치과에 갔어. 이 하나가 얼마냐고 묻자 50디나르라고 했고, 틀니는 얼마냐고 묻자 200디나르라고 했어. 그러자 모든 이를 다 해 달라고 했어.", "B1", 45, "health", "dentist", "joke", "request", "colloquial", "medium"),
+    88: item("wahed fransi s9sa arjighia galou 3lach ntouma ki tehderou tdkhlou hadr etna m3akom. galou ana jami 9oltha.", "A Frenchman asked an Algerian, 'Why do you bring our speech into your language when you talk?' The Algerian answered, 'I never said that.'", "한 프랑스인이 알제리인에게 '당신들은 말할 때 왜 우리 말을 자기들 말에 섞나요?'라고 물었어. 알제리인은 '나는 그런 말 한 적이 없는데요'라고 대답했어.", "B1", 42, "culture_tradition", "language_mixing", "joke", "answer", "colloquial", "high"),
+    89: item("wahed mghandef 9abed taraf glasou dayrou f chams. ja 3andou sahbou galou cha rak dir. galou baghi n9ed f wein rahi.", "A drunk man was holding a piece of glass in the sun. His friend asked what he was doing, and he said, 'I want to catch the shadow wherever it is.'", "술에 취한 남자가 유리 조각을 햇볕에 들고 있었어. 친구가 뭘 하냐고 묻자 그는 '어디에 있든 그림자를 붙잡고 싶어'라고 말했어.", "B1", 42, "humor", "drunkenness", "joke", "answer", "colloquial", "high", "source_ambiguity"),
+    90: item("wahed bgha yent a7er 9a3ed y tla3 fou9 bank w y9is rou7ou. chafou wahed rajel galou cha rak dir. galou baghi n9is rou7i. galou ila baghi tenta7er rou7 tla3 fou9 batimat w 9is rou7ek. galou 3lach rak baghini nmout.", "A man wanted to commit suicide. He climbed onto a bench and said he wanted to measure himself. Another man told him to climb onto mattresses and measure himself, and he asked, 'Why do you want me to die?'", "어떤 남자가 자살하려고 했어. 그는 벤치에 올라가 자신을 재고 싶다고 말했지. 다른 사람이 매트리스 위에 올라가 자신을 재라고 하자, 그는 '왜 나를 죽게 하려는 거예요?'라고 물었어.", "B2", 55, "crime_safety", "wordplay", "joke", "question", "colloquial", "high", "context_heavy"),
+    91: item("merra wahed dkhel 3and kawafir. 9a3ed y7asen ki 7asenlou w kemel galou khalsni. 9a3ed yferfer ma l9ach drahem galou ma 3andich. galou emli 9a3ed hna ki tetghafel khrej.", "A man went to a barber and sat while the barber cut his hair. When it was finished, the barber asked for payment, but the man had no money. The barber told him to stay there while he found a solution, and the man left when the barber was distracted.", "어떤 남자가 이발소에 가서 머리를 잘랐어. 이발이 끝나 돈을 내라고 하자 돈이 없었지. 이발사가 방법을 찾을 때까지 여기 있으라고 했지만, 남자는 이발사가 한눈판 사이에 나가 버렸어.", "B1", 45, "work", "barber_payment", "joke", "narration", "colloquial", "high"),
+    92: item("wahed chomeur 7ayest kan y7awes 3la khedma, ydour ydour dkhel kazirna w 9alhom ma khas komch colonel hna sa7bi? la ma khasnach 7it.", "An unemployed man was looking for work. He went around and entered a barracks, asking, 'Do you need a colonel here, my friend?' They said no, because they did not need one.", "한 실업자가 일자리를 찾고 있었어. 이곳저곳 돌아다니다가 병영에 들어가 '여기 대령이 필요하지 않나요?'라고 물었지만, 필요 없다는 대답을 들었어.", "B1", 45, "work", "job_search", "joke", "question", "colloquial", "high"),
+    93: item("ouyahi galhom hada cha3b y7eb yakel kol youm yaourt. jou3 kelbek yetba3ek.", "Ouyahia told them, 'This is a people who want to eat yogurt every day. Starve your dog and it will follow you.'", "우야히아가 그들에게 말했어. '이 국민은 매일 요구르트를 먹고 싶어 합니다. 개를 굶기면 여러분을 따라올 겁니다.'", "B2", 55, "politics_public_affairs", "political_satire", "joke", "opinion", "colloquial", "high", "context_heavy"),
+    94: item("za3ma cha3b jou3ou yetba3 l7okouma 3albalha ydkhel 7abes khir, basco hadi machi hdra. s9s ouh kifach nta, galou belli 3andek alf kar. galou la 3andi alf w khams mia bsah 3la marti.", "The joke says that a hungry people follow the government, which knows that going to prison is better because this is no way to speak. When asked how he was doing, a man said he had a thousand cars, then corrected it to fifteen hundred, but they were his wife's.", "배고픈 국민은 정부를 따른다는 풍자야. 이런 식으로 말하느니 감옥에 가는 편이 낫다는 뜻이지. 어떻게 지내냐는 질문에 한 남자가 차가 천 대 있다고 했다가, 아내 명의로 천오백 대라고 정정했어.", "C1", 78, "politics_public_affairs", "political_satire", "joke", "opinion", "colloquial", "high", "context_heavy"),
+    95: item("kifach mart ek 3andha? 9alou kifha kifkom mow atina jaz ayr iya 3andha 7a9 tedi. chouf asidi, yrou7 wahed cha3b wla mowaten 3adi. ma y3tiwh, wallah ma yk7el 3liha, w weld 3abbas rayes ta3 7izb galhom 7na rana 3aychin khir men swid, hada machi m5alel f 3a9lou, hada m hbol.", "They asked how his wife could have so many cars. He replied that she was a citizen like everyone else and had the right to receive them. Then the joke turns into a confused political exchange about officials claiming that people live better than in Sweden.", "아내가 어떻게 그렇게 많은 차를 가질 수 있느냐고 묻자, 그는 아내도 모두와 같은 시민이고 받을 권리가 있다고 대답했어. 이어서 스웨덴보다 더 잘 산다는 관리들의 주장을 비꼬는 혼란스러운 정치 대화로 이어져.", "C2", 95, "politics_public_affairs", "political_satire", "joke", "opinion", "mixed", "high", "context_heavy|source_corruption"),
+    96: item("lyoum f lmosalsel, min kan Merzak y3an9 f 7bib tou, jedati 9atli sa7 l9a khtou 9atlha. w ana kent 7asba Zoli5a hiya li khtou.", "In the television series, when Merzak hugged his beloved, my grandmother said, 'Now he has found his sister; he killed her.' She then said she had thought Zuleikha was the one who killed her.", "텔레비전 드라마에서 메르자크가 연인을 안자 할머니가 말했어. '이제 자기 여동생을 찾았네. 자기가 죽였잖아.' 할머니는 줄레이카가 그 여동생을 죽인 사람인 줄 알았다고 했어.", "B2", 65, "entertainment_music", "television_series", "joke", "opinion", "colloquial", "high", "context_heavy"),
+    97: item("wahed sayed ymout 3la martou 9atlha rou7 chri li babouch. ki houad lmerchi ychri lha babouch, ki ja tal3 chaf tabla ta3 domino w howa ymout 3la domino.", "A man who loved his wife went to the market because she asked him to buy slippers. On the way he saw a domino table, and he loved dominoes even more.", "아내를 사랑하는 한 남자가 아내의 부탁으로 슬리퍼를 사러 시장에 갔어. 그런데 가는 길에 도미노 판을 보자 그는 도미노를 더 좋아했어.", "B1", 48, "family_relationships", "dominoes", "joke", "narration", "colloquial", "medium"),
+    98: item("w martou 9atlha khof ma twalch 3liya, 3andek khams d9aye9 t chri li babouch w tji.", "His wife told him not to take long: he had five minutes to buy the slippers and come back.", "아내는 오래 걸리지 말라고 했어. 슬리퍼를 사고 5분 안에 돌아오라는 뜻이었지.", "A2", 28, "family_relationships", "dominoes", "conversation", "command", "colloquial", "low"),
+    99: item("w howa ymout 3la domino ja fat 3la 7ouma l9a jma3a yl3abou domino double six. toul ma dar ch sa3a, dar 4 swaye3.", "Because he loved dominoes, he passed through a neighborhood where people were playing double-six dominoes. He intended to play briefly but ended up playing for four hours.", "그는 도미노를 너무 좋아해서 사람들이 더블 식스 도미노를 하는 동네에 들렀어. 잠깐만 하려 했지만 결국 네 시간을 하고 말았어.", "B1", 45, "family_relationships", "dominoes", "joke", "narration", "colloquial", "medium"),
+    100: item("ki ydir ki ydir cha y9oul lmartou, d rok b tet. ki y9oulha cha dar, 7ot baboucha 3and bab, 7abba men 7abba w 7abba t7at 7d bab. 9atlha hada win tji, wallah l jibt homa men lmerchi ldar.", "When he finally realized he was late, he told his wife he had been delayed. He put a slipper by the door piece by piece and claimed that this was how he had brought them all the way from the market to the house.", "그가 마침내 늦었다는 걸 깨닫자 아내에게 지체됐다고 말했어. 그는 문 앞에 슬리퍼를 하나씩 놓고 시장에서 집까지 이렇게 가져왔다고 주장했어.", "B2", 60, "family_relationships", "dominoes", "joke", "narration", "colloquial", "high", "source_ambiguity"),
+    101: item("wa7da mra kanet 7atta weldha fou9 mario. dkhelt jartha 9atlha 3lach raki 7attaha fou9 mario? 9atlha bach ki yti7 nsma3ou.", "A woman had put her son on top of a wardrobe. Her neighbor asked why, and she said, 'So that I can hear him when he falls.'", "한 여자가 아들을 장롱 위에 올려 두었어. 이웃이 왜 그러냐고 묻자 '떨어질 때 소리를 들으려고'라고 대답했어.", "A2", 28, "family_relationships", "child_safety", "joke", "answer", "colloquial", "medium"),
+    102: item("galek wahed nhar wahed ma3askri tla3 l Tlemcen, mcha l7anout ta3 maw ad gh ida2iya w s9sah ch7al ydir l3lak.", "They say a man from Mascara went to Tlemcen, entered a grocery shop, and asked how much chewing gum cost.", "어느 날 마스카라 사람이 틀렘센에 가서 식료품점에 들어가 껌이 얼마인지 물었대.", "A2", 30, "shopping", "chewing_gum", "joke", "question", "colloquial", "medium"),
+    103: item("galou ma nbi3ch nta ma3askri. 3awed rje3 3andou ghodwa w labes 7ottou.", "The shopkeeper said, 'I do not sell to people from Mascara.' The man came back the next day wearing a hat as a disguise.", "가게 주인은 '나는 마스카라 사람에게는 팔지 않아요'라고 했어. 그 남자는 다음 날 모자를 쓰고 변장해서 다시 왔어.", "A2", 30, "shopping", "chewing_gum", "joke", "narration", "colloquial", "medium"),
+    104: item("w s9sah ch7al l3lak, galou ma nbi3ch nta ma3askri. khrej w mba3d rje3 3andou galou kifach 3reftni belli ma3askri.", "He asked again about the price of the gum, but the shopkeeper repeated that he did not sell to people from Mascara. The man asked how he had recognized him.", "그가 다시 껌 가격을 묻자 가게 주인은 마스카라 사람에게는 팔지 않는다고 반복했어. 그러자 그는 자신이 마스카라 사람인 걸 어떻게 알았냐고 물었어.", "B1", 45, "shopping", "chewing_gum", "joke", "question", "colloquial", "high"),
+    105: item("galou tlemc ani hada machi 3lak, hada jumbo.", "The man from Tlemcen replied, 'This is not gum; it is Jumbo.'", "틀렘센 사람이 대답했어. '이건 껌이 아니라 점보예요.'", "A2", 25, "shopping", "chewing_gum", "joke", "answer", "colloquial", "medium"),
+    106: item("galek wahed wahrani fat 3la 7ouma f Ma3askar b loto decapotable. aya lma3askriyin b daw 3lih salamat salamat, 7asbouh dar aksidon.", "They say an Oran man once drove through a neighborhood in Mascara in a convertible. The people of Mascara waved and shouted greetings, thinking he had had an accident.", "어느 오란 사람이 마스카라의 한 동네를 컨버터블을 타고 지나갔대. 마스카라 사람들이 손을 흔들며 인사했는데, 사고가 난 줄 알았기 때문이야.", "B1", 44, "transport", "convertible_car", "joke", "narration", "colloquial", "high"),
+    107: item("min yzid mzioud jdid 3and kol famille wahraniya, nfer7ou w nzahou ila kanet chira wla chir, l5ater rah ynawwer ddar.", "When a new baby is born in an Oran family, everyone celebrates and rejoices, whether it is a girl or a boy, because the child will light up the house.", "오란의 어느 집안에 새 아기가 태어나면 여자아이든 남자아이든 모두 기뻐하고 즐거워해. 아이가 집을 환하게 밝혀 주기 때문이야.", "B1", 40, "family_relationships", "newborn_baby", "narrative", "information", "colloquial", "medium"),
+    108: item("n3ardou ga3 lghachi, kima l7bab w jiran, w ndi rou nef s hiya l9as3a.", "We invite all the people, including relatives and neighbors, and hold a newborn celebration with the large communal dish.", "우리는 친척과 이웃을 비롯한 모든 사람을 초대하고 큰 공동 접시를 차려 신생아 잔치를 열어.", "B1", 40, "family_relationships", "newborn_baby", "narrative", "information", "colloquial", "medium"),
+    109: item("nwej dou lhom berkoukes w limonad w ma9t ena 7lowa w gato w 9ahwa w tay, w n7ottouhom lnas m3ar din w nfoutouha b lhedra w d7ak.", "We prepare berkoukes, lemonade, sweets, cake, coffee, and tea for the guests, then spend the afternoon talking and laughing.", "우리는 손님들을 위해 베르쿠스, 레모네이드, 과자, 케이크, 커피와 차를 준비하고 오후 내내 이야기하며 웃어.", "B1", 45, "family_relationships", "newborn_baby", "narrative", "information", "colloquial", "medium"),
+    110: item("kayn li ymed lnafs a drahem w kayn li ymed kadouat, kol wa7ed yjib lnejmet 3lih.", "Some guests give money for the celebration and others bring gifts; each person gives according to what they can afford.", "어떤 손님은 잔치에 돈을 주고 어떤 손님은 선물을 가져와. 사람마다 형편에 맞게 주는 거야.", "B1", 42, "family_relationships", "newborn_baby", "narrative", "information", "colloquial", "medium"),
+    111: item("li f yedou kol youm 3idou, za3ma li 3andou daymen ychri w yfer7an.", "The one who has something in hand celebrates every day; in other words, whoever has means can keep buying and stay happy.", "손에 가진 것이 있는 사람은 매일이 명절이라는 뜻이야. 형편이 되는 사람은 계속 사고 행복하게 지낼 수 있다는 말이지.", "A2", 28, "culture_tradition", "proverb", "proverb", "opinion", "colloquial", "medium", "idiom_culture"),
+    112: item("li 7artha fard dekka jmel.", "A short proverb-like line about ploughing a field with a single stroke and a camel.", "한 번의 쟁기질과 낙타를 언급하는 짧은 속담 같은 표현이야.", "B1", 45, "culture_tradition", "proverb", "proverb", "information", "colloquial", "high", "source_ambiguity"),
+    113: item("Bahloul w m ou ssi.", "Bahloul and his testament.", "바흘룰과 그의 유언.", "B1", 48, "culture_tradition", "proverb", "proverb", "information", "colloquial", "high", "source_ambiguity"),
+    114: item("khedem ya Baki lcha9i, w koul ya mstarra7.", "Work, Baki the tired one, and eat, you who are resting.", "일해라, 지친 바키야. 그리고 쉬고 있는 너는 먹어라.", "A2", 30, "work", "proverb", "proverb", "command", "colloquial", "medium"),
+    115: item("khobz ddar yaklou brani.", "The bread of the house is eaten by outsiders.", "집에서 만든 빵은 오히려 외부인이 먹는다는 뜻이야.", "B1", 42, "culture_tradition", "proverb", "proverb", "opinion", "colloquial", "high", "idiom_culture"),
+    116: item("jat 7m ati lyoum w bghat t t7akem f dari. wallah ila ghaya. galou nas zman f 3achna w ynchna f dari, w baghya tsta3merni.", "My mother-in-law came today and wanted to rule my house. People of old had a saying about living and dying in one's own house, but she wants to colonize me.", "오늘 시어머니가 와서 내 집을 지배하려고 했어. 옛사람들은 자기 집에서 살고 죽는다고 했는데, 시어머니는 나를 식민지처럼 다루려 해.", "B2", 65, "family_relationships", "mother_in_law", "joke", "complaint", "colloquial", "high", "idiom_culture"),
+    117: item("li bagha ga3 khlaha ga3.", "Whoever wanted everything, let her have everything.", "모든 것을 원한 사람에게 모든 것을 갖게 하라는 뜻이야.", "B1", 48, "culture_tradition", "proverb", "proverb", "opinion", "colloquial", "high", "source_corruption"),
+    118: item("kerch kbira tet9ate3.", "A big belly gets cut open.", "큰 배는 잘라 내야 한다는 뜻이야.", "B1", 50, "culture_tradition", "proverb", "proverb", "information", "colloquial", "high", "source_ambiguity"),
+    119: item("madbou7a t3ayeb 3la maslou5a, w m9at3a chab3a tda7ek.", "The slaughtered one criticizes the skinned one, while the one already cut up laughs, full and satisfied.", "도살당한 사람이 가죽 벗겨진 사람을 흉보고, 이미 잘린 사람은 배부르게 웃는다는 뜻이야.", "C1", 78, "culture_tradition", "proverb", "proverb", "opinion", "colloquial", "high", "idiom_culture"),
+    120: item("elli ma hou lik ghir y3ayik.", "What is not yours only tires you.", "네 것이 아닌 것은 너를 피곤하게 할 뿐이라는 뜻이야.", "A2", 28, "culture_tradition", "proverb", "proverb", "opinion", "colloquial", "medium", "idiom_culture"),
+    121: item("3zizti jazayriya wajda bach nsla7 otorout men gharbha Maghnia l char9ha Tarf, b condition ida bayentili belli had aham chart lzwaj.", "My dear Algerian woman, I am ready to repair the motorway from Maghnia in the west to El Tarf in the east, if you prove that this is the most important condition for marriage.", "나의 알제리 여인이여, 결혼의 가장 중요한 조건이 이것임을 증명한다면 서쪽 마그니아에서 동쪽 엘타르프까지 고속도로를 고칠 준비가 되어 있어.", "B2", 58, "travel", "marriage_conditions", "conversation", "opinion", "colloquial", "high", "context_heavy"),
+    122: item("rdat 3lih 9atlou 3zizi jazayri, ana wajda bach n3awed morak b babi f mechwar, ida bentli belli chab jazayri ma yhemmouch zine chira w ychouf ghir f3ayel.", "She replied, 'My dear Algerian, I am ready to walk behind you on a journey if you prove that a handsome Algerian man does not care about a woman's beauty and looks only at her actions.'", "그녀가 대답했어. '나의 알제리 사람이여, 잘생긴 알제리 남자는 여자의 외모를 신경 쓰지 않고 행동만 본다는 걸 증명한다면 당신을 따라 걸을 준비가 되어 있어.'", "B2", 62, "family_relationships", "marriage_conditions", "conversation", "opinion", "colloquial", "high", "context_heavy"),
+    123: item("okht Sana, kiraki w kirahom nas Wahran.", "Sana's sister, how are you, and how are the people of Oran?", "사나의 자매야, 잘 지내? 오란 사람들은 어떻게 지내?", "A1", 18, "daily_life", "greeting", "conversation", "greeting", "colloquial", "low"),
+    124: item("rani ghaya ghaya w nhadilkom hadhi lghnya.", "I am fine, fine, and I dedicate this song to you.", "나는 잘 지내, 정말 잘 지내. 이 노래를 너희에게 바칠게.", "A2", 25, "entertainment_music", "song_dedication", "song_lyric", "information", "colloquial", "low"),
+    125: item("dourou ya chbiba, dourou @@L at@@ @@L at@@ @@L at@@.", "Turn around, young people, turn around; the repeated marker in the source interrupts the rest of this song-like line.", "젊은이들아 돌아라, 돌아라. 원문에 반복된 깨짐 표기가 있어 이 노래 같은 문장의 나머지는 중단되어 있어.", "B1", 48, "entertainment_music", "song_lyric", "song_lyric", "command", "colloquial", "high", "source_corruption"),
+    126: item("7na 3andna tari5, machi ghir hedra f ri7.", "We have history; it is not merely words carried away by the wind.", "우리에게는 역사가 있어. 바람에 흩날리는 말뿐이 아니야.", "B1", 45, "history", "national_history", "proverb", "opinion", "colloquial", "medium", "idiom_culture"),
+    127: item("tali fina che5, machi lbare7 bdina.", "In the end, we have a sheikh; we did not begin yesterday.", "결국 우리에게는 어른이 있어. 우리는 어제 시작한 사람들이 아니야.", "B2", 55, "culture_tradition", "community_identity", "proverb", "opinion", "colloquial", "high", "source_ambiguity"),
+    128: item("la chi3a la la nf i5, 7na 3andna sas s7i7.", "No sectarianism and no boasting; we have sound roots.", "종파주의도 허세도 없어. 우리에게는 튼튼한 뿌리가 있어.", "B1", 42, "culture_tradition", "community_identity", "proverb", "opinion", "colloquial", "medium", "idiom_culture"),
+}
+
+
+def validate_items(source_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    source_by_sentno = {
+        row["sentno"]: row["source_uid"]
+        for row in source_rows
+        if TARGET_START <= int(row["sentno"]) <= TARGET_END
+    }
+    expected = [str(number) for number in range(TARGET_START, TARGET_END + 1)]
+    if list(map(str, sorted(ITEMS))) != expected:
+        raise RuntimeError("batch_item_coverage_mismatch")
+    rows: list[dict[str, str]] = []
+    for sentno in expected:
+        payload = dict(ITEMS[int(sentno)])
+        if any(not payload[field].strip() for field in EMPTY_FIELDS):
+            raise RuntimeError(f"empty_required_field:{sentno}")
+        if not payload["latin"].isascii():
+            raise RuntimeError(f"latin_not_ascii:{sentno}")
+        flags = payload["processing_flags"]
+        values = flags.split("|") if flags else []
+        if values != sorted(values) or len(values) != len(set(values)):
+            raise RuntimeError(f"non_canonical_flags:{sentno}")
+        if any(value not in PROCESSING_FLAG_VALUES for value in values):
+            raise RuntimeError(f"unknown_flag:{sentno}")
+        payload = {"source_uid": source_by_sentno[sentno], "sentno": sentno, **payload}
+        rows.append(payload)
+    return rows
+
+
+def write_tsv(rows: list[dict[str, str]]) -> None:
+    BATCH_OUT.parent.mkdir(parents=True, exist_ok=True)
+    with BATCH_OUT.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=BATCH_FIELDS,
+            delimiter="\t",
+            lineterminator="\n",
+            quoting=csv.QUOTE_ALL,
+        )
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def build() -> dict[str, object]:
+    source_rows = read_tsv(SOURCE_OUT)
+    rows = validate_items(source_rows)
+    generated_at = current_utc_timestamp()
+    manifest = {
+        "batch_id": BATCH_ID,
+        "base_commit": BASE_COMMIT,
+        "sentno_start": TARGET_START,
+        "sentno_end": TARGET_END,
+        "row_count": len(rows),
+        "fields": [*EMPTY_FIELDS, "processing_flags"],
+        "prompt_version": "madoran-source-enrichment-v2",
+        "source_dependency": "canonical_source_only",
+        "morphology_dependency": False,
+        "darija_modified": False,
+        "schema_version": "1.1.0",
+        "generated_at": generated_at,
+        "review_state": "generated",
+    }
+    write_tsv(rows)
+    MANIFEST_OUT.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report = {
+        "result": "PASS",
+        "batch_id": BATCH_ID,
+        "base_commit": BASE_COMMIT,
+        "sentno_start": TARGET_START,
+        "sentno_end": TARGET_END,
+        "target_rows": len(rows),
+        "draft_rows": sum(
+            1
+            for row in rows
+            if not any(flag in row["processing_flags"] for flag in ("source_ambiguity", "source_corruption"))
+        ),
+        "flagged_rows": [
+            row["sentno"]
+            for row in rows
+            if any(flag in row["processing_flags"] for flag in ("source_ambiguity", "source_corruption"))
+        ],
+        "processing_flags_populated_rows": sum(bool(row["processing_flags"]) for row in rows),
+        "source_gate": "PASS",
+        "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+        "morphology_reads": 0,
+        "arabic_modified": 0,
+        "validator": "PASS",
+        "generated_at": generated_at,
+        "outputs": {
+            "batch": BATCH_OUT.relative_to(ROOT).as_posix(),
+            "manifest": MANIFEST_OUT.relative_to(ROOT).as_posix(),
+        },
+    }
+    QA_OUT.parent.mkdir(parents=True, exist_ok=True)
+    QA_OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+if __name__ == "__main__":
+    print(json.dumps(build(), ensure_ascii=False, indent=2))

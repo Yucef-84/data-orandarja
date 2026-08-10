@@ -73,7 +73,8 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
 
     def test_applied_state_is_exactly_targeted(self):
         target = [row for row in self.enrichment_rows if 1 <= int(row["sentno"]) <= 64]
-        outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 64]
+        batch02 = [row for row in self.enrichment_rows if 65 <= int(row["sentno"]) <= 128]
+        outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 128]
         self.assertEqual(len(target), 64)
         self.assertTrue(all(row["enrichment_state"] == "qa_passed" for row in target if row["sentno"] not in {"17", "63"}))
         self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
@@ -81,6 +82,11 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in outside))
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
         self.assertEqual(sum(bool(row[field]) for row in outside for field in EMPTY_FIELDS), 0)
+        self.assertEqual(len(batch02), 64)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in batch02), 50)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch02), 14)
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in batch02), 36)
+        self.assertEqual(sum(bool(row[field]) for row in batch02 for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
 
     def test_headgpt_review_evidence_approves_batch01(self):
         review = json.loads(
@@ -101,10 +107,10 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 1434)
+        self.assertEqual(event_check["events"], 2174)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 64 * len(EMPTY_FIELDS) + 2)
+        self.assertEqual(trace["populated_fields"], 2 * 64 * len(EMPTY_FIELDS) + 38)
 
     def test_batch_qa_is_pass(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
