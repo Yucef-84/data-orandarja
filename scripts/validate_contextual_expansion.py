@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTEXTUAL = ROOT / "data" / "contextual"
+CANONICAL = ROOT / "data" / "oran_darija_verified.tsv"
 SOURCE = (
     ROOT
     / "sources"
@@ -31,6 +32,10 @@ ACTIVE = {"source_verified", "gpt_reviewed", "native1_reviewed", "native2_approv
 STATUSES = ACTIVE | {"hold"}
 LEVELS = {"A1", "A2", "B1", "B2"}
 DOMAINS = {"school_work", "city_transport", "body_health", "food_shopping"}
+ALLOWED_SOURCE_IDS = {"S6"}
+ALLOWED_EVIDENCE = {"MADORAN_DIRECT"}
+ALLOWED_DERIVATIONS = {"source_direct", "source_normalized"}
+ALLOWED_LICENSES = {"CC-BY-NC-3.0-MADORAN"}
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
@@ -47,16 +52,21 @@ def locator_number(value: str) -> int | None:
     return int(match.group(1)) if match else None
 
 
-def contextual_paths() -> list[Path]:
-    return sorted(CONTEXTUAL.rglob("oran_darija_contextual_*.tsv"))
+def contextual_paths(paths: list[Path] | None = None) -> list[Path]:
+    return sorted(paths if paths is not None else CONTEXTUAL.rglob("oran_darija_contextual_*.tsv"))
 
 
-def validate() -> dict[str, object]:
+def validate(paths: list[Path] | None = None) -> dict[str, object]:
     errors: list[str] = []
     source_rows = read_tsv(SOURCE)
     source_by_no = {int(row["Sentno"]): row["Sentence"] for row in source_rows}
+    canonical_arabic = {
+        normalize_arabic(row.get("arabic", ""))
+        for row in read_tsv(CANONICAL)
+        if row.get("arabic", "").strip()
+    }
     all_rows: list[tuple[Path, dict[str, str]]] = []
-    for path in contextual_paths():
+    for path in contextual_paths(paths):
         for row in read_tsv(path):
             all_rows.append((path, row))
 
@@ -87,10 +97,21 @@ def validate() -> dict[str, object]:
             errors.append(f"{sid}: learner_ready requires native2_approved")
         if row.get("review_status") == "hold" and not row.get("note", "").startswith("HOLD:"):
             errors.append(f"{sid}: hold rows require a HOLD note")
-        if row.get("source_id") not in {"S1", "S6"}:
-            errors.append(f"{sid}: invalid source_id")
+        if row.get("source_id") not in ALLOWED_SOURCE_IDS:
+            errors.append(f"{sid}: source_id {row.get('source_id', '')} has no implemented replay adapter")
+        if row.get("evidence") not in ALLOWED_EVIDENCE:
+            errors.append(f"{sid}: invalid evidence {row.get('evidence', '')}")
+        if row.get("derivation_type") not in ALLOWED_DERIVATIONS:
+            errors.append(f"{sid}: prohibited or unsupported derivation_type {row.get('derivation_type', '')}")
+        if row.get("license_id") not in ALLOWED_LICENSES:
+            errors.append(f"{sid}: invalid license_id {row.get('license_id', '')}")
         if row.get("derivation_type") == "source_direct" and row.get("arabic") != row.get("source_form"):
             errors.append(f"{sid}: source_direct Arabic/source_form mismatch")
+        if row.get("derivation_type") == "source_normalized":
+            if row.get("arabic") == row.get("source_form"):
+                errors.append(f"{sid}: source_normalized must change the source form")
+            if "normal" not in row.get("note", "").lower():
+                errors.append(f"{sid}: source_normalized requires a normalization note")
         number = locator_number(row.get("source_locator", ""))
         if number is None or number not in source_by_no:
             errors.append(f"{sid}: source locator does not replay")
@@ -102,9 +123,13 @@ def validate() -> dict[str, object]:
             if number in source_seen:
                 errors.append(f"{sid}: source locator duplicates {source_seen[number]}")
             source_seen[number] = sid
+            if row.get("family_id") != f"MADOran-S6-{number}":
+                errors.append(f"{sid}: family_id does not match MADOran S6 locator")
         normalized = normalize_arabic(row.get("arabic", ""))
         if normalized in arabic_seen:
             errors.append(f"{sid}: normalized Arabic duplicates {arabic_seen[normalized]}")
+        if normalized in canonical_arabic:
+            errors.append(f"{sid}: normalized Arabic overlaps canonical lexical core")
         arabic_seen[normalized] = sid
 
     cefr_counts = Counter(row["cefr"] for _, row in all_rows)

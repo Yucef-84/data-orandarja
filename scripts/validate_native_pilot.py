@@ -27,22 +27,29 @@ def read_tsv(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(handle, delimiter="\t"))
 
 
-def validate() -> dict[str, object]:
+def validate(
+    review_path: Path = REVIEWS,
+    summary_path: Path = SUMMARY,
+    batch_paths: list[Path] | None = None,
+) -> dict[str, object]:
     errors: list[str] = []
     target: dict[str, dict[str, str]] = {}
-    for path in sorted(CONTEXTUAL.glob("oran_darija_contextual_batch*.tsv")):
+    paths = batch_paths if batch_paths is not None else sorted(CONTEXTUAL.glob("oran_darija_contextual_batch*.tsv"))
+    for path in sorted(paths):
         for row in read_tsv(path):
             if row["review_status"] in ACTIVE:
                 target[row["sample_id"]] = row
 
-    reviews = read_tsv(REVIEWS) if REVIEWS.exists() else []
-    summary = read_tsv(SUMMARY) if SUMMARY.exists() else []
+    reviews = read_tsv(review_path) if review_path.exists() else []
+    summary = read_tsv(summary_path) if summary_path.exists() else []
     by_sample: dict[str, list[dict[str, str]]] = {}
     for row in reviews:
         sid = row.get("sample_id", "")
         if sid not in target:
             errors.append(f"review row references non-active sample {sid}")
         by_sample.setdefault(sid, []).append(row)
+        if not row.get("reviewer_id", "").strip():
+            errors.append(f"{sid}: reviewer_id is required")
         if row.get("oran_native_confirmed") != "true":
             errors.append(f"{sid}: reviewer {row.get('reviewer_id', '')} is not confirmed Oran-native")
         if row.get("rating") not in RATINGS:
@@ -57,7 +64,14 @@ def validate() -> dict[str, object]:
         elif all(row.get("rating") in RATINGS for row in sample_reviews):
             complete_samples += 1
 
-    summary_by_sample = {row.get("sample_id", ""): row for row in summary}
+    summary_by_sample: dict[str, dict[str, str]] = {}
+    for row in summary:
+        sid = row.get("sample_id", "")
+        if sid in summary_by_sample:
+            errors.append(f"{sid}: duplicate native summary sample_id")
+        summary_by_sample[sid] = row
+    for sid in sorted(set(summary_by_sample) - set(target)):
+        errors.append(f"summary row references non-active sample {sid}")
     for sid in sorted(target):
         row = summary_by_sample.get(sid)
         if row is None:
@@ -67,6 +81,25 @@ def validate() -> dict[str, object]:
             errors.append(f"{sid}: unresolved final_native_status")
         if row.get("agreement") not in {"true", "false"}:
             errors.append(f"{sid}: agreement must be true/false")
+        sample_reviews = by_sample.get(sid, [])
+        reviewer_ids = {review.get("reviewer_id", "") for review in sample_reviews}
+        if len(sample_reviews) == 2 and len(reviewer_ids) == 2:
+            ratings = sorted(review.get("rating", "") for review in sample_reviews)
+            summary_ratings = sorted(
+                [row.get("reviewer1_rating", ""), row.get("reviewer2_rating", "")]
+            )
+            if summary_ratings != ratings:
+                errors.append(f"{sid}: summary ratings do not match reviewer manifest")
+            expected_agreement = ratings[0] == ratings[1]
+            actual_agreement = row.get("agreement") == "true"
+            if actual_agreement != expected_agreement:
+                errors.append(f"{sid}: summary agreement does not match reviewer ratings")
+            if not expected_agreement and not row.get("resolution_note", "").strip():
+                errors.append(f"{sid}: disagreement requires a non-empty resolution_note")
+            if row.get("final_native_status") == "native2_approved" and not all(
+                rating in ACCEPTABLE for rating in ratings
+            ):
+                errors.append(f"{sid}: native2_approved requires two acceptable ratings")
 
     rating_counts = Counter(row.get("rating", "") for row in reviews)
     acceptable_count = sum(count for rating, count in rating_counts.items() if rating in ACCEPTABLE)
@@ -88,13 +121,17 @@ def validate() -> dict[str, object]:
         "wrong_plus_not_oran_rate": wrong_not_oran / review_total if review_total else 0.0,
         "reviewer_agreement_rate": agreement_count / agreement_denominator if agreement_denominator else 0.0,
     }
+    summary_complete = len(summary) == len(target) and set(summary_by_sample) == set(target)
+    all_final_approved = summary_complete and all(
+        row.get("final_native_status") == "native2_approved" for row in summary
+    )
     gate_pass = (
         not errors
         and metrics["target_active"] > 0
         and metrics["acceptable_rate"] >= 0.95
         and metrics["wrong_plus_not_oran_rate"] <= 0.02
         and metrics["reviewer_agreement_rate"] >= 0.90
-        and all(row.get("final_native_status") == "native2_approved" for row in summary)
+        and all_final_approved
     )
     return {
         "p0_errors": errors,

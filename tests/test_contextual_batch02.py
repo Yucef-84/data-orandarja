@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BATCH01 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
 BATCH02 = ROOT / "data" / "contextual" / "oran_darija_contextual_batch02.tsv"
-EXPECTED_BATCH01_SHA256 = "34cb2dd42810737f80f9a9d552d42c806968e5fe73b618dca2cb7d53eb1a984f"
+EXPECTED_BATCH01_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
 EXPECTED_HOLD_IDS = {
     "ODC-000149", "ODC-000150", "ODC-000153", "ODC-000154", "ODC-000155",
     "ODC-000158", "ODC-000159", "ODC-000160", "ODC-000162", "ODC-000164",

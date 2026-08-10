@@ -24,7 +24,7 @@ SOURCE = (
 )
 
 CANONICAL_SHA256 = "96cc35a441c91ee70bd1edd70c6c0d48646f7b808b08f140a88b5d98d642eaf6"
-BATCH01_SHA256 = "34cb2dd42810737f80f9a9d552d42c806968e5fe73b618dca2cb7d53eb1a984f"
+BATCH01_SHA256 = "ac181b09771bf1f32d3038f5f5af9d5bf64d904b0735505e633c6076a1bac288"
 FIELDS = [
     "sample_id", "language", "variety", "cefr", "domain", "topic",
     "sample_type", "arabic", "source_form", "latin", "ko", "en",

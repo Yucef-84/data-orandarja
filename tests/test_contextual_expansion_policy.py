@@ -2,8 +2,11 @@ import csv
 import json
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+
+from scripts.validate_contextual_expansion import validate as validate_expansion
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,6 +65,47 @@ class ContextualExpansionPolicyTests(unittest.TestCase):
                 "reviewed_at",
             ],
         )
+
+    def test_validator_rejects_prohibited_derivation_and_spoofed_source(self):
+        source = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir) / source.name
+            rows = list(csv.DictReader(source.open(encoding="utf-8-sig", newline=""), delimiter="\t"))
+            fieldnames = list(rows[0])
+
+            rows[0]["derivation_type"] = "ai_composed"
+            with temp_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames, delimiter="\t", quoting=csv.QUOTE_ALL)
+                writer.writeheader()
+                writer.writerows(rows)
+            report = validate_expansion([temp_path])
+            self.assertTrue(any("derivation_type" in error for error in report["p0_errors"]))
+
+            rows[0]["derivation_type"] = "source_direct"
+            rows[0]["source_id"] = "S1"
+            with temp_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=fieldnames, delimiter="\t", quoting=csv.QUOTE_ALL)
+                writer.writeheader()
+                writer.writerows(rows)
+            report = validate_expansion([temp_path])
+            self.assertTrue(any("replay adapter" in error for error in report["p0_errors"]))
+
+    def test_validator_rejects_canonical_arabic_overlap(self):
+        source = ROOT / "data" / "contextual" / "oran_darija_contextual_batch01.tsv"
+        canonical = ROOT / "data" / "oran_darija_verified.tsv"
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir) / source.name
+            with source.open(encoding="utf-8-sig", newline="") as handle:
+                rows = list(csv.DictReader(handle, delimiter="\t"))
+            with canonical.open(encoding="utf-8-sig", newline="") as handle:
+                canonical_arabic = next(csv.DictReader(handle, delimiter="\t"))["arabic"]
+            rows[0]["arabic"] = canonical_arabic
+            with temp_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0]), delimiter="\t", quoting=csv.QUOTE_ALL)
+                writer.writeheader()
+                writer.writerows(rows)
+            report = validate_expansion([temp_path])
+            self.assertTrue(any("canonical lexical core" in error for error in report["p0_errors"]))
 
 
 if __name__ == "__main__":
