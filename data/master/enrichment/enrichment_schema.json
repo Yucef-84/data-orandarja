@@ -1,6 +1,6 @@
 {
   "schema_id": "madoran-sentence-enrichment",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "dataset": "MADOran",
   "path": "data/master/enrichment/madoran_sentence_enrichment.tsv",
   "key_fields": [
@@ -126,6 +126,25 @@
       ],
       "provenance_required": true
     },
+    "processing_flags": {
+      "type": "pipe_delimited_enum",
+      "values": [
+        "cefr_boundary",
+        "code_switching",
+        "context_heavy",
+        "idiom_culture",
+        "long_source",
+        "source_ambiguity",
+        "source_corruption"
+      ],
+      "required": false,
+      "empty_allowed": true,
+      "alphabetical_order": true,
+      "requires": [
+        "source"
+      ],
+      "provenance_required_when_non_empty": true
+    },
     "enrichment_state": {
       "type": "enum",
       "values": [
@@ -150,7 +169,8 @@
       "genre",
       "speech_act",
       "register",
-      "context_dependency"
+      "context_dependency",
+      "processing_flags"
     ],
     "morphology_dependent_fields": [
       "lemma_features",
@@ -163,6 +183,7 @@
     "initial_linguistic_values": "empty",
     "arabic_original_policy": "not copied; canonical source remains authoritative"
   },
+  "layer_contract_path": "data/master/schema/madoran_layer_contract.json",
   "provenance": {
     "path": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl",
     "required_fields": [

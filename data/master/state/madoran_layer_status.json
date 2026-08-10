@@ -1,7 +1,7 @@
 {
   "status_schema_version": "1.0.0",
   "decision_id": "HEAD-MADORAN-2026-08-10-01",
-  "updated_from_commit": "c8d85c7",
+  "updated_from_commit": "bd260fc",
   "foundation": "PASS",
   "source": "PASS",
   "source_provenance": "PASS",
@@ -11,6 +11,8 @@
   "morphology_dependent_enrichment": "BLOCKED",
   "learning_units": "NOT_STARTED",
   "exports": "NOT_STARTED",
+  "layer_contract": "PASS",
+  "layer_contract_path": "data/master/schema/madoran_layer_contract.json",
   "counts": {
     "canonical_source_rows": 1356,
     "canonical_word_count": 30919,
@@ -18,7 +20,8 @@
     "enrichment_completed_rows": 62,
     "enrichment_draft_rows": 0,
     "enrichment_not_started_rows": 1292,
-    "enrichment_flagged_rows": 2
+    "enrichment_flagged_rows": 2,
+    "processing_flags_populated_rows": 2
   },
   "dependency_policy": {
     "source_only_pipeline_reads_morphology": false,

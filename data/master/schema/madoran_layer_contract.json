@@ -1,0 +1,54 @@
+{
+  "contract_id": "madoran-layer-contract",
+  "contract_version": "1.0.0",
+  "source_sentence_annotation": {
+    "status": "ACTIVE",
+    "granularity": "canonical_source_sentence",
+    "primary_key": "source_uid",
+    "may_rewrite_darija": false,
+    "derived_learning_unit": false
+  },
+  "learning_unit": {
+    "status": "NOT_STARTED",
+    "granularity": "derived_learning_unit",
+    "separate_uid_namespace": true,
+    "parent_source_uid_required": true,
+    "may_have_multiple_units_per_source": true,
+    "modified_or_generated_darija_requires_native_review": true
+  },
+  "morphology_dependent_annotation": {
+    "status": "BLOCKED_UPSTREAM_DEFECT"
+  },
+  "source_annotation_fields": {
+    "linguistic_fields": [
+      "latin",
+      "english",
+      "korean",
+      "cefr_level",
+      "difficulty_score",
+      "domain",
+      "topic",
+      "genre",
+      "speech_act",
+      "register",
+      "context_dependency"
+    ],
+    "metadata_fields": ["processing_flags"],
+    "workflow_fields": ["enrichment_state"]
+  },
+  "processing_flags": {
+    "type": "pipe_delimited_controlled_flags",
+    "empty_allowed": true,
+    "alphabetical_order": true,
+    "controlled_values": [
+      "cefr_boundary",
+      "code_switching",
+      "context_heavy",
+      "idiom_culture",
+      "long_source",
+      "source_ambiguity",
+      "source_corruption"
+    ],
+    "provenance_required_when_non_empty": true
+  }
+}

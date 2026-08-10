@@ -1,7 +1,8 @@
 {
   "schema_id": "madoran-master",
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "dataset": "MADOran",
+  "layer_contract_path": "data/master/schema/madoran_layer_contract.json",
   "levels": ["A1", "A2", "B1", "B2", "C1", "C2"],
   "source_layer": {
     "path": "data/master/source/madoran_sentences.tsv",
@@ -76,7 +77,9 @@
     "topic": "optional open vocabulary",
     "speech_act": "optional open vocabulary",
     "register": "optional open vocabulary",
-    "genre": "optional open vocabulary"
+    "genre": "optional open vocabulary",
+    "context_dependency": "optional enum low|medium|high",
+    "processing_flags": "optional pipe-delimited controlled flags"
   },
   "layer_status_path": "data/master/state/madoran_layer_status.json",
   "morphology_issue_path": "data/master/issues/madoran_morphology_upstream_defect.json",
@@ -102,6 +105,7 @@
       "speech_act",
       "register",
       "context_dependency",
+      "processing_flags",
       "enrichment_state"
     ],
     "source_only_fields": [
@@ -115,7 +119,8 @@
       "genre",
       "speech_act",
       "register",
-      "context_dependency"
+      "context_dependency",
+      "processing_flags"
     ],
     "morphology_dependent_fields": [
       "lemma_features",

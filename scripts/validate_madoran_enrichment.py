@@ -13,6 +13,8 @@ try:
         ENRICHMENT_FIELDS,
         ENRICHMENT_OUT,
         EVENTS_OUT,
+        LINGUISTIC_FIELDS,
+        PROCESSING_FLAG_VALUES,
         QA_OUT,
         ROOT,
         SOURCE_OUT,
@@ -27,6 +29,8 @@ except ModuleNotFoundError:
         ENRICHMENT_FIELDS,
         ENRICHMENT_OUT,
         EVENTS_OUT,
+        LINGUISTIC_FIELDS,
+        PROCESSING_FLAG_VALUES,
         QA_OUT,
         ROOT,
         SOURCE_OUT,
@@ -38,6 +42,7 @@ except ModuleNotFoundError:
 
 
 STATUS_OUT = ROOT / "data" / "master" / "state" / "madoran_layer_status.json"
+LAYER_CONTRACT_OUT = ROOT / "data" / "master" / "schema" / "madoran_layer_contract.json"
 ISSUE_OUT = ROOT / "data" / "master" / "issues" / "madoran_morphology_upstream_defect.json"
 MORPHOLOGY_DEPENDENT_FIELDS = frozenset(
     {
@@ -80,6 +85,17 @@ def check_enrichment_rows(
         state = row.get("enrichment_state", "")
         if state not in ENRICHMENT_STATES:
             failures.append("invalid_enrichment_state")
+            break
+        processing_flags = row.get("processing_flags", "")
+        flag_values = processing_flags.split("|") if processing_flags else []
+        if len(flag_values) != len(set(flag_values)) or flag_values != sorted(flag_values):
+            failures.append("non_canonical_processing_flags")
+            break
+        if any(value not in PROCESSING_FLAG_VALUES for value in flag_values):
+            failures.append("invalid_processing_flag")
+            break
+        if state == "flagged" and not flag_values:
+            failures.append("flagged_without_processing_flag")
             break
         if state == "not_started" and any(
             row.get(field, "") != "" for field in EMPTY_FIELDS
@@ -124,7 +140,7 @@ def check_enrichment_provenance(
     populated_fields = 0
     for row in enrichment_rows:
         source_uid = row.get("source_uid", "")
-        for field in EMPTY_FIELDS:
+        for field in (*LINGUISTIC_FIELDS, "processing_flags"):
             value = row.get(field, "")
             if value == "":
                 continue
@@ -144,6 +160,40 @@ def check_enrichment_provenance(
         "failures": failures,
         "populated_fields": populated_fields,
     }
+
+
+def check_layer_contract() -> dict[str, object]:
+    """Validate the explicit source/learning-unit layer boundary contract."""
+
+    failures: list[str] = []
+    if not LAYER_CONTRACT_OUT.exists():
+        return {"result": "FAIL", "failures": ["layer_contract_missing"]}
+    contract = json.loads(LAYER_CONTRACT_OUT.read_text(encoding="utf-8"))
+    source = contract.get("source_sentence_annotation", {})
+    learning_unit = contract.get("learning_unit", {})
+    morphology = contract.get("morphology_dependent_annotation", {})
+    if source.get("status") != "ACTIVE":
+        failures.append("source_layer_not_active")
+    if source.get("granularity") != "canonical_source_sentence":
+        failures.append("source_layer_granularity")
+    if source.get("primary_key") != "source_uid":
+        failures.append("source_layer_primary_key")
+    if source.get("may_rewrite_darija") is not False:
+        failures.append("source_layer_rewrite_policy")
+    if learning_unit.get("status") != "NOT_STARTED":
+        failures.append("learning_unit_status")
+    if learning_unit.get("separate_uid_namespace") is not True:
+        failures.append("learning_unit_uid_namespace")
+    if learning_unit.get("parent_source_uid_required") is not True:
+        failures.append("learning_unit_parent_link")
+    if learning_unit.get("may_have_multiple_units_per_source") is not True:
+        failures.append("learning_unit_cardinality")
+    if morphology.get("status") != "BLOCKED_UPSTREAM_DEFECT":
+        failures.append("morphology_contract_gate")
+    flags = contract.get("processing_flags", {})
+    if flags.get("provenance_required_when_non_empty") is not True:
+        failures.append("processing_flag_provenance_policy")
+    return {"result": "PASS" if not failures else "FAIL", "failures": failures}
 
 
 def validate() -> dict[str, object]:
@@ -173,6 +223,8 @@ def validate() -> dict[str, object]:
     failures.extend(event_check["failures"])
     enrichment_provenance = check_enrichment_provenance(enrichment_rows, event_text)
     failures.extend(enrichment_provenance["failures"])
+    contract_check = check_layer_contract()
+    failures.extend(contract_check["failures"])
     status: dict[str, object] = {}
     if not STATUS_OUT.exists():
         failures.append("layer_status_missing")
@@ -216,6 +268,7 @@ def validate() -> dict[str, object]:
         "morphology_dependency": dependency_check,
         "provenance_events": event_check,
         "enrichment_provenance": enrichment_provenance,
+        "layer_contract": contract_check,
         "outputs": {
             "enrichment": ENRICHMENT_OUT.relative_to(ROOT).as_posix(),
             "status": STATUS_OUT.relative_to(ROOT).as_posix(),

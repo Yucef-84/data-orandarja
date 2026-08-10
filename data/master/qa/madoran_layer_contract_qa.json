@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "migration_id": "MADORAN-LAYER-CONTRACT-001",
+  "base_commit": "bd260fc",
+  "rows": 1356,
+  "processing_flags_populated_rows": 2,
+  "new_provenance_events": 2,
+  "total_provenance_events": 1434,
+  "linguistic_fields_modified": 0,
+  "arabic_modified": 0,
+  "learning_unit_rows_created": 0,
+  "source_gate": "PASS",
+  "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+  "latest_event_hash_gate": "PASS",
+  "validator": "PASS",
+  "generated_at": "2026-08-10T14:16:19Z",
+  "outputs": {
+    "contract": "data/master/schema/madoran_layer_contract.json",
+    "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+    "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
+  }
+}

@@ -33,12 +33,16 @@
   "provenance_events": {
     "result": "PASS",
     "failures": [],
-    "events": 1432
+    "events": 1434
   },
   "enrichment_provenance": {
     "result": "PASS",
     "failures": [],
-    "populated_fields": 704
+    "populated_fields": 706
+  },
+  "layer_contract": {
+    "result": "PASS",
+    "failures": []
   },
   "outputs": {
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",

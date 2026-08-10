@@ -59,9 +59,22 @@ ENRICHMENT_FIELDS = [
     "speech_act",
     "register",
     "context_dependency",
+    "processing_flags",
     "enrichment_state",
 ]
-EMPTY_FIELDS = ENRICHMENT_FIELDS[2:-1]
+LINGUISTIC_FIELDS = ENRICHMENT_FIELDS[2:-2]
+EMPTY_FIELDS = LINGUISTIC_FIELDS
+PROCESSING_FLAG_VALUES = frozenset(
+    {
+        "source_ambiguity",
+        "source_corruption",
+        "context_heavy",
+        "long_source",
+        "code_switching",
+        "idiom_culture",
+        "cefr_boundary",
+    }
+)
 PROVENANCE_REQUIRED_FIELDS = (
     "source_uid",
     "field",
@@ -302,6 +315,7 @@ def scaffold_rows(source_rows: list[dict[str, str]]) -> list[dict[str, str]]:
             "source_uid": row["source_uid"],
             "sentno": row["sentno"],
             **{field: "" for field in EMPTY_FIELDS},
+            "processing_flags": "",
             "enrichment_state": "not_started",
         }
         for row in source_rows
@@ -330,6 +344,13 @@ def load_or_create_enrichment(source_rows: list[dict[str, str]]) -> tuple[list[d
     allowed_states = {"not_started", "draft", "qa_passed", "reviewed", "flagged"}
     if any(row.get("enrichment_state") not in allowed_states for row in rows):
         raise RuntimeError("existing enrichment output contains an invalid enrichment_state")
+    for row in rows:
+        flags = row.get("processing_flags", "")
+        values = flags.split("|") if flags else []
+        if len(values) != len(set(values)) or values != sorted(values):
+            raise RuntimeError("existing enrichment output contains non-canonical processing_flags")
+        if any(value not in PROCESSING_FLAG_VALUES for value in values):
+            raise RuntimeError("existing enrichment output contains an unknown processing_flag")
     return rows, True
 
 

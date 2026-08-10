@@ -80,6 +80,25 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows[64:]))
 
+    def test_processing_flags_are_source_metadata_not_workflow_state(self):
+        self.assertIn("processing_flags", scaffold.ENRICHMENT_FIELDS)
+        self.assertEqual(self.enrichment_rows[16]["processing_flags"], "source_ambiguity")
+        self.assertEqual(self.enrichment_rows[62]["processing_flags"], "source_corruption")
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in self.enrichment_rows), 2)
+        self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
+        self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
+
+    def test_layer_contract_separates_source_sentences_and_learning_units(self):
+        contract = json.loads(
+            (ROOT / "data" / "master" / "schema" / "madoran_layer_contract.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(enrichment.check_layer_contract()["result"], "PASS")
+        self.assertEqual(contract["source_sentence_annotation"]["status"], "ACTIVE")
+        self.assertEqual(contract["learning_unit"]["status"], "NOT_STARTED")
+        self.assertTrue(contract["learning_unit"]["parent_source_uid_required"])
+
     def test_source_gate_passes_without_morphology_access(self):
         report = scaffold.source_gate()
         self.assertEqual(report["result"], "PASS")
@@ -321,7 +340,15 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 1432)
+        self.assertEqual(report["events"], 1434)
+
+    def test_processing_flag_provenance_hashes_are_current(self):
+        report = enrichment.check_enrichment_provenance(
+            self.enrichment_rows,
+            scaffold.EVENTS_OUT.read_text(encoding="utf-8"),
+        )
+        self.assertEqual(report["result"], "PASS", report)
+        self.assertEqual(report["populated_fields"], 64 * len(scaffold.EMPTY_FIELDS) + 2)
 
 
 if __name__ == "__main__":
