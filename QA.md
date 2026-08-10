@@ -34,3 +34,18 @@
   `data/oran_darija_learner_ready.tsv`에서 제외한다.
 - learner-ready export는 현재 883행이며, A1/A2 444/444 균형을 회복하기 전에는 최종 배포본으로 표시하지 않는다.
 - 500행 레거시 입력과 388행 추가 파일을 통한 재빌드는 교정 전 값을 되살릴 수 있으므로 릴리스 입력으로 금지한다.
+
+## Contextual expansion QA
+
+Contextual rows are stored separately from the lexical core. Batch 01 must
+retain the canonical SHA-256, contain exactly 96 rows with A1/A2 48/48 and
+24 rows in each of the four declared domains, and use ODC IDs. Every source
+locator must replay the exact MADOran sentence and every row must carry the
+MADOran license identifier. Source-backed rows cannot silently become
+AI-composed or translated-from-MSA rows.
+
+Batch 01 begins as source_verified with learner_ready=false. The validator
+blocks duplicate IDs, duplicate normalized Arabic, canonical overlap, missing
+provenance, invalid enums, source replay failures, prohibited sources or
+derivations, and premature learner release. GPT must review all four chunks
+of 24 rows; native review remains a separate release gate.

@@ -67,3 +67,16 @@ Oran 직접 근거가 부족한 행이 확인되었으므로 현재 학습·배�
 
 `native_review_required` 행은 학습 초안으로는 사용할 수 있지만, 음성 녹음·모델 학습·출판 전에는
 반드시 Oran 원어민 검수를 거쳐야 한다.
+
+## Contextual expansion layer
+
+Batch 01 is a separate, source-backed pilot at
+data/contextual/oran_darija_contextual_batch01.tsv. It contains 96 MADOran
+utterances (A1 48 / A2 48) across school/work, city/transport, body/health,
+and food/shopping. The batch uses ODC IDs and references the lexical core
+through lexical_refs; it does not modify the 888-row canonical TSV.
+
+Batch 01 starts with review_status=source_verified and learner_ready=false.
+Run python scripts/validate_contextual.py for the structural and source-replay
+gates. GPT review of all four 24-row chunks and two independent Oran-native
+reviews are required before learner release.

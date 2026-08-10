@@ -1,0 +1,59 @@
+{
+  "dataset": "oran_darija_contextual_expansion",
+  "version": "0.1.0",
+  "encoding": "UTF-8",
+  "delimiter": "tab",
+  "primary_key": "sample_id",
+  "fields": {
+    "sample_id": "string",
+    "language": "ar",
+    "variety": "ar-DZ-oran",
+    "cefr": "A1 or A2",
+    "domain": "school_work | city_transport | body_health | food_shopping",
+    "topic": "string",
+    "sample_type": "utterance",
+    "arabic": "string",
+    "source_form": "string",
+    "latin": "string",
+    "ko": "string",
+    "en": "string",
+    "lexical_refs": "pipe-separated OD IDs",
+    "source_id": "S6",
+    "source_locator": "MADOran_Sentences.tsv:Sentno=N",
+    "evidence": "MADORAN_DIRECT",
+    "derivation_type": "source_direct | source_normalized",
+    "license_id": "CC-BY-NC-3.0-MADORAN",
+    "group_id": "string",
+    "family_id": "string",
+    "review_status": "source_verified | gpt_reviewed | native_reviewed | disputed",
+    "learner_ready": "true or false",
+    "note": "string"
+  },
+  "constraints": {
+    "batch_size": 96,
+    "cefr_counts": {
+      "A1": 48,
+      "A2": 48
+    },
+    "domain_counts": {
+      "school_work": 24,
+      "city_transport": 24,
+      "body_health": 24,
+      "food_shopping": 24
+    },
+    "source_priority": [
+      "S6 MADOran direct sentence",
+      "S1 CORVAM direct sentence"
+    ],
+    "prohibited_derivation_types": [
+      "ai_composed",
+      "pedagogical_composed",
+      "translated_from_msa",
+      "synthetic_dialogue"
+    ],
+    "public_release_requires": [
+      "gpt_reviewed",
+      "two independent Oran-native reviews"
+    ]
+  }
+}
