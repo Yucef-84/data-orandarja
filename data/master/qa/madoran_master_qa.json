@@ -629,5 +629,12 @@
   "morphology_mutations": 0,
   "master_source_qa": "PASS",
   "master_morphology_qa": "FAIL",
-  "result": "FAIL"
+  "result": "FAIL",
+  "provenance": {
+    "manifest_version": "1.1.0",
+    "pinned_snapshot_matches": true,
+    "snapshot_mismatches": [],
+    "path_format": "posix",
+    "result": "PASS"
+  }
 }

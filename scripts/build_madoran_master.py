@@ -14,10 +14,30 @@ ROOT = Path(__file__).resolve().parents[1]
 UPSTREAM_ROOT = ROOT / "sources" / "madoran_v2" / "Morphologically Annotated Orani-Arbaic Dialect Dat"
 SENTENCES = UPSTREAM_ROOT / "Raw Data - Sentences" / "MADOran_Sentences.tsv"
 MORPHOLOGY = UPSTREAM_ROOT / "MADOran Morphologically Annotated Dataset" / "MADOran.tsv"
+MORPHOLOGY_CSV = UPSTREAM_ROOT / "MADOran Morphologically Annotated Dataset" / "MADOran.csv"
+MORPHOLOGY_JSON = UPSTREAM_ROOT / "MADOran Morphologically Annotated Dataset" / "MADOran.json"
+MORPHOLOGY_DB = UPSTREAM_ROOT / "MADOran Morphologically Annotated Dataset" / "MADOran.db"
+SENTENCES_TEXT = UPSTREAM_ROOT / "Raw Data - Sentences" / "MADOran_Sentences.txt"
+README = UPSTREAM_ROOT / "ReadMe.txt"
+ANNOTATION_GUIDELINES = UPSTREAM_ROOT / "Morphology Annotation Guidelines.pdf"
+FREQUENCY = UPSTREAM_ROOT / "Frequency distribution data" / "MADORanFreqDist.csv"
 SOURCE_OUT = ROOT / "data" / "master" / "source" / "madoran_sentences.tsv"
 MORPHOLOGY_OUT = ROOT / "data" / "master" / "morphology" / "madoran_tokens.tsv"
 QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_master_qa.json"
 PROVENANCE_OUT = ROOT / "data" / "master" / "provenance_manifest.json"
+PROVENANCE_VERSION = "1.1.0"
+
+UPSTREAM_FILES = {
+    "sentences": SENTENCES,
+    "sentences_text": SENTENCES_TEXT,
+    "morphology_tsv": MORPHOLOGY,
+    "morphology_csv": MORPHOLOGY_CSV,
+    "morphology_json": MORPHOLOGY_JSON,
+    "morphology_sqlite": MORPHOLOGY_DB,
+    "readme": README,
+    "annotation_guidelines": ANNOTATION_GUIDELINES,
+    "frequency": FREQUENCY,
+}
 
 SOURCE_FIELDS = ["Sentno", "Sentence", "WordCount"]
 MORPHOLOGY_FIELDS = [
@@ -34,6 +54,109 @@ MASTER_SOURCE_FIELDS = [
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def git_blob_sha1(path: Path) -> str:
+    payload = path.read_bytes()
+    header = f"blob {len(payload)}\0".encode("ascii")
+    return hashlib.sha1(header + payload).hexdigest()
+
+
+def relative_posix(path: Path) -> str:
+    return path.relative_to(ROOT).as_posix()
+
+
+def current_upstream_snapshot() -> dict[str, dict[str, object]]:
+    return {
+        key: {
+            "path": relative_posix(path),
+            "size_bytes": path.stat().st_size,
+            "sha256": sha256(path),
+            "git_blob_sha1": git_blob_sha1(path),
+        }
+        for key, path in UPSTREAM_FILES.items()
+    }
+
+
+def validate_pinned_provenance() -> dict[str, object]:
+    if not PROVENANCE_OUT.exists():
+        return {
+            "manifest_version": None,
+            "pinned_snapshot_matches": False,
+            "snapshot_mismatches": ["manifest_missing"],
+            "path_format": "posix",
+            "result": "FAIL",
+        }
+    try:
+        pinned = json.loads(PROVENANCE_OUT.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {
+            "manifest_version": None,
+            "pinned_snapshot_matches": False,
+            "snapshot_mismatches": [f"manifest_unreadable:{exc}"],
+            "path_format": "posix",
+            "result": "FAIL",
+        }
+    current = current_upstream_snapshot()
+    pinned_snapshot = pinned.get("upstream_snapshot")
+    mismatches = [] if pinned_snapshot == current else sorted(
+        set(current) | set(pinned_snapshot or {})
+    )
+    if mismatches and pinned_snapshot:
+        mismatches = [
+            key
+            for key in mismatches
+            if pinned_snapshot.get(key) != current.get(key)
+        ]
+    paths_are_posix = all("\\" not in str(entry.get("path", "")) for entry in current.values())
+    result = (
+        "PASS"
+        if pinned.get("manifest_version") == PROVENANCE_VERSION
+        and pinned_snapshot == current
+        and paths_are_posix
+        else "FAIL"
+    )
+    return {
+        "manifest_version": pinned.get("manifest_version"),
+        "pinned_snapshot_matches": pinned_snapshot == current,
+        "snapshot_mismatches": mismatches,
+        "path_format": "posix" if paths_are_posix else "non_posix",
+        "result": result,
+    }
+
+
+def assert_pinned_provenance() -> None:
+    report = validate_pinned_provenance()
+    if report["result"] != "PASS":
+        raise RuntimeError(
+            "pinned provenance mismatch; update the manifest explicitly before rebuilding: "
+            + json.dumps(report, ensure_ascii=False)
+        )
+
+
+def make_provenance(qa_result: str) -> dict[str, object]:
+    return {
+        "manifest_version": PROVENANCE_VERSION,
+        "dataset": "MADOran",
+        "doi": "10.17632/pgr766jbhp.2",
+        "license_id": "CC-BY-NC-3.0-MADORAN",
+        "snapshot_policy": {
+            "path_format": "posix",
+            "byte_preservation": "upstream bytes are preserved; no EOL normalization",
+            "builder_rebaselining": "disabled after the manifest is pinned",
+        },
+        "upstream_snapshot": current_upstream_snapshot(),
+        "outputs": {
+            "source": relative_posix(SOURCE_OUT),
+            "morphology": relative_posix(MORPHOLOGY_OUT),
+            "qa": relative_posix(QA_OUT),
+            "format_reconciliation": relative_posix(
+                ROOT / "data" / "master" / "qa" / "madoran_format_reconciliation.json"
+            ),
+        },
+        "builder": relative_posix(ROOT / "scripts" / "build_madoran_master.py"),
+        "qa_result": qa_result,
+    }
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -237,6 +360,7 @@ def make_qa(
 
 
 def build() -> dict[str, object]:
+    assert_pinned_provenance()
     source_rows = read_rows(SENTENCES)
     morphology_rows, malformed_rows = read_strict_rows(MORPHOLOGY)
     master_source = build_source(source_rows)
@@ -252,25 +376,13 @@ def build() -> dict[str, object]:
         actual_morphology_rows,
         malformed_rows,
     )
+    provenance_qa = validate_pinned_provenance()
+    qa["provenance"] = provenance_qa
+    if provenance_qa["result"] != "PASS":
+        qa["result"] = "FAIL"
     QA_OUT.parent.mkdir(parents=True, exist_ok=True)
     QA_OUT.write_text(json.dumps(qa, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    provenance = {
-        "manifest_version": "1.0.0",
-        "dataset": "MADOran",
-        "doi": "10.17632/pgr766jbhp.2",
-        "license_id": "CC-BY-NC-3.0-MADORAN",
-        "upstream_snapshot": {
-            "sentences": {"path": str(SENTENCES.relative_to(ROOT)), "sha256": sha256(SENTENCES)},
-            "morphology": {"path": str(MORPHOLOGY.relative_to(ROOT)), "sha256": sha256(MORPHOLOGY)},
-        },
-        "outputs": {
-            "source": str(SOURCE_OUT.relative_to(ROOT)),
-            "morphology": str(MORPHOLOGY_OUT.relative_to(ROOT)),
-            "qa": str(QA_OUT.relative_to(ROOT)),
-        },
-        "builder": "scripts/build_madoran_master.py",
-        "qa_result": qa["result"],
-    }
+    provenance = make_provenance(qa["result"])
     PROVENANCE_OUT.parent.mkdir(parents=True, exist_ok=True)
     PROVENANCE_OUT.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return qa

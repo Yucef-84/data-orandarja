@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from scripts.build_madoran_master import (
+    current_upstream_snapshot,
     MORPHOLOGY,
     MASTER_SOURCE_FIELDS,
     MORPHOLOGY_FIELDS,
@@ -16,7 +17,9 @@ from scripts.build_madoran_master import (
     make_qa,
     read_rows,
     read_strict_rows,
+    validate_pinned_provenance,
 )
+from scripts.reconcile_madoran_formats import reconcile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,6 +42,20 @@ class MadoranMasterTests(unittest.TestCase):
         self.assertEqual([int(row["sentno"]) for row in current], list(range(1, 1357)))
         self.assertTrue(all(row["source_status"] == "canonical" for row in current))
         self.assertTrue(all(row["darija_provenance"] == "source_exact" for row in current))
+
+    def test_provenance_is_pinned_with_posix_paths_and_git_blob_hashes(self):
+        report = validate_pinned_provenance()
+        self.assertEqual(report["result"], "PASS")
+        manifest = json.loads(
+            (ROOT / "data" / "master" / "provenance_manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(manifest["upstream_snapshot"], current_upstream_snapshot())
+        self.assertTrue(
+            all("git_blob_sha1" in entry for entry in manifest["upstream_snapshot"].values())
+        )
+        self.assertTrue(
+            all("\\" not in entry["path"] for entry in manifest["upstream_snapshot"].values())
+        )
 
     def test_morphology_preserves_upstream_schema(self):
         current = rows(MORPHOLOGY_OUT)
@@ -90,6 +107,19 @@ class MadoranMasterTests(unittest.TestCase):
         )
         self.assertEqual(report["morphology_mutations"], 1)
         self.assertEqual(report["result"], "FAIL")
+
+    def test_official_morphology_formats_reconcile_without_repair(self):
+        report = reconcile()
+        self.assertEqual(report["cross_format_consistency"], "PASS")
+        self.assertEqual(report["reconciliation_result"], "UPSTREAM_DEFECT_CONFIRMED")
+        self.assertFalse(report["derived_reconciled_layer_created"])
+        self.assertEqual(report["master_morphology_gate"], "BLOCKED")
+        for comparison in report["comparisons_to_tsv"].values():
+            self.assertTrue(comparison["equal"])
+        for position_report in report["format_positions"].values():
+            self.assertEqual(position_report["rows"], 30915)
+            self.assertEqual(position_report["orphan_rows"], 5)
+            self.assertEqual(position_report["expected_positions"], 30919)
 
 
 if __name__ == "__main__":

@@ -10,9 +10,11 @@ try:
     from scripts.build_madoran_master import (
         MORPHOLOGY,
         MORPHOLOGY_OUT,
+        PROVENANCE_OUT,
         SENTENCES,
         SOURCE_OUT,
         build_source,
+        validate_pinned_provenance,
         make_qa,
         read_rows,
         read_strict_rows,
@@ -21,9 +23,11 @@ except ModuleNotFoundError:
     from build_madoran_master import (  # type: ignore
         MORPHOLOGY,
         MORPHOLOGY_OUT,
+        PROVENANCE_OUT,
         SENTENCES,
         SOURCE_OUT,
         build_source,
+        validate_pinned_provenance,
         make_qa,
         read_rows,
         read_strict_rows,
@@ -36,7 +40,7 @@ def validate() -> dict[str, object]:
     expected_morphology_rows, malformed_rows = read_strict_rows(MORPHOLOGY)
     actual_source_rows = read_rows(SOURCE_OUT) if SOURCE_OUT.exists() else []
     actual_morphology_rows = read_rows(MORPHOLOGY_OUT) if MORPHOLOGY_OUT.exists() else []
-    return make_qa(
+    report = make_qa(
         upstream_source_rows,
         expected_source_rows,
         actual_source_rows,
@@ -44,6 +48,10 @@ def validate() -> dict[str, object]:
         actual_morphology_rows,
         malformed_rows,
     )
+    report["provenance"] = validate_pinned_provenance()
+    if report["provenance"]["result"] != "PASS":
+        report["result"] = "FAIL"
+    return report
 
 
 if __name__ == "__main__":

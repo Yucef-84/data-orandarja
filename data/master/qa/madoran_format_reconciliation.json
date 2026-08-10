@@ -1,0 +1,398 @@
+{
+  "dataset": "MADOran",
+  "comparison_basis": "all 16 morphology fields keyed by (ID, Sentno, Wordno); null and empty cells are equivalent",
+  "source_rows": 1356,
+  "expected_morphology_positions": 30919,
+  "malformed_rows": {
+    "tsv": [],
+    "csv": [],
+    "json": [],
+    "sqlite": []
+  },
+  "format_positions": {
+    "tsv": {
+      "rows": 30915,
+      "orphan_rows": 5,
+      "valid_positions": 30910,
+      "missing_positions": [
+        [
+          345,
+          14
+        ],
+        [
+          345,
+          16
+        ],
+        [
+          583,
+          2
+        ],
+        [
+          583,
+          11
+        ],
+        [
+          695,
+          7
+        ],
+        [
+          1226,
+          4
+        ],
+        [
+          1226,
+          5
+        ],
+        [
+          1226,
+          6
+        ],
+        [
+          1226,
+          7
+        ],
+        [
+          1226,
+          8
+        ],
+        [
+          1226,
+          9
+        ],
+        [
+          1226,
+          10
+        ],
+        [
+          1226,
+          11
+        ],
+        [
+          1226,
+          12
+        ]
+      ],
+      "extra_positions": [
+        [
+          345,
+          22
+        ],
+        [
+          345,
+          23
+        ],
+        [
+          583,
+          30
+        ],
+        [
+          583,
+          31
+        ],
+        [
+          695,
+          29
+        ]
+      ],
+      "expected_positions": 30919
+    },
+    "csv": {
+      "rows": 30915,
+      "orphan_rows": 5,
+      "valid_positions": 30910,
+      "missing_positions": [
+        [
+          345,
+          14
+        ],
+        [
+          345,
+          16
+        ],
+        [
+          583,
+          2
+        ],
+        [
+          583,
+          11
+        ],
+        [
+          695,
+          7
+        ],
+        [
+          1226,
+          4
+        ],
+        [
+          1226,
+          5
+        ],
+        [
+          1226,
+          6
+        ],
+        [
+          1226,
+          7
+        ],
+        [
+          1226,
+          8
+        ],
+        [
+          1226,
+          9
+        ],
+        [
+          1226,
+          10
+        ],
+        [
+          1226,
+          11
+        ],
+        [
+          1226,
+          12
+        ]
+      ],
+      "extra_positions": [
+        [
+          345,
+          22
+        ],
+        [
+          345,
+          23
+        ],
+        [
+          583,
+          30
+        ],
+        [
+          583,
+          31
+        ],
+        [
+          695,
+          29
+        ]
+      ],
+      "expected_positions": 30919
+    },
+    "json": {
+      "rows": 30915,
+      "orphan_rows": 5,
+      "valid_positions": 30910,
+      "missing_positions": [
+        [
+          345,
+          14
+        ],
+        [
+          345,
+          16
+        ],
+        [
+          583,
+          2
+        ],
+        [
+          583,
+          11
+        ],
+        [
+          695,
+          7
+        ],
+        [
+          1226,
+          4
+        ],
+        [
+          1226,
+          5
+        ],
+        [
+          1226,
+          6
+        ],
+        [
+          1226,
+          7
+        ],
+        [
+          1226,
+          8
+        ],
+        [
+          1226,
+          9
+        ],
+        [
+          1226,
+          10
+        ],
+        [
+          1226,
+          11
+        ],
+        [
+          1226,
+          12
+        ]
+      ],
+      "extra_positions": [
+        [
+          345,
+          22
+        ],
+        [
+          345,
+          23
+        ],
+        [
+          583,
+          30
+        ],
+        [
+          583,
+          31
+        ],
+        [
+          695,
+          29
+        ]
+      ],
+      "expected_positions": 30919
+    },
+    "sqlite": {
+      "rows": 30915,
+      "orphan_rows": 5,
+      "valid_positions": 30910,
+      "missing_positions": [
+        [
+          345,
+          14
+        ],
+        [
+          345,
+          16
+        ],
+        [
+          583,
+          2
+        ],
+        [
+          583,
+          11
+        ],
+        [
+          695,
+          7
+        ],
+        [
+          1226,
+          4
+        ],
+        [
+          1226,
+          5
+        ],
+        [
+          1226,
+          6
+        ],
+        [
+          1226,
+          7
+        ],
+        [
+          1226,
+          8
+        ],
+        [
+          1226,
+          9
+        ],
+        [
+          1226,
+          10
+        ],
+        [
+          1226,
+          11
+        ],
+        [
+          1226,
+          12
+        ]
+      ],
+      "extra_positions": [
+        [
+          345,
+          22
+        ],
+        [
+          345,
+          23
+        ],
+        [
+          583,
+          30
+        ],
+        [
+          583,
+          31
+        ],
+        [
+          695,
+          29
+        ]
+      ],
+      "expected_positions": 30919
+    }
+  },
+  "comparisons_to_tsv": {
+    "csv": {
+      "equal": true,
+      "base_rows": 30915,
+      "other_rows": 30915,
+      "missing_keys": [],
+      "extra_keys": [],
+      "field_differences": [],
+      "field_difference_count": 0,
+      "base_duplicate_keys": [],
+      "other_duplicate_keys": []
+    },
+    "json": {
+      "equal": true,
+      "base_rows": 30915,
+      "other_rows": 30915,
+      "missing_keys": [],
+      "extra_keys": [],
+      "field_differences": [],
+      "field_difference_count": 0,
+      "base_duplicate_keys": [],
+      "other_duplicate_keys": []
+    },
+    "sqlite": {
+      "equal": true,
+      "base_rows": 30915,
+      "other_rows": 30915,
+      "missing_keys": [],
+      "extra_keys": [],
+      "field_differences": [],
+      "field_difference_count": 0,
+      "base_duplicate_keys": [],
+      "other_duplicate_keys": []
+    }
+  },
+  "cross_format_consistency": "PASS",
+  "reconciliation_result": "UPSTREAM_DEFECT_CONFIRMED",
+  "derived_reconciled_layer_created": false,
+  "master_morphology_gate": "BLOCKED",
+  "result": "PASS"
+}
