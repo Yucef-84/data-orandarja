@@ -32,7 +32,7 @@
   "morphology_reads": 0,
   "arabic_modified": 0,
   "validator": "PASS",
-  "generated_at": "2026-08-10T22:24:14Z",
+  "generated_at": "2026-08-10T22:29:23Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch02_sentno_0065_0128.tsv",
     "manifest": "data/master/enrichment/batches/batch02_manifest.json"

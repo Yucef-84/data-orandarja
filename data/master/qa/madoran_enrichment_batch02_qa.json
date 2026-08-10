@@ -11,8 +11,8 @@
   "state_transition": "not_started_to_draft_or_flagged",
   "populated_linguistic_fields": 704,
   "outside_target_mutations": 0,
-  "new_provenance_events": 837,
-  "total_provenance_events": 2271,
+  "new_provenance_events": 840,
+  "total_provenance_events": 2274,
   "missing_provenance_events": 0,
   "hash_mismatch": 0,
   "source_gate": "PASS",
@@ -22,18 +22,18 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "generated_at": "2026-08-10T22:25:30Z",
+  "generated_at": "2026-08-10T22:31:41Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch02_sentno_0065_0128.tsv",
     "manifest": "data/master/enrichment/batches/batch02_manifest.json",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
   },
-  "correction_id": "MADORAN-ENRICH-002-CORRECTION-03",
-  "correction_changed_fields": 15,
-  "correction_rows": 6,
-  "correction_provenance_events": 15,
-  "latest_correction_id": "MADORAN-ENRICH-002-CORRECTION-03",
+  "correction_id": "MADORAN-ENRICH-002-CORRECTION-04",
+  "correction_changed_fields": 3,
+  "correction_rows": 1,
+  "correction_provenance_events": 3,
+  "latest_correction_id": "MADORAN-ENRICH-002-CORRECTION-04",
   "correction_history": [
     {
       "correction_id": "MADORAN-ENRICH-002-CORRECTION-01",
@@ -52,6 +52,12 @@
       "changed_fields": 15,
       "rows": 6,
       "provenance_events": 15
+    },
+    {
+      "correction_id": "MADORAN-ENRICH-002-CORRECTION-04",
+      "changed_fields": 3,
+      "rows": 1,
+      "provenance_events": 3
     }
   ]
 }
