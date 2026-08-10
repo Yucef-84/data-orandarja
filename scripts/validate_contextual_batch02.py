@@ -33,7 +33,7 @@ FIELDS = [
     "review_status", "learner_ready", "note",
 ]
 DOMAINS = {"school_work", "city_transport", "body_health", "food_shopping"}
-CEFR_QUOTA = {"A1": 49, "A2": 55}
+CEFR_QUOTA = {"A1": 47, "A2": 57}
 
 
 def read_tsv(path: Path) -> list[dict[str, str]]:
