@@ -75,12 +75,27 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         target = [row for row in self.enrichment_rows if 1 <= int(row["sentno"]) <= 64]
         outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 64]
         self.assertEqual(len(target), 64)
-        self.assertTrue(all(row["enrichment_state"] == "draft" for row in target if row["sentno"] not in {"17", "63"}))
+        self.assertTrue(all(row["enrichment_state"] == "qa_passed" for row in target if row["sentno"] not in {"17", "63"}))
         self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
         self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
         self.assertTrue(all(row["enrichment_state"] == "not_started" for row in outside))
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
         self.assertEqual(sum(bool(row[field]) for row in outside for field in EMPTY_FIELDS), 0)
+
+    def test_headgpt_review_evidence_approves_batch01(self):
+        review = json.loads(
+            (ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch01_review.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["reviewed_commit"], "2031147")
+        self.assertEqual(review["qa_passed_rows"], 62)
+        self.assertEqual(review["flagged_rows"], ["17", "63"])
+        self.assertEqual(review["provenance_events_before"], 1432)
+        self.assertEqual(review["provenance_events_after"], 1432)
 
     def test_provenance_is_field_level_and_hashed(self):
         source_uids = {row["source_uid"] for row in self.source_rows}

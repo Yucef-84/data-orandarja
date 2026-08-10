@@ -24,11 +24,13 @@
   "morphology_reads": 0,
   "arabic_modified": 0,
   "validator": "PASS",
-  "content_review_status": "corrected_pending_headgpt_recheck",
+  "content_review_status": "headgpt_passed",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch01_sentno_0001_0064.tsv",
     "manifest": "data/master/enrichment/batches/batch01_manifest.json",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
-  }
+  },
+  "review_id": "MADORAN-ENRICH-001-REVIEW-01",
+  "reviewed_commit": "2031147"
 }

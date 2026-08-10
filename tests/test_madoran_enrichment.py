@@ -68,10 +68,10 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertEqual(report["result"], "FAIL")
         self.assertIn("non_empty_initial_linguistic_field", report["failures"])
 
-    def test_initial_state_is_not_started(self):
+    def test_headgpt_approved_state_is_frozen(self):
         self.assertTrue(
             all(
-                row["enrichment_state"] == "draft"
+                row["enrichment_state"] == "qa_passed"
                 for row in self.enrichment_rows[:64]
                 if row["sentno"] not in {"17", "63"}
             )

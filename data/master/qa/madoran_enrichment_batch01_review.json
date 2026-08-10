@@ -1,0 +1,30 @@
+{
+  "review_id": "MADORAN-ENRICH-001-REVIEW-01",
+  "batch_id": "MADORAN-ENRICH-001",
+  "reviewed_commit": "2031147",
+  "reviewer": "HeadGPT",
+  "headgpt_result": "PASS",
+  "p0": "NONE",
+  "p1": "NONE",
+  "qa_passed_rows": 62,
+  "flagged_rows": [
+    "17",
+    "63"
+  ],
+  "not_started_rows": 1292,
+  "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+  "source_gate": "PASS",
+  "linguistic_fields_modified": 0,
+  "arabic_modified": 0,
+  "provenance_events_before": 1432,
+  "provenance_events_after": 1432,
+  "provenance_modified": 0,
+  "outside_target_mutations": 0,
+  "reviewed_at": "2026-08-10T13:55:55Z",
+  "next_batch": {
+    "batch_id": "MADORAN-ENRICH-002",
+    "sentno_start": 65,
+    "sentno_end": 128,
+    "row_count": 64
+  }
+}
