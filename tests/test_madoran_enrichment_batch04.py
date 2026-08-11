@@ -30,6 +30,7 @@ GENERATION_QA_OUT = (
 CORRECTION_QA_OUT = (
     ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch04_correction01_qa.json"
 )
+REVIEW_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch04_review.json"
 
 
 class MadoranEnrichmentBatch04Tests(unittest.TestCase):
@@ -61,7 +62,8 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
             if TARGET_START <= int(row["sentno"]) <= TARGET_END
         ]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 41)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 41)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 23)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 62)
@@ -114,7 +116,24 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["learning_unit_rows_created"], 0)
         self.assertEqual(qa["latest_event_hash_gate"], "PASS")
-        self.assertEqual(qa["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(qa["content_review_status"], "headgpt_passed")
+        self.assertEqual(qa["review_id"], "MADORAN-ENRICH-004-REVIEW-01")
+        self.assertEqual(qa["reviewed_commit"], "0df2021")
+
+    def test_batch04_review_evidence_passes(self):
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["structure"], "PASS")
+        self.assertEqual(review["provenance"], "PASS")
+        self.assertEqual(review["isolation"], "PASS")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["qa_passed_rows"], 41)
+        self.assertEqual(len(review["flagged_rows"]), 23)
+        self.assertEqual(review["linguistic_fields_modified"], 0)
+        self.assertEqual(review["provenance_events_before"], 3819)
+        self.assertEqual(review["provenance_events_after"], 3819)
 
     def test_ambiguity_and_corruption_are_visible(self):
         rows = {int(row["sentno"]): row for row in self.enrichment_rows}

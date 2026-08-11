@@ -87,8 +87,12 @@ class MadoranEnrichmentTests(unittest.TestCase):
             14,
         )
         self.assertEqual(
-            sum(row["enrichment_state"] == "draft" for row in self.enrichment_rows[192:256]),
+            sum(row["enrichment_state"] == "qa_passed" for row in self.enrichment_rows[192:256]),
             41,
+        )
+        self.assertEqual(
+            sum(row["enrichment_state"] == "draft" for row in self.enrichment_rows[192:256]),
+            0,
         )
         self.assertEqual(
             sum(row["enrichment_state"] == "flagged" for row in self.enrichment_rows[192:256]),

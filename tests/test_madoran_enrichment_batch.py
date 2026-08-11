@@ -96,7 +96,8 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch03), 14)
         self.assertEqual(sum(bool(row["processing_flags"]) for row in batch03), 51)
         self.assertEqual(len(batch04), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in batch04), 41)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in batch04), 41)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in batch04), 0)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch04), 23)
         self.assertEqual(sum(bool(row["processing_flags"]) for row in batch04), 62)
 
@@ -144,6 +145,21 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         self.assertEqual(len(review["flagged_rows"]), 14)
         self.assertEqual(review["provenance_events_before"], 3036)
         self.assertEqual(review["provenance_events_after"], 3036)
+
+    def test_headgpt_review_evidence_approves_batch04(self):
+        review = json.loads(
+            (ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch04_review.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["reviewed_commit"], "0df2021")
+        self.assertEqual(review["qa_passed_rows"], 41)
+        self.assertEqual(len(review["flagged_rows"]), 23)
+        self.assertEqual(review["provenance_events_before"], 3819)
+        self.assertEqual(review["provenance_events_after"], 3819)
 
     def test_provenance_is_field_level_and_hashed(self):
         source_uids = {row["source_uid"] for row in self.source_rows}
