@@ -27,6 +27,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 BATCH_FIELDS = engine.BATCH_FIELDS
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch09_qa.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch09_generation_qa.json"
+REVIEW_OUT = ROOT / "data/master/qa/madoran_enrichment_batch09_review.json"
 
 
 def validate_batch_rows(source_rows, batch_rows):
@@ -65,7 +66,7 @@ class MadoranEnrichmentBatch09Tests(unittest.TestCase):
     def test_batch09_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 9)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 9)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 55)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 55)
@@ -110,7 +111,16 @@ class MadoranEnrichmentBatch09Tests(unittest.TestCase):
         self.assertEqual(application["flagged_rows"], 55)
         self.assertEqual(application["processing_flags_populated_rows"], 403)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 55)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
+
+    def test_batch09_headgpt_review_is_frozen(self):
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["reviewed_batch_rows"], 64)
+        self.assertEqual(review["next_batch"]["batch_id"], "MADORAN-ENRICH-010")
 
     def test_batch09_representative_values_preserve_source_details(self):
         rows = {int(row["sentno"]): row for row in self.enrichment_rows}
