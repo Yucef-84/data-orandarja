@@ -51,8 +51,8 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
     def test_batch13_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 3)
-        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 0)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 3)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 61)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 62)
@@ -95,7 +95,7 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
         self.assertEqual(application["expected_total_provenance_events"], 11312)
         self.assertEqual(application["processing_flags_populated_rows"], 649)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 62)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
 
     def test_full_validator_passes_after_batch13_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
