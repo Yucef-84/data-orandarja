@@ -1,7 +1,7 @@
 {
   "status_schema_version": "1.0.0",
   "decision_id": "HEAD-MADORAN-2026-08-11-05",
-  "updated_from_commit": "bc8428485266d39e5c702dca2bc983595c4eb990",
+  "updated_from_commit": "6aabeaa",
   "foundation": "PASS",
   "source": "PASS",
   "source_provenance": "PASS",
@@ -15,10 +15,10 @@
   "layer_contract_path": "data/master/schema/madoran_layer_contract.json",
   "counts": {
     "enrichment_completed_rows": 293,
-    "enrichment_draft_rows": 0,
-    "enrichment_flagged_rows": 219,
-    "enrichment_not_started_rows": 844,
-    "processing_flags_populated_rows": 348
+    "enrichment_draft_rows": 9,
+    "enrichment_flagged_rows": 274,
+    "enrichment_not_started_rows": 780,
+    "processing_flags_populated_rows": 403
   },
   "dependency_policy": {
     "source_only_pipeline_reads_morphology": false,
@@ -63,7 +63,7 @@
     "data/master/qa/madoran_enrichment_batch08_correction02_qa.json",
     "data/master/qa/madoran_enrichment_batch08_review.json"
   ],
-  "enrichment_batch_id": "MADORAN-ENRICH-008",
+  "enrichment_batch_id": "MADORAN-ENRICH-009",
   "enrichment_correction_id": "MADORAN-ENRICH-008-CORRECTION-02",
   "enrichment_review_id": "MADORAN-ENRICH-008-REVIEW-01"
 }
