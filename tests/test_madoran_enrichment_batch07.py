@@ -95,7 +95,7 @@ class MadoranEnrichmentBatch07Tests(unittest.TestCase):
         self.assertEqual(event_check["events"], 11250)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 9800)
+        self.assertEqual(trace["populated_fields"], 9801)
 
     def test_batch07_generation_and_application_qa_pass(self):
         generation = json.loads(GENERATION_QA_OUT.read_text(encoding="utf-8"))

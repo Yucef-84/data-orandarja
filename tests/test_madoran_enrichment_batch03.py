@@ -95,7 +95,7 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(
             trace["populated_fields"],
-            9800,
+            9801,
         )
 
     def test_batch03_qa_evidence_passes(self):

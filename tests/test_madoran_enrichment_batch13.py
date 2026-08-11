@@ -46,7 +46,7 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
         self.assertEqual(report["result"], "PASS", report)
         self.assertEqual(report["target_rows"], 64)
         self.assertEqual(report["required_linguistic_fields"], 64 * len(EMPTY_FIELDS))
-        self.assertEqual(report["processing_flags_populated_rows"], 61)
+        self.assertEqual(report["processing_flags_populated_rows"], 62)
 
     def test_batch13_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
@@ -55,7 +55,7 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
         self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 0)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 61)
         self.assertTrue(all(row["latin"].isascii() for row in target))
-        self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 61)
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 62)
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
 
     def test_batch13_manifest_contract(self):
@@ -74,10 +74,10 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 11285)
+        self.assertEqual(event_check["events"], 11302)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 9800)
+        self.assertEqual(trace["populated_fields"], 9801)
 
     def test_batch13_generation_and_application_qa_pass(self):
         generation = json.loads(GENERATION_QA_OUT.read_text(encoding="utf-8"))
@@ -90,11 +90,11 @@ class MadoranEnrichmentBatch13Tests(unittest.TestCase):
         application = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(application["result"], "PASS")
         self.assertEqual(application["provenance_events_before"], 10415)
-        self.assertEqual(application["new_provenance_events"], 870)
-        self.assertEqual(application["total_provenance_events"], 11285)
-        self.assertEqual(application["expected_total_provenance_events"], 11285)
-        self.assertEqual(application["processing_flags_populated_rows"], 648)
-        self.assertEqual(application["batch_processing_flags_populated_rows"], 61)
+        self.assertEqual(application["new_provenance_events"], 887)
+        self.assertEqual(application["total_provenance_events"], 11302)
+        self.assertEqual(application["expected_total_provenance_events"], 11302)
+        self.assertEqual(application["processing_flags_populated_rows"], 649)
+        self.assertEqual(application["batch_processing_flags_populated_rows"], 62)
         self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
 
     def test_full_validator_passes_after_batch13_application(self):
