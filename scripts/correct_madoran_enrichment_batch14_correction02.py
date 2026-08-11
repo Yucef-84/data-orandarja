@@ -25,6 +25,8 @@ SCHEMA_VERSION = "1.1.0"
 STATUS_OUT = ROOT / "data/master/state/madoran_layer_status.json"
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch14_qa.json"
 CORRECTION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch14_correction02_qa.json"
+PROVENANCE_BEFORE = 12096
+EVIDENCE_PATH = "data/master/qa/madoran_enrichment_batch14_correction02_qa.json"
 
 CORRECTIONS = {
     833: {
@@ -135,7 +137,7 @@ def apply():
     changed_fields = sum(len(fields) for fields in CORRECTIONS.values())
     existing = EVENTS_OUT.read_text(encoding="utf-8")
     existing_check = check_provenance_events(existing, source_uids)
-    if not existing.endswith("\n") or existing_check["result"] != "PASS" or existing_check["events"] != 12096:
+    if not existing.endswith("\n") or existing_check["result"] != "PASS" or existing_check["events"] != PROVENANCE_BEFORE:
         raise RuntimeError(json.dumps(existing_check, ensure_ascii=False))
     generated_at = now()
     master = {row["sentno"]: row for row in after}
@@ -144,7 +146,7 @@ def apply():
     combined = existing + addition
     combined_check = check_provenance_events(combined, source_uids)
     trace = check_enrichment_provenance(after, combined)
-    if combined_check["result"] != "PASS" or combined_check["events"] != 12096 + changed_fields or trace["result"] != "PASS":
+    if combined_check["result"] != "PASS" or combined_check["events"] != PROVENANCE_BEFORE + changed_fields or trace["result"] != "PASS":
         raise RuntimeError(json.dumps({"events": combined_check, "trace": trace}, ensure_ascii=False))
     write_tsv(ENRICHMENT_OUT, after)
     write_tsv(BATCH_OUT, corrected_batch)
@@ -154,7 +156,7 @@ def apply():
     status["updated_from_commit"] = BASE_COMMIT
     status["enrichment_correction_id"] = CORRECTION_ID
     status["counts"]["processing_flags_populated_rows"] = sum(bool(row["processing_flags"]) for row in after)
-    evidence_path = "data/master/qa/madoran_enrichment_batch14_correction02_qa.json"
+    evidence_path = EVIDENCE_PATH
     evidence = list(status.get("evidence_files", []))
     status["evidence_files"] = evidence if evidence_path in evidence else evidence + [evidence_path]
     STATUS_OUT.write_text(json.dumps(status, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -170,8 +172,8 @@ def apply():
         "correction_rows": len(CORRECTIONS),
         "correction_provenance_events": changed_fields,
         "new_provenance_events": int(qa.get("new_provenance_events", 0)) + changed_fields,
-        "total_provenance_events": 12096 + changed_fields,
-        "expected_total_provenance_events": 12096 + changed_fields,
+        "total_provenance_events": PROVENANCE_BEFORE + changed_fields,
+        "expected_total_provenance_events": PROVENANCE_BEFORE + changed_fields,
         "processing_flags_populated_rows": status["counts"]["processing_flags_populated_rows"],
         "batch_processing_flags_populated_rows": sum(bool(row["processing_flags"]) for row in corrected_batch),
         "content_review_status": "pending_headgpt_correction_review",
@@ -187,8 +189,8 @@ def apply():
         "changed_fields": changed_fields,
         "state_updates": 0,
         "new_provenance_events": changed_fields,
-        "provenance_events_before": 12096,
-        "provenance_events_after": 12096 + changed_fields,
+        "provenance_events_before": PROVENANCE_BEFORE,
+        "provenance_events_after": PROVENANCE_BEFORE + changed_fields,
         "source_gate": "PASS",
         "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
         "morphology_reads": 0,
