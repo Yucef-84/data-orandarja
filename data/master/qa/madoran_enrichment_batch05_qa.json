@@ -48,5 +48,18 @@
   ],
   "correction_changed_fields": 24,
   "correction_rows": 5,
-  "correction_provenance_events": 24
+  "correction_provenance_events": 24,
+  "batch_artifact_sync": {
+    "result": "PASS",
+    "correction_id": "MADORAN-ENRICH-005-CORRECTION-01",
+    "base_commit": "704a0b7",
+    "rows": [
+      "273",
+      "294",
+      "303",
+      "309",
+      "315"
+    ],
+    "changed_fields": 24
+  }
 }

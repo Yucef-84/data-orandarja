@@ -45,7 +45,7 @@ class MadoranEnrichmentBatch05Tests(unittest.TestCase):
         self.assertEqual(report["result"], "PASS", report)
         self.assertEqual(report["target_rows"], 64)
         self.assertEqual(report["required_linguistic_fields"], 64 * len(EMPTY_FIELDS))
-        self.assertEqual(report["processing_flags_populated_rows"], 49)
+        self.assertEqual(report["processing_flags_populated_rows"], 51)
 
     def test_batch05_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
@@ -99,6 +99,13 @@ class MadoranEnrichmentBatch05Tests(unittest.TestCase):
         self.assertEqual(application["batch_processing_flags_populated_rows"], 51)
         self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
 
+    def test_batch_artifact_matches_corrected_master(self):
+        master = {row["sentno"]: row for row in self.enrichment_rows}
+        for row in self.batch_rows:
+            if row["sentno"] in {"273", "294", "303", "309", "315"}:
+                for field in BATCH_FIELDS:
+                    self.assertEqual(row[field], master[row["sentno"]][field], f"{row['sentno']}:{field}")
+
     def test_batch05_ambiguous_rows_are_explicitly_flagged(self):
         rows = {int(row["sentno"]): row for row in self.enrichment_rows}
         for sentno in (258, 259, 266, 267, 268, 270, 271, 273, 274, 276, 279, 282, 283, 284, 286, 291, 294, 303, 304, 306, 307, 309, 311, 312, 313, 314, 315, 318, 319):
@@ -138,6 +145,8 @@ class MadoranEnrichmentBatch05Tests(unittest.TestCase):
         self.assertEqual(correction["flagged_rows"], 30)
         self.assertEqual(correction["processing_flags_populated_rows"], 51)
         self.assertEqual(correction["validator"], "PASS")
+        self.assertEqual(correction["batch_artifact_sync"], "PASS")
+        self.assertEqual(correction["batch_artifact_sync_changed_fields"], 24)
 
     def test_full_validator_passes_after_batch05(self):
         result = subprocess.run(

@@ -31,5 +31,7 @@
     "batch": "data/master/enrichment/batches/batch05_sentno_0257_0320.tsv",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
-  }
+  },
+  "batch_artifact_sync": "PASS",
+  "batch_artifact_sync_changed_fields": 24
 }
