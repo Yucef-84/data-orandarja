@@ -29,6 +29,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 
 
 CORRECTION_QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch03_correction01_qa.json"
+REVIEW_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch03_review.json"
 
 
 class MadoranEnrichmentBatch03Tests(unittest.TestCase):
@@ -60,7 +61,8 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
             if TARGET_START <= int(row["sentno"]) <= TARGET_END
         ]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 50)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 50)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 14)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(
@@ -109,7 +111,24 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["learning_unit_rows_created"], 0)
         self.assertEqual(qa["validator"], "PASS")
-        self.assertEqual(qa["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(qa["content_review_status"], "headgpt_passed")
+        self.assertEqual(qa["review_id"], "MADORAN-ENRICH-003-REVIEW-01")
+        self.assertEqual(qa["reviewed_commit"], "984272d")
+
+    def test_batch03_review_evidence_passes(self):
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["structure"], "PASS")
+        self.assertEqual(review["provenance"], "PASS")
+        self.assertEqual(review["isolation"], "PASS")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["qa_passed_rows"], 50)
+        self.assertEqual(len(review["flagged_rows"]), 14)
+        self.assertEqual(review["linguistic_fields_modified"], 0)
+        self.assertEqual(review["provenance_events_before"], 3036)
+        self.assertEqual(review["provenance_events_after"], 3036)
 
     def test_batch03_correction_evidence_passes(self):
         qa = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
