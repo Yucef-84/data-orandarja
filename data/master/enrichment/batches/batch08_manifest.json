@@ -1,0 +1,29 @@
+{
+  "batch_id": "MADORAN-ENRICH-008",
+  "base_commit": "71bb99f",
+  "sentno_start": 449,
+  "sentno_end": 512,
+  "row_count": 64,
+  "fields": [
+    "latin",
+    "english",
+    "korean",
+    "cefr_level",
+    "difficulty_score",
+    "domain",
+    "topic",
+    "genre",
+    "speech_act",
+    "register",
+    "context_dependency",
+    "processing_flags",
+    "enrichment_state"
+  ],
+  "prompt_version": "madoran-source-enrichment-v8",
+  "source_dependency": "canonical_source_only",
+  "morphology_dependency": false,
+  "darija_modified": false,
+  "schema_version": "1.1.0",
+  "generated_at": "2026-08-11T06:23:22Z",
+  "review_state": "generated"
+}
