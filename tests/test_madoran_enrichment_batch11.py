@@ -16,6 +16,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 BATCH_FIELDS = engine.BATCH_FIELDS
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch11_qa.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch11_generation_qa.json"
+CORRECTION01_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch11_correction01_qa.json"
 
 
 def validate_batch_rows(source_rows, batch_rows):
@@ -73,7 +74,7 @@ class MadoranEnrichmentBatch11Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 9420)
+        self.assertEqual(event_check["events"], 9472)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 8270)
@@ -89,12 +90,23 @@ class MadoranEnrichmentBatch11Tests(unittest.TestCase):
         application = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(application["result"], "PASS")
         self.assertEqual(application["provenance_events_before"], 8655)
-        self.assertEqual(application["new_provenance_events"], 765)
-        self.assertEqual(application["total_provenance_events"], 9420)
-        self.assertEqual(application["expected_total_provenance_events"], 9420)
+        self.assertEqual(application["new_provenance_events"], 817)
+        self.assertEqual(application["total_provenance_events"], 9472)
+        self.assertEqual(application["expected_total_provenance_events"], 9472)
         self.assertEqual(application["processing_flags_populated_rows"], 526)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 61)
-        self.assertEqual(application["content_review_status"], "pending_headgpt")
+        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+
+    def test_batch11_correction01_qa_pass(self):
+        correction = json.loads(CORRECTION01_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(correction["result"], "PASS")
+        self.assertEqual(correction["correction_id"], "MADORAN-ENRICH-011-CORRECTION-01")
+        self.assertEqual(correction["corrected_rows"], ["641", "644", "648", "652", "653", "654", "655", "658", "665", "671", "674", "675", "677", "679", "680", "682", "683", "685", "687", "688", "689", "691", "692", "694", "699", "701"])
+        self.assertEqual(correction["changed_fields"], 52)
+        self.assertEqual(correction["provenance_events_before"], 9420)
+        self.assertEqual(correction["provenance_events_after"], 9472)
+        self.assertEqual(correction["validator"], "PASS")
+        self.assertEqual(correction["batch_artifact_sync"], "PASS")
 
     def test_full_validator_passes_after_batch11(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
