@@ -103,6 +103,7 @@ class MadoranEnrichmentBatch17Tests(unittest.TestCase):
         self.assertEqual(application["processing_flags_populated_rows"], 895)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 62)
         self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["correction_state_updates"], 0)
         correction = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(correction["result"], "PASS")
         self.assertEqual(correction["changed_fields"], 210)

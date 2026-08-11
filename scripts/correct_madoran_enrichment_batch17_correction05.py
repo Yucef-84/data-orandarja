@@ -44,7 +44,7 @@ def apply():
     qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
     qa["draft_rows"] = 7
     qa["flagged_rows"] = 57
-    qa["correction_state_updates"] = 2
+    qa["correction_state_updates"] = 0
     BATCH_QA_OUT.write_text(json.dumps(qa, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     correction = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
