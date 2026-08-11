@@ -1,0 +1,41 @@
+{
+  "result": "PASS",
+  "batch_id": "MADORAN-ENRICH-007",
+  "correction_id": "MADORAN-ENRICH-007-CORRECTION-02",
+  "base_commit": "6f3e62e",
+  "corrected_rows": [
+    "391",
+    "393",
+    "399",
+    "404",
+    "410",
+    "418",
+    "422",
+    "426",
+    "441"
+  ],
+  "changed_fields": 19,
+  "new_provenance_events": 19,
+  "provenance_events_before": 6209,
+  "provenance_events_after": 6228,
+  "source_gate": "PASS",
+  "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+  "morphology_reads": 0,
+  "arabic_modified": 0,
+  "outside_target_mutations": 0,
+  "learning_unit_rows_created": 0,
+  "latest_event_hash_gate": "PASS",
+  "validator": "PASS",
+  "target_rows": 64,
+  "draft_rows": 23,
+  "flagged_rows": 41,
+  "processing_flags_populated_rows": 295,
+  "batch_artifact_sync": "PASS",
+  "batch_artifact_sync_changed_fields": 19,
+  "generated_at": "2026-08-11T06:00:17Z",
+  "outputs": {
+    "batch": "data/master/enrichment/batches/batch07_sentno_0385_0448.tsv",
+    "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
+    "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
+  }
+}
