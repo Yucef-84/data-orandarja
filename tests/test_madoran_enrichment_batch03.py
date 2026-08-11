@@ -28,6 +28,9 @@ from scripts.build_madoran_enrichment_scaffold import (
 from scripts.validate_madoran_enrichment import check_enrichment_provenance
 
 
+CORRECTION_QA_OUT = ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch03_correction01_qa.json"
+
+
 class MadoranEnrichmentBatch03Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -57,8 +60,8 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
             if TARGET_START <= int(row["sentno"]) <= TARGET_END
         ]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 51)
-        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 13)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 50)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 14)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(
             sum(bool(row["processing_flags"]) for row in target),
@@ -85,7 +88,7 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 3029)
+        self.assertEqual(event_check["events"], 3036)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(
@@ -97,16 +100,38 @@ class MadoranEnrichmentBatch03Tests(unittest.TestCase):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
         self.assertEqual(qa["batch_id"], BATCH_ID)
-        self.assertEqual(qa["new_provenance_events"], 704 + 51)
-        self.assertEqual(qa["total_provenance_events"], 3029)
+        self.assertEqual(qa["new_provenance_events"], 704 + 51 + 7)
+        self.assertEqual(qa["total_provenance_events"], 3036)
         self.assertEqual(qa["provenance_events_before"], 2274)
-        self.assertEqual(qa["expected_total_provenance_events"], 3029)
+        self.assertEqual(qa["expected_total_provenance_events"], 3036)
         self.assertTrue(qa["prefix_preserved"])
         self.assertEqual(qa["outside_target_mutations"], 0)
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["learning_unit_rows_created"], 0)
         self.assertEqual(qa["validator"], "PASS")
-        self.assertEqual(qa["content_review_status"], "pending_headgpt")
+        self.assertEqual(qa["content_review_status"], "pending_headgpt_correction_review")
+
+    def test_batch03_correction_evidence_passes(self):
+        qa = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["result"], "PASS")
+        self.assertEqual(qa["correction_id"], "MADORAN-ENRICH-003-CORRECTION-01")
+        self.assertEqual(qa["corrected_rows"], ["161", "165", "166"])
+        self.assertEqual(qa["changed_fields"], 7)
+        self.assertEqual(qa["new_provenance_events"], 7)
+        self.assertEqual(qa["provenance_events_before"], 3029)
+        self.assertEqual(qa["provenance_events_after"], 3036)
+        self.assertEqual(qa["draft_rows"], 50)
+        self.assertEqual(qa["flagged_rows"], 14)
+        self.assertEqual(qa["validator"], "PASS")
+
+    def test_headgpt_content_corrections_are_applied(self):
+        rows = {int(row["sentno"]): row for row in self.enrichment_rows}
+        for sentno in (161, 165):
+            self.assertEqual(rows[sentno]["english"], "May you stay safe.")
+            self.assertEqual(rows[sentno]["korean"], "무사히 지내길 바라.")
+        self.assertEqual(rows[166]["enrichment_state"], "flagged")
+        self.assertIn("unclear in the source", rows[166]["english"])
+        self.assertIn("뜻이 분명하지 않아", rows[166]["korean"])
 
     def test_full_validator_passes_after_batch03(self):
         result = subprocess.run(
