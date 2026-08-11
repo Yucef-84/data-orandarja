@@ -28,7 +28,7 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt_correction_review",
+  "content_review_status": "headgpt_passed",
   "generated_at": "2026-08-11T13:54:44Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch14_sentno_0833_0896.tsv",
@@ -99,5 +99,10 @@
   "correction_changed_fields": 4,
   "correction_state_updates": 0,
   "correction_rows": 2,
-  "correction_provenance_events": 4
+  "correction_provenance_events": 4,
+  "review_id": "MADORAN-ENRICH-014-REVIEW-01",
+  "reviewed_commit": "1cd0de46ebf30ea47f34c2cae4a6236502cb01b1",
+  "reviewed_at": "2026-08-11T15:45:59Z",
+  "approved_draft_rows": 3,
+  "approved_flagged_rows": 61
 }
