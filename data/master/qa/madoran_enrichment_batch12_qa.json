@@ -7,16 +7,16 @@
   "target_rows": 64,
   "draft_rows": 3,
   "flagged_rows": 61,
-  "processing_flags_populated_rows": 588,
-  "batch_processing_flags_populated_rows": 62,
+  "processing_flags_populated_rows": 587,
+  "batch_processing_flags_populated_rows": 61,
   "required_linguistic_fields": 704,
   "populated_linguistic_fields": 8448,
   "state_transition": "not_started_to_explicit_draft_or_flagged",
   "outside_target_mutations": 0,
   "provenance_events_before": 9479,
-  "new_provenance_events": 766,
-  "total_provenance_events": 10245,
-  "expected_total_provenance_events": 10245,
+  "new_provenance_events": 894,
+  "total_provenance_events": 10373,
+  "expected_total_provenance_events": 10373,
   "missing_provenance_events": 0,
   "hash_mismatch": 0,
   "prefix_preserved": true,
@@ -28,12 +28,34 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt",
+  "content_review_status": "pending_headgpt_correction_review",
   "generated_at": "2026-08-11T10:32:55Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch12_sentno_0705_0768.tsv",
     "manifest": "data/master/enrichment/batches/batch12_manifest.json",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
-  }
+  },
+  "correction_id": "MADORAN-ENRICH-012-CORRECTION-02",
+  "latest_correction_id": "MADORAN-ENRICH-012-CORRECTION-02",
+  "correction_history": [
+    {
+      "correction_id": "MADORAN-ENRICH-012-CORRECTION-01",
+      "changed_fields": 125,
+      "state_updates": 0,
+      "rows": 46,
+      "provenance_events": 125
+    },
+    {
+      "correction_id": "MADORAN-ENRICH-012-CORRECTION-02",
+      "changed_fields": 3,
+      "state_updates": 0,
+      "rows": 3,
+      "provenance_events": 3
+    }
+  ],
+  "correction_changed_fields": 3,
+  "correction_state_updates": 0,
+  "correction_rows": 3,
+  "correction_provenance_events": 3
 }
