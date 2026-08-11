@@ -15,6 +15,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 
 BATCH_FIELDS = engine.BATCH_FIELDS
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch12_qa.json"
+REVIEW_OUT = ROOT / "data/master/qa/madoran_enrichment_batch12_review.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch12_generation_qa.json"
 CORRECTION01_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch12_correction01_qa.json"
 CORRECTION02_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch12_correction02_qa.json"
@@ -57,8 +58,8 @@ class MadoranEnrichmentBatch12Tests(unittest.TestCase):
     def test_batch12_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 3)
-        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 0)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 3)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 61)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 61)
@@ -101,7 +102,18 @@ class MadoranEnrichmentBatch12Tests(unittest.TestCase):
         self.assertEqual(application["expected_total_provenance_events"], 10415)
         self.assertEqual(application["processing_flags_populated_rows"], 587)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 61)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
+
+    def test_batch12_headgpt_approval_qa_pass(self):
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["review_id"], "MADORAN-ENRICH-012-REVIEW-01")
+        self.assertEqual(review["reviewed_commit"], "1eeddf78b6ff9990144a685bb1d730a6d2d8e021")
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["provenance_events_after"], 10415)
+        self.assertEqual(review["total_enrichment_state_after"], {"qa_passed": 311, "flagged": 457, "draft": 0, "not_started": 588})
 
     def test_batch12_correction01_qa_pass(self):
         correction = json.loads(CORRECTION01_QA_OUT.read_text(encoding="utf-8"))
