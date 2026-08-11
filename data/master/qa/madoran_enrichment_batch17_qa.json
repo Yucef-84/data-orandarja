@@ -5,18 +5,18 @@
   "sentno_start": 1025,
   "sentno_end": 1088,
   "target_rows": 64,
-  "draft_rows": 3,
-  "flagged_rows": 61,
-  "processing_flags_populated_rows": 897,
-  "batch_processing_flags_populated_rows": 64,
+  "draft_rows": 5,
+  "flagged_rows": 59,
+  "processing_flags_populated_rows": 895,
+  "batch_processing_flags_populated_rows": 62,
   "required_linguistic_fields": 704,
   "populated_linguistic_fields": 11968,
   "state_transition": "not_started_to_explicit_draft_or_flagged",
   "outside_target_mutations": 0,
   "provenance_events_before": 13943,
-  "new_provenance_events": 768,
-  "total_provenance_events": 14711,
-  "expected_total_provenance_events": 14711,
+  "new_provenance_events": 980,
+  "total_provenance_events": 14923,
+  "expected_total_provenance_events": 14923,
   "missing_provenance_events": 0,
   "hash_mismatch": 0,
   "prefix_preserved": true,
@@ -28,12 +28,34 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt",
+  "content_review_status": "pending_headgpt_correction_review",
   "generated_at": "2026-08-11T19:09:19Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch17_sentno_1025_1088.tsv",
     "manifest": "data/master/enrichment/batches/batch17_manifest.json",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
-  }
+  },
+  "correction_id": "MADORAN-ENRICH-017-CORRECTION-02",
+  "latest_correction_id": "MADORAN-ENRICH-017-CORRECTION-02",
+  "correction_history": [
+    {
+      "correction_id": "MADORAN-ENRICH-017-CORRECTION-01",
+      "changed_fields": 210,
+      "state_updates": 0,
+      "rows": 63,
+      "provenance_events": 210
+    },
+    {
+      "correction_id": "MADORAN-ENRICH-017-CORRECTION-02",
+      "changed_fields": 2,
+      "state_updates": 2,
+      "rows": 2,
+      "provenance_events": 2
+    }
+  ],
+  "correction_changed_fields": 2,
+  "correction_state_updates": 2,
+  "correction_rows": 2,
+  "correction_provenance_events": 2
 }
