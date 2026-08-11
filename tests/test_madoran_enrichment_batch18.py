@@ -54,8 +54,8 @@ class MadoranEnrichmentBatch18Tests(unittest.TestCase):
     def test_batch18_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 16)
-        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 48)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 20)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 44)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 48)
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
@@ -75,10 +75,25 @@ class MadoranEnrichmentBatch18Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 15725)
+        self.assertEqual(event_check["events"], 15854)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 13615)
+
+    def test_batch18_headgpt_correction_artifact_and_key_fixes(self):
+        rows = {row["sentno"]: row for row in self.enrichment_rows}
+        self.assertEqual(rows["1097"]["speech_act"], "wish")
+        self.assertEqual(rows["1122"]["topic"], "denial_of_parentage")
+        self.assertEqual(rows["1122"]["processing_flags"], "")
+        self.assertEqual(rows["1125"]["domain"], "sports")
+        self.assertEqual(rows["1125"]["topic"], "football_score_question_and_response")
+        self.assertEqual(rows["1140"]["processing_flags"], "cefr_boundary|code_switching")
+        self.assertEqual(rows["1149"]["english"], "Abdelkader says, ‘How are you?’ The row does not add a Hawari recipient.")
+        correction = json.loads((ROOT / "data/master/qa/madoran_enrichment_batch18_correction01_qa.json").read_text(encoding="utf-8"))
+        self.assertEqual(correction["result"], "PASS")
+        self.assertEqual(correction["changed_fields"], 129)
+        self.assertEqual(correction["state_updates"], 4)
+        self.assertEqual(correction["batch_artifact_sync_state_updates"], 4)
 
     def test_batch18_generation_and_application_qa_pass(self):
         generation = json.loads(GENERATION_QA_OUT.read_text(encoding="utf-8"))
@@ -91,12 +106,12 @@ class MadoranEnrichmentBatch18Tests(unittest.TestCase):
         application = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(application["result"], "PASS")
         self.assertEqual(application["provenance_events_before"], 14973)
-        self.assertEqual(application["new_provenance_events"], 752)
-        self.assertEqual(application["total_provenance_events"], 15725)
-        self.assertEqual(application["expected_total_provenance_events"], 15725)
+        self.assertEqual(application["new_provenance_events"], 881)
+        self.assertEqual(application["total_provenance_events"], 15854)
+        self.assertEqual(application["expected_total_provenance_events"], 15854)
         self.assertEqual(application["processing_flags_populated_rows"], 943)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 48)
-        self.assertEqual(application["content_review_status"], "pending_headgpt")
+        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
 
     def test_full_validator_passes_after_batch18_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
