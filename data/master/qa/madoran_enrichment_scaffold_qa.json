@@ -22,7 +22,7 @@
   },
   "source_rows": 1356,
   "enrichment_rows": 1356,
-  "completed_rows": 256,
+  "completed_rows": 320,
   "morphology_dependency": {
     "result": "PASS",
     "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
@@ -33,12 +33,12 @@
   "provenance_events": {
     "result": "PASS",
     "failures": [],
-    "events": 3819
+    "events": 4572
   },
   "enrichment_provenance": {
     "result": "PASS",
     "failures": [],
-    "populated_fields": 2970
+    "populated_fields": 3723
   },
   "layer_contract": {
     "result": "PASS",
