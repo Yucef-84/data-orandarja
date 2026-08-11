@@ -21,6 +21,7 @@ CORRECTION02_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch17_correcti
 CORRECTION03_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch17_correction03_qa.json"
 CORRECTION04_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch17_correction04_qa.json"
 CORRECTION05_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch17_correction05_qa.json"
+REVIEW_OUT = ROOT / "data/master/qa/madoran_enrichment_batch17_review.json"
 
 
 def validate_batch_rows(source_rows, batch_rows):
@@ -59,7 +60,8 @@ class MadoranEnrichmentBatch17Tests(unittest.TestCase):
     def test_batch17_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 7)
+        self.assertEqual(sum(row["enrichment_state"] == "qa_passed" for row in target), 7)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 57)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 62)
@@ -102,7 +104,7 @@ class MadoranEnrichmentBatch17Tests(unittest.TestCase):
         self.assertEqual(application["expected_total_provenance_events"], 14973)
         self.assertEqual(application["processing_flags_populated_rows"], 895)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 62)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
         self.assertEqual(application["correction_state_updates"], 0)
         correction = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(correction["result"], "PASS")
@@ -140,6 +142,25 @@ class MadoranEnrichmentBatch17Tests(unittest.TestCase):
         self.assertEqual(correction05["flagged_rows"], 57)
         self.assertEqual(correction05["provenance_events_before"], 14971)
         self.assertEqual(correction05["provenance_events_after"], 14973)
+
+    def test_batch17_headgpt_approval_is_frozen(self):
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["review_id"], "MADORAN-ENRICH-017-REVIEW-01")
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["p2"], "NONE")
+        self.assertEqual(review["structure"], "PASS")
+        self.assertEqual(review["provenance"], "PASS")
+        self.assertEqual(review["isolation"], "PASS")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["qa_passed_rows"], 7)
+        self.assertEqual(len(review["flagged_rows"]), 57)
+        self.assertEqual(review["provenance_events_before"], 13943)
+        self.assertEqual(review["provenance_events_after"], 14973)
+        self.assertEqual(review["next_batch"]["batch_id"], "MADORAN-ENRICH-018")
+        self.assertEqual(review["next_batch"]["sentno_start"], 1089)
+        self.assertEqual(review["next_batch"]["sentno_end"], 1152)
 
     def test_full_validator_passes_after_batch17_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
