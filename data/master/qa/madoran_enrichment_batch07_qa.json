@@ -7,8 +7,8 @@
   "target_rows": 64,
   "draft_rows": 23,
   "flagged_rows": 41,
-  "processing_flags_populated_rows": 295,
-  "batch_processing_flags_populated_rows": 46,
+  "processing_flags_populated_rows": 297,
+  "batch_processing_flags_populated_rows": 48,
   "required_linguistic_fields": 704,
   "populated_linguistic_fields": 4928,
   "state_transition": "not_started_to_explicit_draft_or_flagged",
@@ -28,7 +28,7 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt_correction_review",
+  "content_review_status": "headgpt_passed",
   "generated_at": "2026-08-11T05:31:59Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch07_sentno_0385_0448.tsv",
@@ -60,5 +60,10 @@
   ],
   "correction_changed_fields": 19,
   "correction_rows": 9,
-  "correction_provenance_events": 19
+  "correction_provenance_events": 19,
+  "review_id": "MADORAN-ENRICH-007-REVIEW-01",
+  "reviewed_commit": "f6541136d6067255c8f9643653a263d73fae4b3c",
+  "reviewed_at": "2026-08-11T06:09:03Z",
+  "approved_draft_rows": 23,
+  "approved_flagged_rows": 41
 }
