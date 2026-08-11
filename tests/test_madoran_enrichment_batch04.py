@@ -27,6 +27,9 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 GENERATION_QA_OUT = (
     ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch04_generation_qa.json"
 )
+CORRECTION_QA_OUT = (
+    ROOT / "data" / "master" / "qa" / "madoran_enrichment_batch04_correction01_qa.json"
+)
 
 
 class MadoranEnrichmentBatch04Tests(unittest.TestCase):
@@ -58,8 +61,8 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
             if TARGET_START <= int(row["sentno"]) <= TARGET_END
         ]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 43)
-        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 21)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 41)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 23)
         self.assertTrue(all(row["latin"].isascii() for row in target))
         self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 62)
         self.assertEqual(
@@ -83,7 +86,7 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 3802)
+        self.assertEqual(event_check["events"], 3819)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 2970)
@@ -102,18 +105,20 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
         self.assertEqual(qa["provenance_events_before"], 3036)
-        self.assertEqual(qa["new_provenance_events"], 704 + 62)
-        self.assertEqual(qa["total_provenance_events"], 3802)
-        self.assertEqual(qa["expected_total_provenance_events"], 3802)
+        self.assertEqual(qa["new_provenance_events"], 704 + 62 + 17)
+        self.assertEqual(qa["total_provenance_events"], 3819)
+        self.assertEqual(qa["expected_total_provenance_events"], 3819)
+        self.assertEqual(qa["draft_rows"], 41)
+        self.assertEqual(qa["flagged_rows"], 23)
         self.assertEqual(qa["outside_target_mutations"], 0)
         self.assertEqual(qa["morphology_gate"], "BLOCKED_UPSTREAM_DEFECT")
         self.assertEqual(qa["learning_unit_rows_created"], 0)
         self.assertEqual(qa["latest_event_hash_gate"], "PASS")
-        self.assertEqual(qa["content_review_status"], "pending_headgpt")
+        self.assertEqual(qa["content_review_status"], "pending_headgpt_correction_review")
 
     def test_ambiguity_and_corruption_are_visible(self):
         rows = {int(row["sentno"]): row for row in self.enrichment_rows}
-        for sentno in (194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 205, 206, 207, 208, 209, 210, 211, 212, 213, 215, 236):
+        for sentno in (194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 205, 206, 207, 208, 209, 210, 211, 212, 213, 215, 225, 226, 236):
             self.assertEqual(rows[sentno]["enrichment_state"], "flagged")
             self.assertTrue(
                 "source_ambiguity" in rows[sentno]["processing_flags"]
@@ -121,6 +126,39 @@ class MadoranEnrichmentBatch04Tests(unittest.TestCase):
             )
         self.assertIn("corrupted", rows[206]["english"])
         self.assertIn("손상", rows[236]["korean"])
+
+    def test_batch04_correction_evidence_passes(self):
+        qa = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["result"], "PASS")
+        self.assertEqual(qa["correction_id"], "MADORAN-ENRICH-004-CORRECTION-01")
+        self.assertEqual(qa["corrected_rows"], ["206", "209", "211", "212", "213", "225", "226", "253"])
+        self.assertEqual(qa["changed_fields"], 17)
+        self.assertEqual(qa["new_provenance_events"], 17)
+        self.assertEqual(qa["provenance_events_before"], 3802)
+        self.assertEqual(qa["provenance_events_after"], 3819)
+        self.assertEqual(qa["draft_rows"], 41)
+        self.assertEqual(qa["flagged_rows"], 23)
+        self.assertEqual(qa["validator"], "PASS")
+
+    def test_headgpt_content_corrections_are_applied(self):
+        rows = {int(row["sentno"]): row for row in self.enrichment_rows}
+        self.assertEqual(rows[206]["latin"].count("@@Lat@@"), 3)
+        self.assertNotIn("Aziza", rows[209]["english"])
+        self.assertNotIn("아지자", rows[209]["korean"])
+        self.assertIn("Messenger", rows[209]["english"])
+        self.assertIn("Do not take your money", rows[211]["english"])
+        self.assertIn("갈 거야, 안 갈 거야?", rows[211]["korean"])
+        self.assertNotIn("girl", rows[212]["english"].lower())
+        self.assertNotIn("오빠", rows[212]["korean"])
+        self.assertNotIn("오빠", rows[213]["korean"])
+        self.assertEqual(rows[225]["enrichment_state"], "flagged")
+        self.assertIn("source_ambiguity", rows[225]["processing_flags"])
+        self.assertIn("당신의 서류", rows[225]["korean"])
+        self.assertIn("9alha", rows[226]["latin"])
+        self.assertIn("9atlo", rows[226]["latin"])
+        self.assertEqual(rows[226]["enrichment_state"], "flagged")
+        self.assertIn("source_corruption", rows[226]["processing_flags"])
+        self.assertTrue(rows[253]["korean"].startswith("그는 "))
 
     def test_batch04_does_not_create_morphology_or_learning_units(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))

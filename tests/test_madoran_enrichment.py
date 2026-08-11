@@ -88,11 +88,11 @@ class MadoranEnrichmentTests(unittest.TestCase):
         )
         self.assertEqual(
             sum(row["enrichment_state"] == "draft" for row in self.enrichment_rows[192:256]),
-            43,
+            41,
         )
         self.assertEqual(
             sum(row["enrichment_state"] == "flagged" for row in self.enrichment_rows[192:256]),
-            21,
+            23,
         )
         self.assertTrue(
             all(row["enrichment_state"] == "not_started" for row in self.enrichment_rows[256:])
@@ -358,7 +358,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 3802)
+        self.assertEqual(report["events"], 3819)
 
     def test_processing_flag_provenance_hashes_are_current(self):
         report = enrichment.check_enrichment_provenance(
