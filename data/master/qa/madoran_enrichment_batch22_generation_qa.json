@@ -1,0 +1,50 @@
+{
+  "result": "PASS",
+  "batch_id": "MADORAN-ENRICH-022",
+  "base_commit": "d8534e7",
+  "sentno_start": 1345,
+  "sentno_end": 1356,
+  "target_rows": 12,
+  "draft_rows": 0,
+  "flagged_rows": 12,
+  "flagged_row_sentnos": [
+    "1345",
+    "1346",
+    "1347",
+    "1348",
+    "1349",
+    "1350",
+    "1351",
+    "1352",
+    "1353",
+    "1354",
+    "1355",
+    "1356"
+  ],
+  "processing_flags_populated_rows": 12,
+  "flag_counts": {
+    "code_switching": 4,
+    "idiom_culture": 3,
+    "long_source": 4,
+    "source_ambiguity": 12
+  },
+  "difficulty_stats": {
+    "min": 18,
+    "max": 88,
+    "mean": 57.83,
+    "median": 53.0
+  },
+  "required_linguistic_fields": 132,
+  "source_gate": "PASS",
+  "layer_contract": "PASS",
+  "morphology_gate": "BLOCKED_UPSTREAM_DEFECT",
+  "morphology_reads": 0,
+  "arabic_modified": 0,
+  "learning_unit_rows_created": 0,
+  "validator": "PASS",
+  "generated_at": "2026-08-12T11:00:54Z",
+  "outputs": {
+    "batch": "data/master/enrichment/batches/batch22_sentno_1345_1356.tsv",
+    "manifest": "data/master/enrichment/batches/batch22_manifest.json"
+  }
+}

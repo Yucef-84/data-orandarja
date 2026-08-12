@@ -124,7 +124,7 @@ def validate_applied_state(before_rows: list[dict[str, str]], after_rows: list[d
                     failures.append(f"target_field:{sentno}:{field}")
         elif before != after:
             outside_mutations += 1
-    if target_rows != 64:
+    if target_rows != TARGET_END - TARGET_START + 1:
         failures.append("target_row_count")
     if outside_mutations:
         failures.append("outside_target_mutations")
@@ -163,7 +163,7 @@ def check_manifest() -> None:
         "base_commit": BASE_COMMIT,
         "sentno_start": TARGET_START,
         "sentno_end": TARGET_END,
-        "row_count": 64,
+        "row_count": TARGET_END - TARGET_START + 1,
         "fields": [*EMPTY_FIELDS, "processing_flags", "enrichment_state"],
         "prompt_version": PROMPT_VERSION,
         "source_dependency": "canonical_source_only",
@@ -246,7 +246,7 @@ def apply() -> dict[str, object]:
     if validation.returncode != 0:
         raise RuntimeError(validation.stdout + validation.stderr)
     n_flags = int(batch_check["processing_flags_populated_rows"])
-    expected_total = EXPECTED_EXISTING_EVENTS + 64 * len(EMPTY_FIELDS) + n_flags
+    expected_total = EXPECTED_EXISTING_EVENTS + (TARGET_END - TARGET_START + 1) * len(EMPTY_FIELDS) + n_flags
     if combined_check["events"] != expected_total:
         raise RuntimeError("unexpected_total_provenance_events")
     qa = {
