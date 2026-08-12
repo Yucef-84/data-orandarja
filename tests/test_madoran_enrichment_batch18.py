@@ -138,7 +138,10 @@ class MadoranEnrichmentBatch18Tests(unittest.TestCase):
         self.assertEqual(application["expected_total_provenance_events"], 15946)
         self.assertEqual(application["processing_flags_populated_rows"], 943)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 48)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
+        self.assertEqual(application["review_id"], "MADORAN-ENRICH-018-REVIEW-01")
+        self.assertEqual(application["approved_draft_rows"], 20)
+        self.assertEqual(application["approved_flagged_rows"], 44)
 
     def test_full_validator_passes_after_batch18_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
