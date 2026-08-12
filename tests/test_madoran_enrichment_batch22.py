@@ -16,6 +16,7 @@ BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_qa.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_generation_qa.json"
 CORRECTION01_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_correction01_qa.json"
 CORRECTION02_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_correction02_qa.json"
+REVIEW_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_review.json"
 
 
 class MadoranEnrichmentBatch22Tests(unittest.TestCase):
@@ -55,6 +56,19 @@ class MadoranEnrichmentBatch22Tests(unittest.TestCase):
         self.assertEqual(qa["expected_total_provenance_events"], 19190)
         self.assertEqual(qa["batch_processing_flags_populated_rows"], 12)
         self.assertEqual(qa["outside_target_mutations"], 0)
+
+    def test_batch22_headgpt_review_recorded(self):
+        qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
+        review = json.loads(REVIEW_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["content_review_status"], "headgpt_passed")
+        self.assertEqual(qa["review_id"], "MADORAN-ENRICH-022-REVIEW-01")
+        self.assertEqual(review["reviewed_commit"], "92f08a2")
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["p0"], "NONE")
+        self.assertEqual(review["p1"], "NONE")
+        self.assertEqual(review["p2"], "NONE")
+        self.assertTrue(review["next_batch_allowed"])
+        self.assertEqual(review["provenance_summary"]["actual"], 19190)
 
     def test_batch22_state_and_content_contract(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]

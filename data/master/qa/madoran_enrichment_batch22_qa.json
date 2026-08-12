@@ -28,7 +28,12 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt_correction_review",
+  "content_review_status": "headgpt_passed",
+  "review_id": "MADORAN-ENRICH-022-REVIEW-01",
+  "reviewed_commit": "92f08a2",
+  "reviewed_at": "2026-08-12T12:19:03Z",
+  "approved_draft_rows": 0,
+  "approved_flagged_rows": 12,
   "generated_at": "2026-08-12T11:01:24Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch22_sentno_1345_1356.tsv",
