@@ -79,7 +79,7 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         batch18 = [row for row in self.enrichment_rows if 1089 <= int(row["sentno"]) <= 1152]
         batch19 = [row for row in self.enrichment_rows if 1153 <= int(row["sentno"]) <= 1216]
         batch20 = [row for row in self.enrichment_rows if 1217 <= int(row["sentno"]) <= 1280]
-        outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 1280]
+        outside = [row for row in self.enrichment_rows if int(row["sentno"]) > 1344]
         self.assertEqual(len(target), 64)
         self.assertTrue(all(row["enrichment_state"] == "qa_passed" for row in target if row["sentno"] not in {"17", "63"}))
         self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
@@ -180,10 +180,10 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 17812)
+        self.assertEqual(event_check["events"], 18580)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 15139)
+        self.assertEqual(trace["populated_fields"], 15907)
 
     def test_batch_qa_is_pass(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
