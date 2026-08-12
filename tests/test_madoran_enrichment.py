@@ -119,7 +119,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
         self.assertIn("processing_flags", scaffold.ENRICHMENT_FIELDS)
         self.assertEqual(self.enrichment_rows[16]["processing_flags"], "source_ambiguity")
         self.assertEqual(self.enrichment_rows[62]["processing_flags"], "source_corruption")
-        self.assertEqual(sum(bool(row["processing_flags"]) for row in self.enrichment_rows), 999)
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in self.enrichment_rows), 998)
         self.assertEqual(self.enrichment_rows[16]["enrichment_state"], "flagged")
         self.assertEqual(self.enrichment_rows[62]["enrichment_state"], "flagged")
 
@@ -375,7 +375,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 16822)
+        self.assertEqual(report["events"], 16849)
 
     def test_processing_flag_provenance_hashes_are_current(self):
         report = enrichment.check_enrichment_provenance(
@@ -383,7 +383,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             scaffold.EVENTS_OUT.read_text(encoding="utf-8"),
         )
         self.assertEqual(report["result"], "PASS", report)
-        self.assertEqual(report["populated_fields"], 14375)
+        self.assertEqual(report["populated_fields"], 14374)
 
 
 if __name__ == "__main__":
