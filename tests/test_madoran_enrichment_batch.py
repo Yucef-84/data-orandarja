@@ -112,9 +112,9 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch19), 44)
         self.assertEqual(sum(bool(row["processing_flags"]) for row in batch19), 55)
         self.assertEqual(len(batch20), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in batch20), 7)
-        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch20), 57)
-        self.assertEqual(sum(bool(row["processing_flags"]) for row in batch20), 63)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in batch20), 11)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in batch20), 53)
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in batch20), 61)
 
     def test_headgpt_review_evidence_approves_batch01(self):
         review = json.loads(
@@ -180,10 +180,10 @@ class MadoranEnrichmentBatchTests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 17618)
+        self.assertEqual(event_check["events"], 17754)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 15141)
+        self.assertEqual(trace["populated_fields"], 15139)
 
     def test_batch_qa_is_pass(self):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))

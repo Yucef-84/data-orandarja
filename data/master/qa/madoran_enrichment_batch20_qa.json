@@ -5,18 +5,18 @@
   "sentno_start": 1217,
   "sentno_end": 1280,
   "target_rows": 64,
-  "draft_rows": 7,
-  "flagged_rows": 57,
-  "processing_flags_populated_rows": 1061,
-  "batch_processing_flags_populated_rows": 63,
+  "draft_rows": 11,
+  "flagged_rows": 53,
+  "processing_flags_populated_rows": 1059,
+  "batch_processing_flags_populated_rows": 61,
   "required_linguistic_fields": 704,
   "populated_linguistic_fields": 14080,
   "state_transition": "not_started_to_explicit_draft_or_flagged",
   "outside_target_mutations": 0,
   "provenance_events_before": 16851,
-  "new_provenance_events": 767,
-  "total_provenance_events": 17618,
-  "expected_total_provenance_events": 17618,
+  "new_provenance_events": 903,
+  "total_provenance_events": 17754,
+  "expected_total_provenance_events": 17754,
   "missing_provenance_events": 0,
   "hash_mismatch": 0,
   "prefix_preserved": true,
@@ -28,12 +28,27 @@
   "learning_unit_rows_created": 0,
   "validator": "PASS",
   "latest_event_hash_gate": "PASS",
-  "content_review_status": "pending_headgpt",
+  "content_review_status": "pending_headgpt_correction_review",
   "generated_at": "2026-08-12T02:11:13Z",
   "outputs": {
     "batch": "data/master/enrichment/batches/batch20_sentno_1217_1280.tsv",
     "manifest": "data/master/enrichment/batches/batch20_manifest.json",
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
-  }
+  },
+  "correction_id": "MADORAN-ENRICH-020-CORRECTION-01",
+  "latest_correction_id": "MADORAN-ENRICH-020-CORRECTION-01",
+  "correction_history": [
+    {
+      "correction_id": "MADORAN-ENRICH-020-CORRECTION-01",
+      "changed_fields": 136,
+      "state_updates": 9,
+      "rows": 58,
+      "provenance_events": 136
+    }
+  ],
+  "correction_changed_fields": 136,
+  "correction_state_updates": 9,
+  "correction_rows": 58,
+  "correction_provenance_events": 136
 }
