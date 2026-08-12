@@ -14,9 +14,9 @@
   "state_transition": "not_started_to_explicit_draft_or_flagged",
   "outside_target_mutations": 0,
   "provenance_events_before": 17812,
-  "new_provenance_events": 1192,
-  "total_provenance_events": 19004,
-  "expected_total_provenance_events": 19004,
+  "new_provenance_events": 1226,
+  "total_provenance_events": 19038,
+  "expected_total_provenance_events": 19038,
   "missing_provenance_events": 0,
   "hash_mismatch": 0,
   "prefix_preserved": true,
@@ -36,8 +36,8 @@
     "enrichment": "data/master/enrichment/madoran_sentence_enrichment.tsv",
     "provenance": "data/master/enrichment/madoran_sentence_enrichment_provenance.jsonl"
   },
-  "correction_id": "MADORAN-ENRICH-021-CORRECTION-06",
-  "latest_correction_id": "MADORAN-ENRICH-021-CORRECTION-06",
+  "correction_id": "MADORAN-ENRICH-021-CORRECTION-07",
+  "latest_correction_id": "MADORAN-ENRICH-021-CORRECTION-07",
   "correction_history": [
     {
       "correction_id": "MADORAN-ENRICH-021-CORRECTION-01",
@@ -80,10 +80,17 @@
       "state_updates": 1,
       "rows": 38,
       "provenance_events": 78
+    },
+    {
+      "correction_id": "MADORAN-ENRICH-021-CORRECTION-07",
+      "changed_fields": 34,
+      "state_updates": 0,
+      "rows": 17,
+      "provenance_events": 34
     }
   ],
-  "correction_changed_fields": 78,
-  "correction_state_updates": 1,
-  "correction_rows": 38,
-  "correction_provenance_events": 78
+  "correction_changed_fields": 34,
+  "correction_state_updates": 0,
+  "correction_rows": 17,
+  "correction_provenance_events": 34
 }
