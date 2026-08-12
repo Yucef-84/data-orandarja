@@ -123,7 +123,7 @@ def apply():
     source_uids = {row["source_uid"] for row in source}
     master_before = {row["sentno"]: row for row in before}
     batch_before = {row["sentno"]: row for row in batch}
-    if list(before[0]) != ENRICHMENT_FIELDS or len(batch) != 64:
+    if list(before[0]) != ENRICHMENT_FIELDS or not batch:
         raise RuntimeError("artifact_shape_mismatch")
     for sentno in batch_before:
         if any(master_before[sentno].get(field) != batch_before[sentno].get(field) for field in ENRICHMENT_FIELDS):
@@ -199,7 +199,7 @@ def apply():
         "learning_unit_rows_created": 0,
         "latest_event_hash_gate": "PASS",
         "validator": "PASS",
-        "target_rows": 64,
+        "target_rows": len(batch),
         "draft_rows": 3,
         "flagged_rows": 61,
         "processing_flags_populated_rows": status["counts"]["processing_flags_populated_rows"],

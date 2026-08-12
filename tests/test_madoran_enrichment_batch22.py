@@ -14,6 +14,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_qa.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_generation_qa.json"
+CORRECTION01_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch22_correction01_qa.json"
 
 
 class MadoranEnrichmentBatch22Tests(unittest.TestCase):
@@ -48,9 +49,9 @@ class MadoranEnrichmentBatch22Tests(unittest.TestCase):
         qa = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(qa["result"], "PASS")
         self.assertEqual(qa["provenance_events_before"], 19038)
-        self.assertEqual(qa["new_provenance_events"], 144)
-        self.assertEqual(qa["total_provenance_events"], 19182)
-        self.assertEqual(qa["expected_total_provenance_events"], 19182)
+        self.assertEqual(qa["new_provenance_events"], 150)
+        self.assertEqual(qa["total_provenance_events"], 19188)
+        self.assertEqual(qa["expected_total_provenance_events"], 19188)
         self.assertEqual(qa["batch_processing_flags_populated_rows"], 12)
         self.assertEqual(qa["outside_target_mutations"], 0)
 
@@ -66,12 +67,25 @@ class MadoranEnrichmentBatch22Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 19182)
+        self.assertEqual(event_check["events"], 19188)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
         self.assertEqual(trace["populated_fields"], 16050)
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_batch22_correction01_qa_and_repairs(self):
+        qa = json.loads(CORRECTION01_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(qa["result"], "PASS")
+        self.assertEqual(qa["correction_id"], "MADORAN-ENRICH-022-CORRECTION-01")
+        self.assertEqual(qa["corrected_rows"], ["1350", "1352", "1355"])
+        self.assertEqual(qa["changed_fields"], 6)
+        self.assertEqual(qa["provenance_events_before"], 19182)
+        self.assertEqual(qa["provenance_events_after"], 19188)
+        by_sentno = {int(row["sentno"]): row for row in self.enrichment_rows}
+        self.assertIn("whenever you enter", by_sentno[1350]["english"])
+        self.assertIn("only I and a female patient will enter", by_sentno[1352]["english"])
+        self.assertIn("wanted to go to my husband", by_sentno[1355]["english"])
 
 
 if __name__ == "__main__":
