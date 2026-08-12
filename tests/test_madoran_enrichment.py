@@ -378,7 +378,7 @@ class MadoranEnrichmentTests(unittest.TestCase):
             event_text, {row["source_uid"] for row in self.source_rows}
         )
         self.assertEqual(report["result"], "PASS")
-        self.assertEqual(report["events"], 19188)
+        self.assertEqual(report["events"], 19190)
 
     def test_processing_flag_provenance_hashes_are_current(self):
         report = enrichment.check_enrichment_provenance(
