@@ -13,6 +13,7 @@ from scripts.validate_madoran_enrichment import check_enrichment_provenance
 BATCH_FIELDS = engine.BATCH_FIELDS
 BATCH_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch21_qa.json"
 GENERATION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch21_generation_qa.json"
+CORRECTION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch21_correction01_qa.json"
 
 
 def validate_batch_rows(source_rows, batch_rows):
@@ -41,15 +42,15 @@ class MadoranEnrichmentBatch21Tests(unittest.TestCase):
         self.assertEqual(report["result"], "PASS", report)
         self.assertEqual(report["target_rows"], 64)
         self.assertEqual(report["required_linguistic_fields"], 64 * len(EMPTY_FIELDS))
-        self.assertEqual(report["processing_flags_populated_rows"], 64)
+        self.assertEqual(report["processing_flags_populated_rows"], 63)
 
     def test_batch21_state_distribution_and_ascii(self):
         target = [row for row in self.enrichment_rows if TARGET_START <= int(row["sentno"]) <= TARGET_END]
         self.assertEqual(len(target), 64)
-        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 0)
-        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 64)
+        self.assertEqual(sum(row["enrichment_state"] == "draft" for row in target), 2)
+        self.assertEqual(sum(row["enrichment_state"] == "flagged" for row in target), 62)
         self.assertTrue(all(row["latin"].isascii() for row in target))
-        self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 64)
+        self.assertEqual(sum(bool(row["processing_flags"]) for row in target), 63)
         self.assertEqual(sum(bool(row[field]) for row in target for field in EMPTY_FIELDS), 64 * len(EMPTY_FIELDS))
 
     def test_batch21_manifest_contract(self):
@@ -67,10 +68,10 @@ class MadoranEnrichmentBatch21Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 18580)
+        self.assertEqual(event_check["events"], 18699)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 15907)
+        self.assertEqual(trace["populated_fields"], 15906)
 
     def test_batch21_generation_and_application_qa_pass(self):
         generation = json.loads(GENERATION_QA_OUT.read_text(encoding="utf-8"))
@@ -83,12 +84,27 @@ class MadoranEnrichmentBatch21Tests(unittest.TestCase):
         application = json.loads(BATCH_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(application["result"], "PASS")
         self.assertEqual(application["provenance_events_before"], 17812)
-        self.assertEqual(application["new_provenance_events"], 768)
-        self.assertEqual(application["total_provenance_events"], 18580)
-        self.assertEqual(application["expected_total_provenance_events"], 18580)
-        self.assertEqual(application["processing_flags_populated_rows"], 1123)
-        self.assertEqual(application["batch_processing_flags_populated_rows"], 64)
-        self.assertEqual(application["content_review_status"], "pending_headgpt")
+        self.assertEqual(application["new_provenance_events"], 887)
+        self.assertEqual(application["total_provenance_events"], 18699)
+        self.assertEqual(application["expected_total_provenance_events"], 18699)
+        self.assertEqual(application["processing_flags_populated_rows"], 1122)
+        self.assertEqual(application["batch_processing_flags_populated_rows"], 63)
+        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+
+    def test_batch21_correction_qa_and_source_close_fields(self):
+        correction = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(correction["result"], "PASS")
+        self.assertEqual(correction["correction_id"], "MADORAN-ENRICH-021-CORRECTION-01")
+        self.assertEqual(correction["provenance_events_after"], 18699)
+        self.assertEqual(correction["state_updates"], 2)
+        by_sentno = {int(row["sentno"]): row for row in self.enrichment_rows}
+        self.assertIn(by_sentno[1281]["latin"], by_sentno[1281]["english"])
+        self.assertIn(by_sentno[1291]["latin"], by_sentno[1291]["korean"])
+        self.assertEqual(by_sentno[1312]["register"], "offensive")
+        self.assertEqual(by_sentno[1283]["enrichment_state"], "draft")
+        self.assertEqual(by_sentno[1283]["processing_flags"], "")
+        self.assertEqual(by_sentno[1327]["enrichment_state"], "draft")
+        self.assertIn("cefr_boundary", by_sentno[1344]["processing_flags"].split("|"))
 
     def test_full_validator_passes_after_batch21_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)

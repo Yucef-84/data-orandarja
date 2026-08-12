@@ -75,10 +75,10 @@ class MadoranEnrichmentBatch20Tests(unittest.TestCase):
         source_uids = {row["source_uid"] for row in self.source_rows}
         event_check = check_provenance_events(self.event_text, source_uids)
         self.assertEqual(event_check["result"], "PASS", event_check)
-        self.assertEqual(event_check["events"], 18580)
+        self.assertEqual(event_check["events"], 18699)
         trace = check_enrichment_provenance(self.enrichment_rows, self.event_text)
         self.assertEqual(trace["result"], "PASS", trace)
-        self.assertEqual(trace["populated_fields"], 15907)
+        self.assertEqual(trace["populated_fields"], 15906)
 
     def test_batch20_generation_and_application_qa_pass(self):
         generation = json.loads(GENERATION_QA_OUT.read_text(encoding="utf-8"))
