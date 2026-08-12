@@ -20,6 +20,7 @@ CORRECTION_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch20_correction
 CORRECTION02_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch20_correction02_qa.json"
 CORRECTION03_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch20_correction03_qa.json"
 CORRECTION04_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch20_correction04_qa.json"
+REVIEW_QA_OUT = ROOT / "data/master/qa/madoran_enrichment_batch20_review.json"
 
 
 def validate_batch_rows(source_rows, batch_rows):
@@ -95,7 +96,10 @@ class MadoranEnrichmentBatch20Tests(unittest.TestCase):
         self.assertEqual(application["expected_total_provenance_events"], 17812)
         self.assertEqual(application["processing_flags_populated_rows"], 1059)
         self.assertEqual(application["batch_processing_flags_populated_rows"], 61)
-        self.assertEqual(application["content_review_status"], "pending_headgpt_correction_review")
+        self.assertEqual(application["content_review_status"], "headgpt_passed")
+        self.assertEqual(application["review_id"], "MADORAN-ENRICH-020-REVIEW-01")
+        self.assertEqual(application["reviewed_commit"], "7643b95")
+        self.assertTrue(application["next_batch_allowed"])
         correction = json.loads(CORRECTION_QA_OUT.read_text(encoding="utf-8"))
         self.assertEqual(correction["result"], "PASS")
         self.assertEqual(correction["changed_fields"], 136)
@@ -121,6 +125,11 @@ class MadoranEnrichmentBatch20Tests(unittest.TestCase):
         self.assertEqual(correction04["provenance_events_after"], 17812)
         self.assertEqual(correction04["draft_rows"], 11)
         self.assertEqual(correction04["flagged_rows"], 53)
+        review = json.loads(REVIEW_QA_OUT.read_text(encoding="utf-8"))
+        self.assertEqual(review["headgpt_result"], "PASS")
+        self.assertEqual(review["reviewed_commit"], "7643b95")
+        self.assertEqual(review["reviewed_batch_rows"], 64)
+        self.assertTrue(review["next_batch_allowed"])
 
     def test_full_validator_passes_after_batch20_application(self):
         result = subprocess.run([sys.executable, "scripts/validate_madoran_enrichment.py"], cwd=ROOT, check=False, capture_output=True, text=True)
